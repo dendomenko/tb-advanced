@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :answer do
-    answer "MyString"
+    answer 'MyString'
   end
 end
