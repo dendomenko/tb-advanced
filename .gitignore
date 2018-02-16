@@ -20,3 +20,4 @@
 .ruby-version
 .ruby-gemset
 config/database.yml
+.vscode/
