@@ -7,7 +7,7 @@ RSpec.describe AnswersController, type: :controller do
   describe 'GET #index' do
     let(:answers) { create_list(:answer, 2, question: question) }
 
-    before { get :index, params: {question_id: question} }
+    before { get :index, params: { question_id: question } }
 
     it 'populates an array of all answers of question' do
       expect(assigns(:answers)).to match_array(answers)
@@ -20,7 +20,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'GET #show' do
     before { get :show, params: { question_id: question, id: answer } }
-    
+
     it 'assigns the requested answer of question to @answer' do
       expect(assigns(:answer)).to eq(answer)
     end
@@ -45,25 +45,33 @@ RSpec.describe AnswersController, type: :controller do
   describe 'POST #create' do
     context 'with valid attributes' do
       it 'saves the new answer of question in the database' do
-        expect { post :create, params: {  question_id: question, answer: attributes_for(:answer, question: question) } }
-          .to change(Answer, :count).by(1)
+        expect do
+          post :create, params: { question_id: question,
+                                  answer:
+                                  attributes_for(:answer,
+                                                 question: question) }
+        end.to change(Answer, :count).by(1)
       end
 
       it 'redirects to show view' do
-        post :create, params: { question_id: question, answer: attributes_for(:answer, question: question) }
-        expect(response).to redirect_to question_answer_path(question, assigns(:answer))
+        post :create, params: { question_id: question,
+                                answer: attributes_for(:answer, question: question) }
+        expect(response)
+          .to redirect_to question_answer_path(question, assigns(:answer))
       end
     end
 
     context 'with invalid attributes' do
       it 'does not save the answer' do
         expect do
-          post :create, params: { question_id: question, answer: attributes_for(:invalid_answer) }
+          post :create, params: { question_id: question,
+                                  answer: attributes_for(:invalid_answer) }
         end.to_not change(Answer, :count)
       end
 
       it 're-renders new view' do
-        post :create, params: { question_id: question, answer: attributes_for(:invalid_answer) }
+        post :create, params: { question_id: question,
+                                answer: attributes_for(:invalid_answer) }
         expect(response).to render_template :new
       end
     end
