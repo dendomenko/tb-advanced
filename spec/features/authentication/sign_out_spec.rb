@@ -25,5 +25,4 @@ feature 'User sign out', %q{
     expect(page).to_not have_content 'Sign out'
     expect(page).to have_content 'Sign in'
   end
-
 end

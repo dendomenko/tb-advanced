@@ -37,8 +37,7 @@ RSpec.describe AnswersController, type: :controller do
           post :create, params: { question_id: question,
                                   answer:
                                   attributes_for(:answer,
-                                                 question: question)
-                                }
+                                                 question: question) }
         end.to change(Answer, :count).by(1)
       end
 
@@ -76,15 +75,19 @@ RSpec.describe AnswersController, type: :controller do
     let!(:user_answer) { create(:answer, question: question, user: @user) }
 
     it 'deletes user answer' do
-      expect { delete :destroy, params: { question_id: question, id: user_answer } }.to change(Answer, :count).by(-1)
+      expect do
+        delete :destroy, params: { question_id: question,
+                                   id: user_answer }
+      end.to change(Answer, :count).by(-1)
     end
 
     it 'fail delete another\'s user answer' do
-      expect { delete :destroy, params: { question_id: question, id: answer } }.to change(Answer, :count).by(0)
+      expect { delete :destroy, params: { question_id: question, id: answer } }
+        .to change(Answer, :count).by(0)
     end
 
     it 'redirect to question view' do
-      delete :destroy,  params: { question_id: question, id: answer }
+      delete :destroy, params: { question_id: question, id: answer }
       expect(response).to redirect_to question_path(question)
     end
   end
