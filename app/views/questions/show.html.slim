@@ -1,0 +1,8 @@
+h2= @question.title
+p= @question.body
+
+p Answers
+= form_for [@question, @question.answers.new] do |f|
+    = f.label :answer
+    = f.text_area :answer
+    = f.submit 'Add Answer'

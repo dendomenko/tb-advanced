@@ -21,3 +21,4 @@
 .ruby-gemset
 config/database.yml
 .vscode/
+.idea/

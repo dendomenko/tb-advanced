@@ -1,10 +1,7 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!, except: %i[index, show]
   before_action :set_question
   before_action :set_answer, only: :show
-
-  def index
-    @answers = @question.answers
-  end
 
   def show; end
 
@@ -15,9 +12,9 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     if @answer.save
-      redirect_to [@question, @answer]
+      redirect_to @question, notice: 'Your answer was added.'
     else
-      render :new
+      render 'questions/show'
     end
   end
 

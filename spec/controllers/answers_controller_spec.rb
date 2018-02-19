@@ -4,20 +4,6 @@ RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
   let(:answer) { create(:answer, question: question) }
 
-  describe 'GET #index' do
-    let(:answers) { create_list(:answer, 2, question: question) }
-
-    before { get :index, params: { question_id: question } }
-
-    it 'populates an array of all answers of question' do
-      expect(assigns(:answers)).to match_array(answers)
-    end
-
-    it 'renders index view' do
-      expect(response).to render_template :index
-    end
-  end
-
   describe 'GET #show' do
     before { get :show, params: { question_id: question, id: answer } }
 
@@ -31,6 +17,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #new' do
+    sign_in_user
     before { get :new, params: { question_id: question } }
 
     it 'assigns a new Answer of question to @answer' do
@@ -43,6 +30,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'POST #create' do
+    sign_in_user
     context 'with valid attributes' do
       it 'saves the new answer of question in the database' do
         expect do
@@ -57,7 +45,7 @@ RSpec.describe AnswersController, type: :controller do
         post :create, params: { question_id: question,
                                 answer: attributes_for(:answer, question: question) }
         expect(response)
-          .to redirect_to question_answer_path(question, assigns(:answer))
+          .to redirect_to question_path(question)
       end
     end
 
@@ -72,7 +60,7 @@ RSpec.describe AnswersController, type: :controller do
       it 're-renders new view' do
         post :create, params: { question_id: question,
                                 answer: attributes_for(:invalid_answer) }
-        expect(response).to render_template :new
+        expect(response).to render_template 'questions/show'
       end
     end
   end
