@@ -10,14 +10,14 @@ feature 'Create question', %q{
 
   scenario 'Authenticated user creates question' do
     sign_in user
-    
+
     visit questions_path
     click_on 'Ask question'
     fill_in 'Title', with: 'Test question'
-    fill_in 'Body', with: 'test test'  
+    fill_in 'Body', with: 'test test'
     click_on 'Create'
-    
-    expect(page).to have_content 'Your question succesfully created.'
+
+    expect(page).to have_content 'Your question successfully created.'
   end
 
   scenario 'Not authenticated user tries creates question' do

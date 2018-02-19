@@ -37,13 +37,16 @@ RSpec.describe AnswersController, type: :controller do
           post :create, params: { question_id: question,
                                   answer:
                                   attributes_for(:answer,
-                                                 question: question) }
+                                                 question: question)
+                                }
         end.to change(Answer, :count).by(1)
       end
 
       it 'redirects to show view' do
         post :create, params: { question_id: question,
-                                answer: attributes_for(:answer, question: question) }
+                                answer: attributes_for(:answer,
+                                                       question: question,
+                                                       user: @user) }
         expect(response)
           .to redirect_to question_path(question)
       end
@@ -62,6 +65,27 @@ RSpec.describe AnswersController, type: :controller do
                                 answer: attributes_for(:invalid_answer) }
         expect(response).to render_template 'questions/show'
       end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    sign_in_user
+
+    before { question }
+    before { answer }
+    let!(:user_answer) { create(:answer, question: question, user: @user) }
+
+    it 'deletes user answer' do
+      expect { delete :destroy, params: { question_id: question, id: user_answer } }.to change(Answer, :count).by(-1)
+    end
+
+    it 'fail delete another\'s user answer' do
+      expect { delete :destroy, params: { question_id: question, id: answer } }.to change(Answer, :count).by(0)
+    end
+
+    it 'redirect to question view' do
+      delete :destroy,  params: { question_id: question, id: answer }
+      expect(response).to redirect_to question_path(question)
     end
   end
 end

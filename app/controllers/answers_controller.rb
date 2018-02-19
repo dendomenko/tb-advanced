@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[index, show]
   before_action :set_question
-  before_action :set_answer, only: :show
+  before_action :set_answer, only: %i[show destroy]
 
   def show; end
 
@@ -11,11 +11,17 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.new(answer_params)
+    @answer.user = current_user
     if @answer.save
       redirect_to @question, notice: 'Your answer was added.'
     else
       render 'questions/show'
     end
+  end
+
+  def destroy
+    @answer.destroy if @answer.author? current_user
+    redirect_to question_path(@question), notice: 'Your answer was successfully deleted.'
   end
 
   private
