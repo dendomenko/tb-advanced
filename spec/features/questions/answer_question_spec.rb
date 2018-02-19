@@ -9,7 +9,7 @@ feature 'Answer the question', %q{
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  scenario 'Authenticated user creates question' do
+  scenario 'Authenticated user creates answer' do
     sign_in user
 
     visit question_path(question)
@@ -20,7 +20,7 @@ feature 'Answer the question', %q{
     expect(current_path).to eq question_path(question)
   end
 
-  scenario 'Not authenticated user tries creates question' do
+  scenario 'Not authenticated user tries creates answer' do
     visit question_path(question)
     fill_in 'Answer', with: 'Test answer'
     click_on 'Add Answer'
