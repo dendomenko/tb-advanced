@@ -1,8 +1,12 @@
-= form_for @question do |f|
-  = f.label :title
-  = f.text_field :title
-  = f.label :body
-  = f.text_area :body
-  = f.submit 'Create'
-  
-  
+h1.text-center New Question
+.container
+  .row.text-center.align-items-center
+    .col
+      = form_for @question, class: 'form-group' do |f|
+        .form-group
+          = f.label :title
+          = f.text_field :title, class: 'form-control'
+        .form-group
+          = f.label :body
+          = f.text_area :body, class: 'form-control'
+        = f.submit 'Create', class: 'btn btn-outline-success'

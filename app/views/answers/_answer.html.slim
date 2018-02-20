@@ -1,0 +1,3 @@
+.container.text-left
+  p= answer.answer
+  = link_to('Delete', question_answer_path(@question, answer), method: :delete, class: 'btn btn-outline-danger btn-sm') if answer.author? current_user

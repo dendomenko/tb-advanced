@@ -29,10 +29,14 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-
+# Ues Devise for authentication
 gem 'devise'
-
+# Use jquery for javascript
+gem 'jquery-rails'
+# U
 gem 'slim-rails'
+
+gem 'bootstrap', '~> 4.0.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -49,6 +53,8 @@ group :test do
   gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
   gem 'capybara'
   gem 'launchy'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 
 group :development do
