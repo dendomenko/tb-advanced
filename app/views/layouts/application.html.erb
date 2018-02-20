@@ -22,7 +22,7 @@
         <a class="nav-link" href="<%= questions_path %>">Questions</a>
       </li>
     </ul>
-    <% unless current_user.nil? %>
+    <% if user_signed_in? %>
       <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'btn btn-outline-danger' %>
     <% else %>
       <%= link_to 'Sign in', new_user_session_path, class: 'btn btn-outline-success' %>
