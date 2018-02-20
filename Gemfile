@@ -47,13 +47,13 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
+  gem 'capybara-webkit'
 end
 
 group :test do
   gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
   gem 'capybara'
   gem 'launchy'
-  gem 'selenium-webdriver'
   gem 'database_cleaner'
 end
 
