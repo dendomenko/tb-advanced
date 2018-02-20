@@ -30,6 +30,8 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+gem 'devise'
+
 gem 'slim-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -41,6 +43,12 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
+end
+
+group :test do
+  gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
+  gem 'capybara'
+  gem 'launchy'
 end
 
 group :development do
