@@ -11,5 +11,6 @@ h1.text-center= @question.title
     = form_for [@question, @question.answers.new], class: 'form-group', remote: true do |f|
       .form-group
         = f.label :answer
+        .answer-errors
         = f.text_area :answer, class: 'form-control'
       = f.submit 'Add Answer', class: 'btn btn-primary'

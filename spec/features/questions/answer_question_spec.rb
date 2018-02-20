@@ -30,4 +30,13 @@ feature 'Answer the question', %q{
     expect(page).to have_content 'You need to sign in or sign up'
     expect(current_path).to eq new_user_session_path
   end
+
+  scenario 'User try create invalid answer', js: true do
+    sign_in user
+    visit question_path(question)
+
+    click_on 'Add Answer'
+
+    expect(page).to have_content 'Answer can\'t be blank'
+  end
 end
