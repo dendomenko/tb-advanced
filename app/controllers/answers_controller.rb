@@ -2,6 +2,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_question
   before_action :set_answer, only: %i[show destroy]
+  before_action :author?, only: :destroy
 
   def show; end
 
@@ -20,12 +21,18 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer.destroy if @answer.author? current_user
+    @answer.destroy
     redirect_to question_path(@question),
                 notice: 'Your answer was successfully deleted.'
   end
 
   private
+
+  def author?
+    unless @answer.author? current_user
+      redirect_to question_path(@question), notice: 'You are not author of this answer!'
+    end
+  end
 
   def answer_params
     params.require(:answer).permit(:answer)

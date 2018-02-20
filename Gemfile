@@ -46,6 +46,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
   gem 'capybara'
   gem 'launchy'
 end

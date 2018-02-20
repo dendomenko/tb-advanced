@@ -1,6 +1,6 @@
 FactoryBot.define do
   sequence :email do |n|
-    "user#{n}@test.com"
+    Faker::Internet.unique.email
   end
   factory :user do
     email
