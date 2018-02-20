@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_question
-  before_action :set_answer, only: %i[show destroy]
+  before_action :set_answer, only: %i[show destroy update]
   before_action :author?, only: :destroy
 
   def show; end
@@ -20,6 +20,10 @@ class AnswersController < ApplicationController
     @answer.destroy
     redirect_to question_path(@question),
                 notice: 'Your answer was successfully deleted.'
+  end
+
+  def update
+    @answer.update(answer_params)
   end
 
   private
