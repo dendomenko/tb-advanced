@@ -1,12 +1,10 @@
 h2= @question.title
 p= @question.body
 
-div Answers
-- @question.answers.each do |answer|
-  = answer.answer
-  = link_to('Delete', question_answer_path(@question, answer), method: :delete) if answer.author? current_user
+.answers Answers
+= render 'answers'
 
-= form_for [@question, @question.answers.new] do |f|
+= form_for [@question, @question.answers.new], remote: true do |f|
     = f.label :answer
     = f.text_area :answer
     = f.submit 'Add Answer'
