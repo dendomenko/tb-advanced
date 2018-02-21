@@ -38,7 +38,7 @@ RSpec.describe AnswersController, type: :controller do
                                   answer:
                                   attributes_for(:answer,
                                                  question: question) },
-               format: :js
+                        format: :js
         end.to change(Answer, :count).by(1)
       end
 
@@ -47,7 +47,7 @@ RSpec.describe AnswersController, type: :controller do
                                 answer: attributes_for(:answer,
                                                        question: question,
                                                        user: @user) },
-             format: :js
+                      format: :js
         expect(response)
           .to render_template :create
       end
@@ -58,14 +58,14 @@ RSpec.describe AnswersController, type: :controller do
         expect do
           post :create, params: { question_id: question,
                                   answer: attributes_for(:invalid_answer) },
-               format: :js
+                        format: :js
         end.to_not change(Answer, :count)
       end
 
       it 're-renders new view' do
         post :create, params: { question_id: question,
                                 answer: attributes_for(:invalid_answer) },
-             format: :js
+                      format: :js
         expect(response).to render_template :create
       end
     end
@@ -82,7 +82,7 @@ RSpec.describe AnswersController, type: :controller do
       expect do
         delete :destroy, params: { question_id: question,
                                    id: user_answer },
-               format: :js
+                         format: :js
       end.to change(Answer, :count).by(-1)
     end
 
@@ -102,23 +102,27 @@ RSpec.describe AnswersController, type: :controller do
     let(:answer) { create(:answer, question: question, user: @user) }
 
     it 'assings the requested answer to @answer' do
-      patch :update, params: { id: answer, question_id: question, answer: attributes_for(:answer) }, format: :js
+      patch :update, params: { id: answer, question_id: question,
+                               answer: attributes_for(:answer) }, format: :js
       expect(assigns(:answer)).to eq answer
     end
 
     it 'assigns th question' do
-      patch :update, params: { id: answer, question_id: question, answer: attributes_for(:answer) }, format: :js
+      patch :update, params: { id: answer, question_id: question,
+                               answer: attributes_for(:answer) }, format: :js
       expect(assigns(:question)).to eq question
     end
 
     it 'changes answer attributes' do
-      patch :update, params: { id: answer, question_id: question, answer: { answer: 'new body'} }, format: :js
+      patch :update, params: { id: answer, question_id: question,
+                               answer: { answer: 'new body' } }, format: :js
       answer.reload
       expect(answer.answer).to eq 'new body'
     end
 
     it 'render update template' do
-      patch :update, params: { id: answer, question_id: question, answer: attributes_for(:answer) }, format: :js
+      patch :update, params: { id: answer, question_id: question,
+                               answer: attributes_for(:answer) }, format: :js
       expect(response).to render_template :update
     end
   end
@@ -130,23 +134,27 @@ RSpec.describe AnswersController, type: :controller do
     let(:answer) { create(:answer, question: author_question) }
 
     it 'assings the requested answer to @answer' do
-      patch :best, params: { id: answer, question_id: author_question, answer: { best: true } } , format: :js
+      patch :best, params: { id: answer, question_id: author_question,
+                             answer: { best: true } }, format: :js
       expect(assigns(:answer)).to eq answer
     end
 
     it 'assigns the question' do
-      patch :best, params: { id: answer, question_id: author_question, answer: { best: true } }, format: :js
+      patch :best, params: { id: answer, question_id: author_question,
+                             answer: { best: true } }, format: :js
       expect(assigns(:question)).to eq author_question
     end
 
     it 'changes answer best attribute' do
-      patch :best, params: { id: answer, question_id: author_question, answer: { best: true } }, format: :js
+      patch :best, params: { id: answer, question_id: author_question,
+                             answer: { best: true } }, format: :js
       answer.reload
       expect(answer.best).to eq true
     end
 
     it 'render best template' do
-      patch :best, params: { id: answer, question_id: author_question, answer: attributes_for(:answer) }, format: :js
+      patch :best, params: { id: answer, question_id: author_question,
+                             answer: attributes_for(:answer) }, format: :js
       expect(response).to render_template :best
     end
   end

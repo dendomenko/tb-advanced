@@ -8,9 +8,9 @@ feature 'Question editing', "
   I'd like to be able to edit question
 " do
 
-  given(:user) {create(:user)}
-  given!(:question) {create(:question, user: user)}
-  given(:new_user) {create(:user)}
+  given(:user) { create(:user) }
+  given!(:question) { create(:question, user: user) }
+  given(:new_user) { create(:user) }
 
   scenario 'Unauthenticated user try to edit question' do
     visit questions_path

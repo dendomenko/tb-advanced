@@ -6,8 +6,8 @@ feature 'Answer the question', %q{
   I want to be able to create answer
 } do
 
-  given(:user) {create(:user)}
-  given(:question) {create(:question)}
+  given(:user) { create(:user) }
+  given(:question) { create(:question) }
 
   scenario 'Authenticated user creates answer', js: true do
     sign_in user
