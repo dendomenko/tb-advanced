@@ -3,6 +3,5 @@
     $('.answer-errors').html('<%= j message %>');
   <% end %>
 <% else %>
-  $('.badge-best').remove();
-  $('#answer_<%= @answer.id %>').replaceWith('<%= j render @answer %>');
+  $('.answers').html('<%= j render 'questions/answers', question: @answer.question %>');
 <% end %>
