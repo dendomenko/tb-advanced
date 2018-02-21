@@ -4,7 +4,7 @@ class Answer < ApplicationRecord
   belongs_to :question
   belongs_to :user
 
-  validates :answer, presence: true
+  validates :body, presence: true
   validates_uniqueness_of :best, if: :best, scope: :question_id
 
   scope :best_answer, -> { where(best: true).limit(1) }

@@ -1,13 +1,13 @@
 FactoryBot.define do
   factory :answer do
-    answer 'MyString'
+    body 'MyString'
     question
     user
     best false
   end
 
   factory :invalid_answer, class: 'Answer' do
-    answer nil
+    body nil
     question nil
   end
 end
