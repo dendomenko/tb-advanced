@@ -99,7 +99,7 @@ RSpec.describe AnswersController, type: :controller do
   describe 'PATCH #update' do
     sign_in_user
 
-    let(:answer) { create(:answer, question: question) }
+    let(:answer) { create(:answer, question: question, user: @user) }
 
     it 'assings the requested answer to @answer' do
       patch :update, params: { id: answer, question_id: question, answer: attributes_for(:answer) }, format: :js

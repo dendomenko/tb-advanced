@@ -8,10 +8,10 @@ feature 'Answer editing', "
   I'd like to be able to edit answer
 " do
 
-  given(:user) {create(:user)}
-  given!(:question) {create(:question)}
-  given!(:answer) {create(:answer, question: question, user: user)}
-  given(:new_user) {create(:user)}
+  given(:user) { create(:user) }
+  given!(:question) { create(:question) }
+  given!(:answer) { create(:answer, question: question, user: user) }
+  given(:new_user) { create(:user) }
 
   scenario 'Unauthenticated user try to edit answer' do
     visit question_path(question)
@@ -46,6 +46,8 @@ feature 'Answer editing', "
 
     scenario 'try to edit other user\'s question' do
       sign_in new_user
+      visit question_path(question)
+
       expect(page).to_not have_link 'Edit'
     end
   end

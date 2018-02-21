@@ -48,6 +48,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
   gem 'capybara-webkit'
+  gem 'pry-rails'
 end
 
 group :test do
