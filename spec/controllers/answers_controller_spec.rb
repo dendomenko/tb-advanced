@@ -99,7 +99,6 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH #update' do
     sign_in_user
-
     let(:answer) { create(:answer, question: question, user: @user) }
 
     it 'assings the requested answer to @answer' do
@@ -121,6 +120,34 @@ RSpec.describe AnswersController, type: :controller do
     it 'render update template' do
       patch :update, params: { id: answer, question_id: question, answer: attributes_for(:answer) }, format: :js
       expect(response).to render_template :update
+    end
+  end
+
+  describe 'PATCH #best' do
+    sign_in_user
+
+    let(:author_question) { create(:question, user: @user) }
+    let(:answer) { create(:answer, question: author_question) }
+
+    it 'assings the requested answer to @answer' do
+      patch :best, params: { id: answer, question_id: author_question, answer: { best: true } } , format: :js
+      expect(assigns(:answer)).to eq answer
+    end
+
+    it 'assigns the question' do
+      patch :best, params: { id: answer, question_id: author_question, answer: { best: true } }, format: :js
+      expect(assigns(:question)).to eq author_question
+    end
+
+    it 'changes answer best attribute' do
+      patch :best, params: { id: answer, question_id: author_question, answer: { best: true } }, format: :js
+      answer.reload
+      expect(answer.best).to eq true
+    end
+
+    it 'render best template' do
+      patch :best, params: { id: answer, question_id: author_question, answer: attributes_for(:answer) }, format: :js
+      expect(response).to render_template :best
     end
   end
 end

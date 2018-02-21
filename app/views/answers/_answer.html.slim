@@ -1,5 +1,10 @@
 .container.text-left id=("answer_#{answer.id}")
-  p= answer.answer
+  p.answer
+    =answer.answer
+    -if answer.best?
+      span.badge-best.badge.badge-success This is the best answer
+  - if answer.question.author? current_user
+    = link_to 'Best Answer', best_question_answer_path(answer.question, answer), method: :patch, remote: true, class: 'best-answer-link', data: {answer_id: answer.id}
   - if user_signed_in? && answer.author?(current_user)
     = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
     = link_to('Delete', question_answer_path(@question, answer),
