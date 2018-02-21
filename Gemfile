@@ -33,10 +33,13 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 # Use jquery for javascript
 gem 'jquery-rails'
-# U
+# Use slim for views
 gem 'slim-rails'
-
+# Use bootstrap for styling
 gem 'bootstrap', '~> 4.0.0'
+# Use for file uploading
+gem 'carrierwave'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
