@@ -9,7 +9,7 @@ h1.text-center= @question.title
   .row
     = form_for [@question, @question.answers.new], class: 'form-group', remote: true do |f|
       .form-group
-        = f.label :answer
+        = f.label :body
         .answer-errors
-        = f.text_area :answer, class: 'form-control'
+        = f.text_area :body, class: 'form-control'
       = f.submit 'Add Answer', class: 'btn btn-primary'

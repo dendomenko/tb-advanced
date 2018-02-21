@@ -16,7 +16,7 @@ feature 'Delete answer', %q{
     within '.answers' do
       click_on 'Delete'
 
-      expect(page).to_not have_content answer.answer
+      expect(page).to_not have_content answer.body
       expect(current_path).to eq question_path(question)
     end
   end

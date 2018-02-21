@@ -13,7 +13,7 @@ feature 'Answer the question', %q{
     sign_in user
 
     visit question_path(question)
-    fill_in 'Answer', with: 'Test answer'
+    fill_in 'Body', with: 'Test answer'
     click_on 'Add Answer'
 
     within '.answers' do
@@ -24,7 +24,7 @@ feature 'Answer the question', %q{
 
   scenario 'Not authenticated user tries creates answer' do
     visit question_path(question)
-    fill_in 'Answer', with: 'Test answer'
+    fill_in 'Body', with: 'Test answer'
     click_on 'Add Answer'
 
     expect(page).to have_content 'You need to sign in or sign up'
@@ -37,6 +37,6 @@ feature 'Answer the question', %q{
 
     click_on 'Add Answer'
 
-    expect(page).to have_content 'Answer can\'t be blank'
+    expect(page).to have_content 'Body can\'t be blank'
   end
 end
