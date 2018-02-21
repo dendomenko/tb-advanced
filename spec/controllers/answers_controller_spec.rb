@@ -81,7 +81,8 @@ RSpec.describe AnswersController, type: :controller do
     it 'deletes user answer' do
       expect do
         delete :destroy, params: { question_id: question,
-                                   id: user_answer }
+                                   id: user_answer },
+               format: :js
       end.to change(Answer, :count).by(-1)
     end
 
