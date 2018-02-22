@@ -36,9 +36,8 @@ class QuestionsController < ApplicationController
   private
 
   def author?
-    unless @question.author? current_user
-      redirect_to questions_path, notice: 'You are not author of this question!'
-    end
+    return nil if @question.author? current_user
+    redirect_to questions_path, notice: 'You are not author of this question!'
   end
 
   def load_question
