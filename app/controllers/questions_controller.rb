@@ -33,6 +33,10 @@ class QuestionsController < ApplicationController
     @question.update(question_params)
   end
 
+  def vote
+
+  end
+
   private
 
   def author?
