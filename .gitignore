@@ -22,3 +22,5 @@
 config/database.yml
 .vscode/
 .idea/
+
+public/uploads/

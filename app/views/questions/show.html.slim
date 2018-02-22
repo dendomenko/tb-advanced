@@ -3,13 +3,20 @@ h1.text-center= @question.title
   .row.text-center.align-items-center
     .col
       p.text-left= @question.body
+      ul
+        - @question.attachments.each do |a|
+          li= link_to a.file.identifier, a.file.url
   .row
     .answers
       = render 'answers', question: @question
   .row
-    = form_for [@question, @question.answers.new], class: 'form-group', remote: true do |f|
+    = form_for [@question, @answer], class: 'form-group', remote: true do |f|
       .form-group
         = f.label :body
         .answer-errors
         = f.text_area :body, class: 'form-control'
+        p
+          = f.fields_for :attachments do |a|
+            = a.label :file
+            = a.file_field :file
       = f.submit 'Add Answer', class: 'btn btn-primary'
