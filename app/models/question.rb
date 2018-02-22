@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Question < ApplicationRecord
   include Author
 
@@ -7,5 +9,6 @@ class Question < ApplicationRecord
 
   validates :body, :title, presence: true
 
-  accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :attachments, reject_if: :all_blank,
+                                              allow_destroy: true
 end
