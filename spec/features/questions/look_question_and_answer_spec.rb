@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../feature_helper'
 
 feature 'Look question and answers', %q{
   In order to get question
@@ -14,7 +14,7 @@ feature 'Look question and answers', %q{
     visit question_path(question)
 
     expect(page).to have_content question.title
-    expect(page).to have_content answer.answer
+    expect(page).to have_content answer.body
     expect(current_path).to eq question_path(question)
   end
 end

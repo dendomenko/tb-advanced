@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../feature_helper'
 
 feature 'Answer the question', %q{
   In order to answer for question
@@ -6,14 +6,14 @@ feature 'Answer the question', %q{
   I want to be able to create answer
 } do
 
-  given(:user) {create(:user)}
-  given(:question) {create(:question)}
+  given(:user) { create(:user) }
+  given(:question) { create(:question) }
 
   scenario 'Authenticated user creates answer', js: true do
     sign_in user
 
     visit question_path(question)
-    fill_in 'Answer', with: 'Test answer'
+    fill_in 'Body', with: 'Test answer'
     click_on 'Add Answer'
 
     within '.answers' do
@@ -24,10 +24,19 @@ feature 'Answer the question', %q{
 
   scenario 'Not authenticated user tries creates answer' do
     visit question_path(question)
-    fill_in 'Answer', with: 'Test answer'
+    fill_in 'Body', with: 'Test answer'
     click_on 'Add Answer'
 
     expect(page).to have_content 'You need to sign in or sign up'
     expect(current_path).to eq new_user_session_path
+  end
+
+  scenario 'User try create invalid answer', js: true do
+    sign_in user
+    visit question_path(question)
+
+    click_on 'Add Answer'
+
+    expect(page).to have_content 'Body can\'t be blank'
   end
 end

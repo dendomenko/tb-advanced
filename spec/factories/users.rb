@@ -1,5 +1,5 @@
 FactoryBot.define do
-  sequence :email do |n|
+  sequence :email do
     Faker::Internet.unique.email
   end
   factory :user do

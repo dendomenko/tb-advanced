@@ -1,8 +1,8 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_question
-  before_action :set_answer, only: %i[show destroy]
-  before_action :author?, only: :destroy
+  before_action :set_answer, only: %i[show destroy update best]
+  before_action :author?, only: %i[destroy update]
 
   def show; end
 
@@ -18,8 +18,16 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer.destroy
-    redirect_to question_path(@question),
-                notice: 'Your answer was successfully deleted.'
+    # redirect_to question_path(@question),
+    #             notice: 'Your answer was successfully deleted.'
+  end
+
+  def update
+    @answer.update(answer_params)
+  end
+
+  def best
+    @answer.make_best
   end
 
   private
@@ -31,7 +39,7 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:answer)
+    params.require(:answer).permit(:body)
   end
 
   def set_question

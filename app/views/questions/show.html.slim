@@ -4,12 +4,12 @@ h1.text-center= @question.title
     .col
       p.text-left= @question.body
   .row
-    Answers
     .answers
-      = render @question.answers
+      = render 'answers', question: @question
   .row
     = form_for [@question, @question.answers.new], class: 'form-group', remote: true do |f|
       .form-group
-        = f.label :answer
-        = f.text_area :answer, class: 'form-control'
+        = f.label :body
+        .answer-errors
+        = f.text_area :body, class: 'form-control'
       = f.submit 'Add Answer', class: 'btn btn-primary'

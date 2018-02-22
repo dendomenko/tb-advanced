@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../feature_helper'
 
 feature 'Delete answer', %q{
   In order to delete my own answer
@@ -8,16 +8,17 @@ feature 'Delete answer', %q{
 
   given(:user) { create(:user) }
   given(:question) { create(:question) }
-  given(:answer) { create(:answer, question: question, user: user) }
+  given!(:answer) { create(:answer, question: question, user: user) }
 
-  scenario 'Authenticated user delete answer' do
+  scenario 'Authenticated user delete answer', js: true do
     sign_in user
-    answer
     visit question_path(question)
-    click_on 'Delete'
+    within '.answers' do
+      click_on 'Delete'
 
-    expect(page).to have_content 'Your answer was successfully deleted.'
-    expect(current_path).to eq question_path(question)
+      expect(page).to_not have_content answer.body
+      expect(current_path).to eq question_path(question)
+    end
   end
 
   scenario 'Not authenticated user tries delete question' do

@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :load_question, only: %i[show destroy]
-  before_action :author?, only: :destroy
+  before_action :load_question, only: %i[show destroy update]
+  before_action :author?, only: %i[destroy update]
   def index
     @questions = Question.all
   end
@@ -24,6 +24,10 @@ class QuestionsController < ApplicationController
   def destroy
     @question.destroy
     redirect_to questions_path, notice: 'Your question was successfully deleted.'
+  end
+
+  def update
+    @question.update(question_params)
   end
 
   private
