@@ -6,10 +6,13 @@ class QuestionsController < ApplicationController
     @questions = Question.all
   end
 
-  def show; end
+  def show
+    @answer = @question.answers.build
+  end
 
   def new
-    @question = current_user.questions.new
+    @question = current_user.questions.build
+    @question.attachments.build
   end
 
   def create
@@ -33,9 +36,8 @@ class QuestionsController < ApplicationController
   private
 
   def author?
-    unless @question.author? current_user
-      redirect_to questions_path, notice: 'You are not author of this question!'
-    end
+    return nil if @question.author? current_user
+    redirect_to questions_path, notice: 'You are not author of this question!'
   end
 
   def load_question
@@ -43,6 +45,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, attachments_attributes: [:file, :_destroy])
   end
 end

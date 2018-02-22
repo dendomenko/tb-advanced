@@ -33,13 +33,12 @@ class AnswersController < ApplicationController
   private
 
   def author?
-    unless @answer.author? current_user
-      redirect_to question_path(@question), notice: 'You are not author of this answer!'
-    end
+    return nil if @answer.author? current_user
+    redirect_to question_path(@question), notice: 'You are not author of this answer!'
   end
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, attachments_attributes: [:file])
   end
 
   def set_question

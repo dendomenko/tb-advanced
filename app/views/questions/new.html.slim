@@ -9,4 +9,10 @@ h1.text-center New Question
         .form-group
           = f.label :body
           = f.text_area :body, class: 'form-control'
+        p Attachments:
+        p
+          = f.fields_for :attachments do |attachment|
+            = render 'common/attachments-form', f: attachment
+          .links
+            = link_to_add_association 'add file', f, :attachments, partial: 'common/attachments-form'
         = f.submit 'Create', class: 'btn btn-outline-success'

@@ -1,11 +1,14 @@
 class Answer < ApplicationRecord
   include Author
 
+  has_many :attachments, as: :attachable, dependent: :destroy
   belongs_to :question
   belongs_to :user
 
   validates :body, presence: true
   validates_uniqueness_of :best, if: :best, scope: :question_id
+
+  accepts_nested_attributes_for :attachments
 
   scope :best_answer, -> { where(best: true).limit(1) }
   scope :answers_without_best, -> { where(best: false) }
