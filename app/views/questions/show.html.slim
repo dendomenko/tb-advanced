@@ -10,13 +10,4 @@ h1.text-center= @question.title
     .answers
       = render 'answers', question: @question
   .row
-    = form_for [@question, @answer], class: 'form-group', remote: true do |f|
-      .form-group
-        = f.label :body
-        .answer-errors
-        = f.text_area :body, class: 'form-control'
-        p
-          = f.fields_for :attachments do |a|
-            = a.label :file
-            = a.file_field :file
-      = f.submit 'Add Answer', class: 'btn btn-primary'
+    = render 'answers/form', {question: @question, answer: @answer}
