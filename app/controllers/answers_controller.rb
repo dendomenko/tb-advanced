@@ -33,9 +33,8 @@ class AnswersController < ApplicationController
   private
 
   def author?
-    unless @answer.author? current_user
-      redirect_to question_path(@question), notice: 'You are not author of this answer!'
-    end
+    return nil if @answer.author? current_user
+    redirect_to question_path(@question), notice: 'You are not author of this answer!'
   end
 
   def answer_params
