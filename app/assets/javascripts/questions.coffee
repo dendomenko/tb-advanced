@@ -14,3 +14,15 @@ $(document).on 'turbolinks:load', ->
   $('form.quesion-voting').bind 'ajax:success', (e) ->
     xhr = e.detail[2]
     $('.question-rating').html(xhr.responseText)
+    $('.unvote-question').show()
+  .bind 'ajax:error', (e, xhr, status, error) ->
+    xhr = e.detail[2]
+    errors = $.parseJSON(xhr.responseText)
+    $.each errors, (index, value) ->
+      $('.question-errors').html(value)
+
+$(document).on 'turbolinks:load', ->
+  $('.unvote-question').bind 'ajax:success', (e) ->
+    xhr = e.detail[2]
+    $('.question-rating').html(xhr.responseText)
+    $('.unvote-question').hide()

@@ -32,9 +32,20 @@ class AnswersController < ApplicationController
   end
 
   def vote
-    @answer.add_vote(current_user.id, params[:rate])
+    @vote = @answer.add_vote(current_user.id, params[:rate])
     respond_to do |format|
-      format.json { render json: { id: @answer.id, rating: @answer.rating } }
+      if @vote.save
+        format.json { render json: @answer.rating }
+      else
+        format.json { render json: @vote.errors.messages.values, status: 422 }
+      end
+    end
+  end
+
+  def unvote
+    @question.remove_vote(current_user.id)
+    respond_to do |format|
+      format.json { render json: @question.rating }
     end
   end
 

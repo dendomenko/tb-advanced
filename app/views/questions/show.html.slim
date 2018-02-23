@@ -10,6 +10,7 @@ h1.text-center= @question.title
             - if a.attachable.author? current_user
               = link_to 'Remove file', attachment_path(a), method: :delete, class: 'btn btn-outline-danger btn-sm'
       .voting
+        .question-errors
         = form_tag vote_question_path(@question), method: :post, remote: true, data: { type: :json }, class: 'quesion-voting'
           = hidden_field_tag :rate, 1
           = submit_tag 'vote up', class: 'btn btn-outline-success btn-sm'
@@ -17,6 +18,7 @@ h1.text-center= @question.title
         = form_tag vote_question_path(@question), method: :post, remote: true, data: {type: :json}, class: 'quesion-voting'
           = hidden_field_tag :rate, -1
           = submit_tag 'vote down', class: 'btn btn-outline-danger btn-sm'
+        = link_to 'Unvote', unvote_question_path(@question), method: :delete, remote: true, data: {type: :json}, class: 'unvote-question', style: display_voted(@question)
   .row
     .answers
       | Answers:

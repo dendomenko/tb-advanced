@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :load_question, only: %i[show destroy update vote]
+  before_action :load_question, only: %i[show destroy update vote unvote]
   before_action :author?, only: %i[destroy update]
 
   def index
@@ -35,7 +35,18 @@ class QuestionsController < ApplicationController
   end
 
   def vote
-    @question.add_vote(current_user.id, params[:rate])
+    @vote = @question.add_vote(current_user.id, params[:rate])
+    respond_to do |format|
+      if @vote.save
+        format.json { render json: @question.rating }
+      else
+        format.json { render json: @vote.errors.messages.values, status: 422 }
+      end
+    end
+  end
+
+  def unvote
+    @question.remove_vote(current_user.id)
     respond_to do |format|
       format.json { render json: @question.rating }
     end
