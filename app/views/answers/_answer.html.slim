@@ -1,6 +1,14 @@
 .container.text-left id=("answer_#{answer.id}")
   p.answer
     =answer.body
+  .voting
+    = form_tag vote_question_answer_path(@question, answer), method: :post, remote: true, data: { type: :json }, class: 'answer-voting'
+      = hidden_field_tag :rate, 1
+      = submit_tag 'vote up'
+    p id=("rating_#{answer.id}") = @question.rating
+    = form_tag vote_question_answer_path(@question, answer), method: :post, remote: true, data: { type: :json }, class: 'answer-voting'
+      = hidden_field_tag :rate, -1
+      = submit_tag 'vote down'
   ul.answer-attachments
     -answer.attachments.each do |a|
       li

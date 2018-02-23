@@ -1,10 +1,11 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_question
-  before_action :set_answer, only: %i[show destroy update best]
+  before_action :set_answer, except: %i[new create]
   before_action :author?, only: %i[destroy update]
 
-  def show; end
+  def show;
+  end
 
   def new
     @answer = @question.answers.new
@@ -28,6 +29,13 @@ class AnswersController < ApplicationController
 
   def best
     @answer.make_best
+  end
+
+  def vote
+    @answer.add_vote(current_user.id, params[:rate])
+    respond_to do |format|
+      format.json { render json: { id: @answer.id, rating: @answer.rating } }
+    end
   end
 
   private

@@ -17,21 +17,15 @@ feature 'Rate answer', %q{
 
   scenario 'User vote up answer', js: true do
     within "#answer_#{answer.id}" do
-      expect(page).to have_link 'vote up'
       click_on 'vote up'
-      within '#rating' do
-        expect(page).to have_content '1'
-      end
+      expect(page).to have_content '1'
     end
   end
 
   scenario 'User vote down answer', js: true do
     within "#answer_#{answer.id}" do
-      expect(page).to have_link 'vote down'
       click_on 'vote down'
-      within '#rating' do
-        expect(page).to have_content '-1'
-      end
+      expect(page).to have_content '-1'
     end
   end
 end

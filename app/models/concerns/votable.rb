@@ -1,13 +1,20 @@
 module Votable
   extend ActiveSupport::Concern
 
-  def add_vote(data_id, user_id, rate)
-    vote = votes.find_by(likeble_type: self.class.to_s, likeble_id: data_id, user_id: user_id)
-    vote.destroy if vote
-    votes.create!(user_id: user_id, rate: rate)
-  end
-
   included do
     has_many :votes, as: :votable, dependent: :destroy
   end
+
+  def add_vote(user_id, rate)
+    return if self.user_id == user_id
+    vote = votes.find_by(user_id: user_id)
+    votes.create(user_id: user_id, rate: rate) && return unless vote
+    vote.update(user_id: user_id, rate: rate) && return if vote.rate != rate.to_i
+    vote.destroy
+  end
+
+  def rating
+    votes.sum(:rate)
+  end
+
 end

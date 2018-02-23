@@ -9,3 +9,8 @@ $(document).on 'turbolinks:load', ->
     question_id = $(this).data('questionId')
     console.log(question_id)
     $('form#edit-question-' + question_id).show()
+
+$(document).on 'turbolinks:load', ->
+  $('form.quesion-voting').bind 'ajax:success', (e) ->
+    xhr = e.detail[2]
+    $('.question-rating').html(xhr.responseText)

@@ -158,4 +158,36 @@ RSpec.describe AnswersController, type: :controller do
       expect(response).to render_template :best
     end
   end
+
+  describe 'POST #vote' do
+
+    let(:question) { create(:question) }
+    let(:answer) { create(:answer, question: question) }
+    context 'Authenticated user' do
+      sign_in_user
+      let(:my_answer) { create(:answer, question: question, user: @user) }
+
+      it 'adds positive vote to question' do
+        expect { post :vote, params: { question_id: question.id, id: answer, rate: 1 }, format: :json }
+            .to change(answer, :rating).by(1)
+      end
+
+      it 'adds negative vote to question' do
+        expect { post :vote, params: { question_id: question.id, id: answer, rate: -1 }, format: :json }
+            .to change(answer, :rating).by(-1)
+      end
+
+      it 'adds positive vote to his own question' do
+        expect { post :vote, params: { question_id: question.id, id: my_answer, rate: 1 }, format: :json }
+            .to change(answer, :rating).by(0)
+      end
+    end
+
+    context 'Non-authenticated user' do
+      it 'tries to add vote' do
+        expect { post :vote, params: { question_id: question.id, id: answer, rate: 1 }, format: :json }
+            .to change(answer, :rating).by(0)
+      end
+    end
+  end
 end

@@ -7,5 +7,9 @@ $(document).on 'turbolinks:load', ->
     e.preventDefault()
     $(this).hide
     answer_id = $(this).data('answerId')
-    console.log(answer_id)
     $('form#edit-answer-' + answer_id).show()
+
+$(document).on 'turbolinks:load', ->
+  $('form.answer-voting').bind 'ajax:success', (e) ->
+    response = JSON.parse(e.detail[2].response)
+    $('#rating_'+response.id).html(response.rating)
