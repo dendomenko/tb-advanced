@@ -12,11 +12,11 @@ h1.text-center= @question.title
       .voting
         = form_tag vote_question_path(@question), method: :post, remote: true, data: { type: :json }, class: 'quesion-voting'
           = hidden_field_tag :rate, 1
-          = submit_tag 'vote up'
+          = submit_tag 'vote up', class: 'btn btn-outline-success btn-sm'
         p.question-rating= @question.rating
         = form_tag vote_question_path(@question), method: :post, remote: true, data: {type: :json}, class: 'quesion-voting'
           = hidden_field_tag :rate, -1
-          = submit_tag 'vote down'
+          = submit_tag 'vote down', class: 'btn btn-outline-danger btn-sm'
   .row
     .answers
       | Answers:
