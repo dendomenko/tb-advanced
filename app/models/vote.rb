@@ -10,7 +10,7 @@ class Vote < ApplicationRecord
 
   def not_author
     if votable.user == user
-      errors.add(:author, "can't vote!")
+      errors.add(:author, "Author can't vote!")
     end
   end
 end
