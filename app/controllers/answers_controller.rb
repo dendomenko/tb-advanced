@@ -4,8 +4,9 @@ class AnswersController < ApplicationController
   before_action :set_answer, except: %i[new create]
   before_action :author?, only: %i[destroy update]
 
-  def show;
-  end
+  include Voted
+
+  def show; end
 
   def new
     @answer = @question.answers.new
@@ -29,24 +30,6 @@ class AnswersController < ApplicationController
 
   def best
     @answer.make_best
-  end
-
-  def vote
-    @vote = @answer.add_vote(current_user.id, params[:rate])
-    respond_to do |format|
-      if @vote.save
-        format.json { render json: @answer.rating }
-      else
-        format.json { render json: @vote.errors.messages.values, status: 422 }
-      end
-    end
-  end
-
-  def unvote
-    @question.remove_vote(current_user.id)
-    respond_to do |format|
-      format.json { render json: @question.rating }
-    end
   end
 
   private

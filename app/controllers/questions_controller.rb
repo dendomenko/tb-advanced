@@ -3,6 +3,8 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: %i[show destroy update vote unvote]
   before_action :author?, only: %i[destroy update]
 
+  include Voted
+
   def index
     @questions = Question.all
   end
@@ -32,24 +34,6 @@ class QuestionsController < ApplicationController
 
   def update
     @question.update(question_params)
-  end
-
-  def vote
-    @vote = @question.add_vote(current_user.id, params[:rate])
-    respond_to do |format|
-      if @vote.save
-        format.json { render json: @question.rating }
-      else
-        format.json { render json: @vote.errors.messages.values, status: 422 }
-      end
-    end
-  end
-
-  def unvote
-    @question.remove_vote(current_user.id)
-    respond_to do |format|
-      format.json { render json: @question.rating }
-    end
   end
 
   private

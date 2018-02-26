@@ -12,12 +12,14 @@ $(document).on 'turbolinks:load', ->
 
 $(document).on 'turbolinks:load', ->
   $('form.quesion-voting').bind 'ajax:success', (e) ->
-    xhr = e.detail[2]
-    $('.question-rating').html(xhr.responseText)
+    response = JSON.parse(e.detail[2].response)
+    $('.question-rating').html(response.rating)
     $('.unvote-question').show()
-  .bind 'ajax:error', (e, xhr, status, error) ->
-    xhr = e.detail[2]
-    errors = $.parseJSON(xhr.responseText)
+  .bind 'ajax:error', (e) ->
+    response = JSON.parse(e.detail[2].response)
+    if (e.detail[2].status == 401)
+      return $('.question-errors').html(response.error)
+    errors = response.errors
     $.each errors, (index, value) ->
       $('.question-errors').html(value)
 

@@ -22,6 +22,7 @@ h1.text-center= @question.title
   .row
     .answers
       | Answers:
+      .answer-errors
       = render 'answers', question: @question
   .row
     = render 'answers/form', {question: @question, answer: @answer}

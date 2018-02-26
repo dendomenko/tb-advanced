@@ -160,4 +160,16 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE #unvote' do
+    sign_in_user
+    let(:another_user) { create(:user) }
+    let(:question) { create(:question, user: another_user) }
+    let!(:vote) { create(:vote, votable: question, user: @user, rate: 1) }
+    let(:delete_request) { delete :unvote, params: { id: question, format: :json } }
+
+    it 'remove current_user`s vote' do
+      expect { delete_request }.to change(question.votes, :count).by(-1)
+    end
+  end
 end
