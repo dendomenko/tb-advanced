@@ -1,18 +1,29 @@
-.container.text-left id=("answer_#{answer.id}")
+.container.text-left.border id=("answer_#{answer.id}")
   p.answer
     =answer.body
+  .voting
+    div id=("answer_#{answer.id}-errors")
+    = form_tag vote_question_answer_path(@question, answer), method: :post, remote: true, data: { type: :json }, class: 'answer-voting'
+      = hidden_field_tag :rate, 1
+      = submit_tag 'vote up', class: 'btn btn-outline-success btn-sm'
+    p id=("rating_#{answer.id}") = answer.rating
+    = form_tag vote_question_answer_path(@question, answer), method: :post, remote: true, data: { type: :json }, class: 'answer-voting'
+      = hidden_field_tag :rate, -1
+      = submit_tag 'vote down', class: 'btn btn-outline-danger btn-sm'
+    = link_to 'Unvote', unvote_question_answer_path(@question, answer), method: :delete, remote: true, data: {type: :json, id: answer.id}, class: "unvote-answer", style: display_voted(answer)
   ul.answer-attachments
     -answer.attachments.each do |a|
       li
         = link_to a.file.identifier, a.file.url
+        |
         - if a.attachable.author? current_user
           = link_to 'Remove file', attachment_path(a), method: :delete, class: 'btn btn-outline-danger btn-sm'
     -if answer.best?
       span.badge-best.badge.badge-success This is the best answer
   - if answer.question.author? current_user
-    = link_to 'Best Answer', best_question_answer_path(answer.question, answer), method: :patch, remote: true, class: 'best-answer-link', data: {answer_id: answer.id}
+    = link_to 'Best Answer', best_question_answer_path(answer.question, answer), method: :patch, remote: true, class: 'btn btn-outline-success btn-sm best-answer-link', data: {answer_id: answer.id}
   - if user_signed_in? && answer.author?(current_user)
-    = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+    = link_to 'Edit', '', class: 'edit-answer-link btn btn-outline-primary btn-sm', data: { answer_id: answer.id }
     = link_to('Delete', question_answer_path(@question, answer),
             method: :delete, remote: true, class: 'btn btn-outline-danger btn-sm delete-answer-link')
     p

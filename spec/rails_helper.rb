@@ -47,7 +47,7 @@ RSpec.configure do |config|
   #
   #     RSpec.describe UsersController, :type => :controller do
   #       # ...
-  #     end
+  #     END
   #
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs

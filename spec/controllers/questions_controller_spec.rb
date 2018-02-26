@@ -56,7 +56,7 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with valid attributes' do
       it 'saves the new question in the database' do
         expect { post :create, params: { question: attributes_for(:question) } }
-          .to change(Question, :count).by(1)
+            .to change(Question, :count).by(1)
       end
 
       it 'redirects to show view' do
@@ -87,12 +87,12 @@ RSpec.describe QuestionsController, type: :controller do
 
     it 'deletes user question' do
       expect { delete :destroy, params: { id: user_question } }
-        .to change(Question, :count).by(-1)
+          .to change(Question, :count).by(-1)
     end
 
     it 'fail delete another\'s user' do
       expect { delete :destroy, params: { id: question } }
-        .to change(Question, :count).by(0)
+          .to change(Question, :count).by(0)
     end
 
     it 'redirect to index view' do
@@ -109,7 +109,7 @@ RSpec.describe QuestionsController, type: :controller do
     it 'assings the requested question to @question' do
       patch :update, params: { id: question,
                                question: attributes_for(:question) },
-                     format: :js
+            format: :js
       expect(assigns(:question)).to eq question
     end
 
@@ -125,8 +125,51 @@ RSpec.describe QuestionsController, type: :controller do
     it 'render update template' do
       patch :update, params: { id: question,
                                question: attributes_for(:question) },
-                     format: :js
+            format: :js
       expect(response).to render_template :update
+    end
+  end
+
+  describe 'POST #vote' do
+
+    let(:question) { create(:question) }
+    context 'Authenticated user' do
+      sign_in_user
+      let(:my_question) { create(:question, user: @user) }
+
+      it 'adds positive vote to question' do
+        expect { post :vote, params: { id: question, rate: 1 }, format: :json }
+            .to change(question, :rating).by(1)
+      end
+
+      it 'adds negative vote to question' do
+        expect { post :vote, params: { id: question, rate: -1 }, format: :json }
+            .to change(question, :rating).by(-1)
+      end
+
+      it 'adds positive vote to his own question' do
+        expect { post :vote, params: { id: my_question, rate: 1 }, format: :json }
+            .to change(question, :rating).by(0)
+      end
+    end
+
+    context 'Non-authenticated user' do
+      it 'tries to add vote' do
+        expect { post :vote, params: { id: question, rate: 1 }, format: :json }
+            .to change(question, :rating).by(0)
+      end
+    end
+  end
+
+  describe 'DELETE #unvote' do
+    sign_in_user
+    let(:another_user) { create(:user) }
+    let(:question) { create(:question, user: another_user) }
+    let!(:vote) { create(:vote, votable: question, user: @user, rate: 1) }
+    let(:delete_request) { delete :unvote, params: { id: question, format: :json } }
+
+    it 'remove current_user`s vote' do
+      expect { delete_request }.to change(question.votes, :count).by(-1)
     end
   end
 end
