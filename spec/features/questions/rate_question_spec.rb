@@ -10,7 +10,6 @@ feature 'Rate question', %q{
   given(:question) { create(:question) }
 
   describe 'Authenticated user' do
-
     context 'add/remove new vote' do
 
       background do
@@ -20,7 +19,6 @@ feature 'Rate question', %q{
 
       scenario 'User vote up question', js: true do
         within '.voting' do
-          # expect(page).to have_content 'vote up'
           click_on 'vote up'
           expect(page).to have_content '1'
         end
@@ -28,7 +26,6 @@ feature 'Rate question', %q{
 
       scenario 'User vote down question', js: true do
         within '.voting' do
-          # expect(page).to have_content 'vote down'
           click_on 'vote down'
           expect(page).to have_content '-1'
         end

@@ -1,9 +1,5 @@
 module ApplicationHelper
   def display_voted(content)
-    if content.voted? current_user
-      ''
-    else
-      'display: none'
-    end
+    'display: none' unless content.voted? current_user
   end
 end

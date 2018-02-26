@@ -11,7 +11,6 @@ feature 'Rate answer', %q{
   given!(:answer) { create(:answer, question: question) }
 
   describe 'Authenticated user' do
-
     context 'add/remove new vote' do
 
       background do
