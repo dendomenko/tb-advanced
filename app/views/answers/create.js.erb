@@ -4,5 +4,6 @@
   <% end %>
 <% else %>
   $('.answers').append('<%= j render @answer %>');
+  answerEvents();
   $('#answer_answer').val('');
 <% end %>

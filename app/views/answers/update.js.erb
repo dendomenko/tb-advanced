@@ -4,4 +4,5 @@
   <% end %>
 <% else %>
   $('#answer_<%= @answer.id %>').replaceWith('<%= j render @answer %>');
+  answerEvents();
 <% end %>
