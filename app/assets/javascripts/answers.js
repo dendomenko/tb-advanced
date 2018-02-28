@@ -9,7 +9,7 @@ function voteAnswerEvent() {
         response = JSON.parse(e.detail[2].response);
         console.log(response);
         if (e.detail[2].status === 401) {
-            $('.answer-errors').html(response.error);
+            $('.answers-errors').html(response.error);
         }
         $.each(response.errors, function (index, value) {
             $('#answer_' + response.id + '-errors').html(value);
@@ -47,7 +47,6 @@ function answerChannel() {
     if (($('.answers').length)) {
         var question_id;
         question_id = $('.question').data('questionId');
-        console.log('comm', question_id);
         App.answers = App.cable.subscriptions.create({
             channel: "AnswersChannel",
             question_id: question_id
@@ -55,7 +54,6 @@ function answerChannel() {
             received: function (data) {
                 var current_user;
                 current_user = $('body').data('currentUser');
-                console.log(data);
                 if (current_user !== data.answer.user_id) {
                     $('.answers').append(renderAnswerHtml(data));
                     answerEvents();
@@ -63,15 +61,41 @@ function answerChannel() {
             }
         });
     } else if (App.answers) {
-        console.log('discomm');
         App.answers.unsubscribe();
         App.answers = null;
+    }
+}
+
+function commentsChannel() {
+    if (($('.answers').length)) {
+        var question_id;
+        question_id = $('.question').data('questionId');
+        console.log('comm', question_id);
+        App.comments = App.cable.subscriptions.create({
+            channel: "CommentsChannel",
+            question_id: question_id
+        }, {
+            received: function (data) {
+                switch (data.type) {
+                    case 'Question':
+                        $('.question-comments').append(data.html);
+                        break;
+                    case 'Answer':
+                        $('.answer-comments-'+data.id).append(data.html);
+                        break;
+                }
+            }
+        });
+    } else if (App.comments) {
+        App.comments.unsubscribe();
+        App.comments = null;
     }
 }
 
 $(document).on('turbolinks:load', function () {
     answerEvents();
     answerChannel();
+    commentsChannel();
 });
 
 

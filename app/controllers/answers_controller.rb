@@ -7,6 +7,7 @@ class AnswersController < ApplicationController
   after_action :publish_ansewr, only: :create
 
   include Voted
+  include Commented
 
   def show;
   end

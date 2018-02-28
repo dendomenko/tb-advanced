@@ -15,10 +15,15 @@ h1.text-center= @question.title
         p.question-rating= @question.rating
         = link_to 'vote down', downvote_question_path(@question), method: :post, remote: true, data: { type: :json }, class: 'quesion-voting btn btn-outline-danger btn-sm'
         = link_to 'Unvote', unvote_question_path(@question), method: :delete, remote: true, data: {type: :json}, class: 'unvote-question', style: display_voted(@question)
+  .question-comments
+    - @question.comments.each do |comment|
+      = render 'comments/comment', comment: comment
+  - if user_signed_in?
+    = render 'comments/form_question', question: @question
   .row
     .answers
       | Answers:
-      .answer-errors
+      .answers-errors
       = render 'answers', question: @question
   .row
     = render 'answers/form', {question: @question, answer: @answer}

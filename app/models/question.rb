@@ -6,6 +6,7 @@ class Question < ApplicationRecord
 
   has_many :answers, dependent: :destroy
   has_many :attachments, as: :attachable, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
   belongs_to :user
 
   validates :body, :title, presence: true
