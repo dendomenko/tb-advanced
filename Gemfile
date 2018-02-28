@@ -41,8 +41,6 @@ gem 'bootstrap', '~> 4.0.0'
 gem 'carrierwave'
 # Use for nested forms
 gem 'cocoon'
-# Use for action cable templates
-gem 'skim'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

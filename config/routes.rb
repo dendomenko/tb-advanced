@@ -3,11 +3,13 @@ Rails.application.routes.draw do
   root to: 'questions#index'
 
   resources :questions, except: %i[edit] do
-    post 'vote', on: :member
+    post 'upvote', on: :member
+    post 'downvote', on: :member
     delete 'unvote', on: :member
     resources :answers, except: %i[edit] do
       patch 'best', on: :member
-      post 'vote', on: :member
+      post 'upvote', on: :member
+      post 'downvote', on: :member
       delete 'unvote', on: :member
     end
   end

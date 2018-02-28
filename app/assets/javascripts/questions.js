@@ -20,6 +20,7 @@ function voteQuestionEvent() {
 
     function showVotingErrors(e) {
         var errors, response;
+        console.log(response);
         response = JSON.parse(e.detail[2].response);
         if (e.detail[2].status === 401) {
             $('.question-errors').html(response.error);
@@ -30,7 +31,7 @@ function voteQuestionEvent() {
         });
     }
 
-    $('form.quesion-voting').bind('ajax:success', showNewRating).bind('ajax:error', showVotingErrors);
+    $('.quesion-voting').bind('ajax:success', showNewRating).bind('ajax:error', showVotingErrors);
 }
 
 function unvoteQuesionEvent() {
@@ -50,8 +51,7 @@ function questionEvents() {
     unvoteQuesionEvent();
 }
 
-$(document).on('turbolinks:load', function () {
-    questionEvents();
+function questionChannel() {
     if (($('.questions').length) || ($('#new_question').length)) {
         App.questions = App.cable.subscriptions.create({
             channel: "QuestionsChannel"
@@ -64,4 +64,9 @@ $(document).on('turbolinks:load', function () {
         App.questions.unsubscribe();
         App.questions = null;
     }
+}
+
+$(document).on('turbolinks:load', function () {
+    questionEvents();
+    questionChannel()
 });

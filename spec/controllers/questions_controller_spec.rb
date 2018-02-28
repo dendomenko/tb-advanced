@@ -130,7 +130,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe 'POST #vote' do
+  describe 'POST #upvote #downvote' do
 
     let(:question) { create(:question) }
     context 'Authenticated user' do
@@ -138,24 +138,24 @@ RSpec.describe QuestionsController, type: :controller do
       let(:my_question) { create(:question, user: @user) }
 
       it 'adds positive vote to question' do
-        expect { post :vote, params: { id: question, rate: 1 }, format: :json }
+        expect { post :upvote, params: { id: question }, format: :json }
             .to change(question, :rating).by(1)
       end
 
       it 'adds negative vote to question' do
-        expect { post :vote, params: { id: question, rate: -1 }, format: :json }
+        expect { post :downvote, params: { id: question }, format: :json }
             .to change(question, :rating).by(-1)
       end
 
       it 'adds positive vote to his own question' do
-        expect { post :vote, params: { id: my_question, rate: 1 }, format: :json }
+        expect { post :upvote, params: { id: my_question}, format: :json }
             .to change(question, :rating).by(0)
       end
     end
 
     context 'Non-authenticated user' do
       it 'tries to add vote' do
-        expect { post :vote, params: { id: question, rate: 1 }, format: :json }
+        expect { post :upvote, params: { id: question, rate: 1 }, format: :json }
             .to change(question, :rating).by(0)
       end
     end

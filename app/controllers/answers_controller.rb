@@ -4,9 +4,12 @@ class AnswersController < ApplicationController
   before_action :set_answer, except: %i[new create]
   before_action :author?, only: %i[destroy update]
 
+  after_action :publish_ansewr, only: :create
+
   include Voted
 
-  def show; end
+  def show;
+  end
 
   def new
     @answer = @question.answers.new
@@ -33,6 +36,22 @@ class AnswersController < ApplicationController
   end
 
   private
+
+  def publish_ansewr
+    return if @answer.errors.any?
+    ActionCable.server.broadcast(
+      "question-#{@question.id}",
+      question_id: @question.id,
+      question_author_id: @question.user_id,
+      answer: {
+        id: @answer.id,
+        body: @answer.body,
+        rating: @answer.rating,
+        user_id: @answer.user_id,
+        attachments: @answer.attachments
+      }
+    )
+  end
 
   def author?
     return nil if @answer.author? current_user

@@ -159,7 +159,7 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
-  describe 'POST #vote' do
+  describe 'POST #upvote #downvote' do
 
     let(:question) { create(:question) }
     let(:answer) { create(:answer, question: question) }
@@ -168,24 +168,24 @@ RSpec.describe AnswersController, type: :controller do
       let(:my_answer) { create(:answer, question: question, user: @user) }
 
       it 'adds positive vote to question' do
-        expect { post :vote, params: { question_id: question.id, id: answer, rate: 1 }, format: :json }
+        expect { post :upvote, params: { question_id: question.id, id: answer }, format: :json }
             .to change(answer, :rating).by(1)
       end
 
       it 'adds negative vote to question' do
-        expect { post :vote, params: { question_id: question.id, id: answer, rate: -1 }, format: :json }
+        expect { post :downvote, params: { question_id: question.id, id: answer}, format: :json }
             .to change(answer, :rating).by(-1)
       end
 
       it 'adds positive vote to his own question' do
-        expect { post :vote, params: { question_id: question.id, id: my_answer, rate: 1 }, format: :json }
+        expect { post :upvote, params: { question_id: question.id, id: my_answer }, format: :json }
             .to change(answer, :rating).by(0)
       end
     end
 
     context 'Non-authenticated user' do
       it 'tries to add vote' do
-        expect { post :vote, params: { question_id: question.id, id: answer, rate: 1 }, format: :json }
+        expect { post :upvote, params: { question_id: question.id, id: answer }, format: :json }
             .to change(answer, :rating).by(0)
       end
     end
