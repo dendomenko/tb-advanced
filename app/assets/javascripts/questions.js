@@ -4,9 +4,10 @@ function editQuestionEvent() {
         var question_id;
         $(this).hide();
         question_id = $(this).data('questionId');
-        return $('form#edit-question-' + question_id).show();
+        $('form#edit-question-' + question_id).show();
     }
-    return $('.edit-question-link').click(showEditForm);
+
+    $('.edit-question-link').click(showEditForm);
 }
 
 function voteQuestionEvent() {
@@ -14,20 +15,22 @@ function voteQuestionEvent() {
         var response;
         response = JSON.parse(e.detail[2].response);
         $('.question-rating').html(response.rating);
-        return $('.unvote-question').show();
+        $('.unvote-question').show();
     }
+
     function showVotingErrors(e) {
         var errors, response;
         response = JSON.parse(e.detail[2].response);
         if (e.detail[2].status === 401) {
-            return $('.question-errors').html(response.error);
+            $('.question-errors').html(response.error);
         }
         errors = response.errors;
-        return $.each(errors, function (index, value) {
-            return $('.question-errors').html(value);
+        $.each(errors, function (index, value) {
+            $('.question-errors').html(value);
         });
     }
-    return $('form.quesion-voting').bind('ajax:success', showNewRating).bind('ajax:error', showVotingErrors);
+
+    $('form.quesion-voting').bind('ajax:success', showNewRating).bind('ajax:error', showVotingErrors);
 }
 
 function unvoteQuesionEvent() {
@@ -35,9 +38,10 @@ function unvoteQuesionEvent() {
         var xhr;
         xhr = e.detail[2];
         $('.question-rating').html(xhr.responseText);
-        return $('.unvote-question').hide();
+        $('.unvote-question').hide();
     }
-    return $('.unvote-question').bind('ajax:success', removeVote);
+
+    $('.unvote-question').bind('ajax:success', removeVote);
 }
 
 function questionEvents() {
@@ -48,7 +52,16 @@ function questionEvents() {
 
 $(document).on('turbolinks:load', function () {
     questionEvents();
-    if ($('.questions').length) {
-
+    if (($('.questions').length) || ($('#new_question').length)) {
+        App.questions = App.cable.subscriptions.create({
+            channel: "QuestionsChannel"
+        }, {
+            received: function (data) {
+                $('.questions').append(data);
+            }
+        });
+    } else if (App.questions) {
+        App.questions.unsubscribe();
+        App.questions = null;
     }
 });

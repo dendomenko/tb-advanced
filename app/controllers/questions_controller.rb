@@ -3,6 +3,8 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: %i[show destroy update vote unvote]
   before_action :author?, only: %i[destroy update]
 
+  after_action :publish_question, only: [:create]
+
   include Voted
 
   def index
@@ -37,6 +39,17 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def publish_question
+    return if @question.errors.any?
+    ActionCable.server.broadcast(
+        'questions',
+        ApplicationController.render(
+          partial: 'questions/question_cable',
+          locals: { question: @question }
+        )
+    )
+  end
 
   def author?
     return nil if @question.author? current_user
