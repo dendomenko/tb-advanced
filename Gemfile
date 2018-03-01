@@ -39,8 +39,6 @@ gem 'slim-rails'
 gem 'bootstrap', '~> 4.0.0'
 # Use for file uploading
 gem 'carrierwave'
-# Use for nested forms
-gem 'cocoon'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

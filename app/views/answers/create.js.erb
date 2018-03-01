@@ -1,9 +1,9 @@
-<% if @answer.errors.present? %>
-  <% @answer.errors.full_messages.each do |message| %>
+<% if @answer_form.answer.errors.present? %>
+  <% @answer_form.answer.errors.full_messages.each do |message| %>
     $('.answer-errors').html('<%= j message %>');
   <% end %>
 <% else %>
-  $('.answers').append('<%= j render @answer %>');
+  $('.answers').append('<%= j render @answer_form.answer %>');
   answerEvents();
   $('#answer_body').val('');
 <% end %>

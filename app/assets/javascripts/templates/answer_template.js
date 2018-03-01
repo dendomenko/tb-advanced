@@ -23,7 +23,7 @@ function votingHtml(data) {
     '        <a data-type="json" data-id="'+ data.answer.id +'" class="unvote-answer" style="display: none" data-remote="true" rel="nofollow" data-method="delete" href="/questions/'+ data.question_id +'/answers/'+ data.answer.id +'/unvote">\n' +
     '            Unvote\n' +
     '        </a>\n' +
-    '    </div>\n'
+    '</div>\n'
 }
 
 function bestAnswerHtml(data) {

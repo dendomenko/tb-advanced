@@ -9,8 +9,7 @@ class Question < ApplicationRecord
   has_many :comments, as: :commentable, dependent: :destroy
   belongs_to :user
 
-  validates :body, :title, presence: true
 
-  accepts_nested_attributes_for :attachments, reject_if: :all_blank,
-                                              allow_destroy: true
+  # accepts_nested_attributes_for :attachments, reject_if: :all_blank,
+  #                                             allow_destroy: true
 end

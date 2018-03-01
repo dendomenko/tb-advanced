@@ -4,7 +4,7 @@ class AnswersController < ApplicationController
   before_action :set_answer, except: %i[new create]
   before_action :author?, only: %i[destroy update]
 
-  after_action :publish_ansewr, only: :create
+  after_action :publish_answer, only: :create
 
   include Voted
   include Commented
@@ -13,13 +13,16 @@ class AnswersController < ApplicationController
   end
 
   def new
-    @answer = @question.answers.new
+    @answer_form = AnswerForm.new('current_user', @question)
+    # @answer = @question.answers.new
   end
 
   def create
-    @answer = @question.answers.new(answer_params)
-    @answer.user = current_user
-    @answer.save
+    @answer_form = AnswerForm.new(current_user, @question)
+    @answer_form.submit(params)
+    # @answer = @question.answers.new(answer_params)
+    # @answer.user = current_user
+    # @answer.save
   end
 
   def destroy
@@ -38,19 +41,17 @@ class AnswersController < ApplicationController
 
   private
 
-  def publish_ansewr
-    return if @answer.errors.any?
+  def publish_answer
+    return if @answer_form.answer.valid?
     ActionCable.server.broadcast(
       "question-#{@question.id}",
       question_id: @question.id,
       question_author_id: @question.user_id,
-      answer: {
-        id: @answer.id,
-        body: @answer.body,
-        rating: @answer.rating,
-        user_id: @answer.user_id,
-        attachments: @answer.attachments
-      }
+      answer_id: @answer_form.answer.id,
+      body: @answer_form.answer.body,
+      rating: @answer_form.answer.rating,
+      user_id: @answer_form.answer.user_id,
+      attachments: @answer_form.answer.attachments
     )
   end
 
@@ -60,7 +61,7 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, attachments_attributes: [:file])
+    params.require(:answer).permit(:body)
   end
 
   def set_question

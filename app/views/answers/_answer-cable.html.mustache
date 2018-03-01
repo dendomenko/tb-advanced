@@ -1,0 +1,41 @@
+<div class="container text-left border" id="answer_{{answer_id}}"><p class="answer">{{body}}</p>
+  <div class="voting">
+    <div id="answer_{{ answer_id}}-errors"></div>
+    <a data-type="json" class="answer-voting btn btn-outline-success btn-sm" data-remote="true" rel="nofollow"
+       data-method="post" href="/questions/{{question_id }}/answers/{{ answer_id }}/upvote">
+       vote up
+    </a>
+    <p id="rating_{{ answer_id }}">0</p>
+    <a data-type="json" class="answer-voting btn btn-outline-danger btn-sm"
+       data-remote="true" rel="nofollow" data-method="post"
+       href="/questions/{{question_id}}/answers/{{answer_id}}/downvote">
+       vote down
+    </a>
+    <a data-type="json" data-id="{{answer_id }}" class="unvote-answer" style="display: none" data-remote="true" rel="nofollow" data-method="delete" href="/questions/{{ question_id }}/answers/{{ answer_id }}/unvote">
+    Unvote
+    </a>
+  </div>
+    <ul class="answer-attachments">
+    {{#attachments}}
+        <li>
+            <a href="{{url}}">{{name}}</a>
+        </li>
+    {{/attachments}}
+    </ul>
+    {{#author}}
+    <a class="btn btn-outline-success btn-sm best-answer-link" data-answer-id="{{ answer_id }}" data-remote="true" rel="nofollow"
+       data-method="patch" href="/questions/{{ question_id }}/answers/{{ answer_id }}/best">
+       Best Answer
+    </a>
+    {{/author}}
+    {{#isLogged}}
+    <form class="new_comment" id="new_comment" action="/questions/{{ question_id }}/answers/{{answer_id}}/comment" accept-charset="UTF-8" data-remote="true" method="post">
+        <input name="utf8" value="✓" type="hidden">
+        <div class="form-group">
+            <label for="comment_text">Text</label>
+            <textarea class="form-control" name="comment[text]" id="comment_text"></textarea>
+        </div>
+        <input name="commit" value="Add Comment" class="btn btn-primary" data-disable-with="Add Comment" type="submit">
+    </form>
+    {{/isLogged}}
+</div>

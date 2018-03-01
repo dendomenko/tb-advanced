@@ -13,21 +13,29 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @answer = @question.answers.build
+    # @answer = @question.answers.build
+    @answer_form = AnswerForm.new('current_user', @question)
   end
 
   def new
-    @question = current_user.questions.build
-    @question.attachments.build
+    # @question = current_user.questions.build
+    # @question.attachments.build
+    @question_form = QuestionForm.new('current_user')
   end
 
   def create
-    @question = current_user.questions.new(question_params)
-    if @question.save
-      redirect_to @question, notice: 'Your question successfully created.'
+    @question_form = QuestionForm.new(current_user)
+    if @question_form.submit(params)
+      redirect_to @question_form.question, notice: 'Your question successfully created.'
     else
       render :new
     end
+    # @question = current_user.questions.new(question_params)
+    # if @question.save
+    #   redirect_to @question, notice: 'Your question successfully created.'
+    # else
+    #   render :new
+    # end
   end
 
   def destroy
@@ -39,15 +47,20 @@ class QuestionsController < ApplicationController
     @question.update(question_params)
   end
 
+  def upvote
+    @vote = @votable.add_vote(current_user.id, 1)
+    save_vote
+  end
+
   private
 
   def publish_question
-    return if @question.errors.any?
+    return if @question_form.question.valid?
     ActionCable.server.broadcast(
         'questions',
         ApplicationController.render(
           partial: 'questions/question_cable',
-          locals: { question: @question }
+          locals: { question: @question_form.question }
         )
     )
   end
