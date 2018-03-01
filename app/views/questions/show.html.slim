@@ -27,3 +27,5 @@ h1.text-center= @question.title
       = render 'answers', question: @question
   .row
     = render 'answers/form', {question: @question, answer: @answer}
+script type="text/html" id="answer_template"
+  = render 'answers/answer-cable'

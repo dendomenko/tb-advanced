@@ -54,9 +54,21 @@ function answerChannel() {
             received: function (data) {
                 var current_user;
                 current_user = $('body').data('currentUser');
-                if (current_user !== data.answer.user_id) {
-                    $('.answers').append(renderAnswerHtml(data));
+                if (current_user !== data.user_id) {
+                    console.log(data);
+                    // $('.answers').append(renderAnswerHtml(data));
+                    data.attachments = data.attachments.map(function(value) {
+                        return {url: value.file.url, name: value.file.url.substring(value.file.url.lastIndexOf('/')+1)};
+                    });
+                    data.author = false;
+                    data.isLogged = !!current_user
+                    console.log(data);
+                    if (current_user === data.question_author_id) {
+                        data.author = true
+                    }
+                    $('.answers').append(Mustache.to_html($('#answer_template').html(), data));
                     answerEvents();
+                    commentsChannel();
                 }
             }
         });
@@ -70,7 +82,6 @@ function commentsChannel() {
     if (($('.answers').length)) {
         var question_id;
         question_id = $('.question').data('questionId');
-        console.log('comm', question_id);
         App.comments = App.cable.subscriptions.create({
             channel: "CommentsChannel",
             question_id: question_id

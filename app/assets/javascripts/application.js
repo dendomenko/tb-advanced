@@ -16,4 +16,5 @@
 //= require popper
 //= require bootstrap-sprockets
 //= require cocoon
+//= require mustache
 //= require_tree .
