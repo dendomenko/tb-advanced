@@ -2,21 +2,17 @@ module Voted
   extend ActiveSupport::Concern
 
   included do
-    before_action :find_votable, only: [:vote, :unvote]
+    before_action :find_votable, only: %i[upvote downvote unvote]
   end
 
-  def vote
-    @vote = @votable.add_vote(current_user.id, params[:rate])
-    respond_to do |format|
-      if @vote.save
-        format.json { render json: {id: @votable.id, rating: @votable.rating } }
-      else
-        format.json do
-          render json: { id: @votable.id, errors: @vote.errors.messages.values },
-                 status: 422
-        end
-      end
-    end
+  def upvote
+    @vote = @votable.add_vote(current_user.id, 1)
+    save_vote
+  end
+
+  def downvote
+    @vote = @votable.add_vote(current_user.id, -1)
+    save_vote
   end
 
   def unvote
@@ -27,6 +23,19 @@ module Voted
   end
 
   private
+
+  def save_vote
+    respond_to do |format|
+      if @vote.save
+        format.json { render json: { id: @votable.id, rating: @votable.rating } }
+      else
+        format.json do
+          render json: { id: @votable.id, errors: @vote.errors.messages.values },
+                 status: 422
+        end
+      end
+    end
+  end
 
   def model_klass
     controller_name.classify.constantize

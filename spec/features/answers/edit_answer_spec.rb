@@ -39,7 +39,7 @@ feature 'Answer editing', "
           click_on 'Save'
           expect(page).to_not have_content answer.body
           expect(page).to have_content 'edited answer'
-          expect(page).to_not have_selector 'textarea'
+          expect(page).to_not have_css("form.edit_answer")
         end
       end
     end

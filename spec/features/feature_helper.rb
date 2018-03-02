@@ -1,7 +1,11 @@
 require 'rails_helper'
+require 'capybara/poltergeist'
+require "puma"
 
 RSpec.configure do |config|
-  Capybara.javascript_driver = :webkit
+  Capybara.javascript_driver = :poltergeist
+
+  Capybara.server = :puma
 
   config.include FeatureHelpers, type: :feature
 
@@ -29,3 +33,5 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 end
+
+Capybara.server = :puma

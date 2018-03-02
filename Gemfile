@@ -39,8 +39,6 @@ gem 'slim-rails'
 gem 'bootstrap', '~> 4.0.0'
 # Use for file uploading
 gem 'carrierwave'
-# Use for nested forms
-gem 'cocoon'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -51,7 +49,6 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
-  gem 'capybara-webkit'
   gem 'pry-rails'
 end
 
@@ -60,6 +57,7 @@ group :test do
   gem 'capybara'
   gem 'launchy'
   gem 'database_cleaner'
+  gem 'poltergeist'
 end
 
 group :development do

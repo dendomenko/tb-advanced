@@ -1,11 +1,8 @@
-= form_for [question, answer], class: 'form-group', remote: true do |f|
+= form_for @answer_form, url: question_answers_path(@answer_form.question), html: { multipart: true }, remote: true do |f|
   .form-group
     = f.label :body
     .answer-errors
     = f.text_area :body, class: 'form-control'
     p
-      = f.fields_for :attachments do |attachment|
-        = render 'common/attachments-form', f: attachment
-      .links
-        = link_to_add_association 'add file', f, :attachments, partial: 'common/attachments-form'
+      = render 'common/attachments-form', f: f
   = f.submit 'Add Answer', class: 'btn btn-primary'

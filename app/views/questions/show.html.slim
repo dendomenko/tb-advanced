@@ -1,5 +1,5 @@
 h1.text-center= @question.title
-.container
+.container.question data={'question-id': @question.id }
   .row.text-center.align-items-center
     .col.info
       p.text-left= @question.body
@@ -11,18 +11,22 @@ h1.text-center= @question.title
               = link_to 'Remove file', attachment_path(a), method: :delete, class: 'btn btn-outline-danger btn-sm'
       .voting
         .question-errors
-        = form_tag vote_question_path(@question), method: :post, remote: true, data: { type: :json }, class: 'quesion-voting'
-          = hidden_field_tag :rate, 1
-          = submit_tag 'vote up', class: 'btn btn-outline-success btn-sm'
+        = link_to 'vote up', upvote_question_path(@question), method: :post, remote: true, data: { type: :json }, class: 'quesion-voting btn btn-outline-success btn-sm'
         p.question-rating= @question.rating
-        = form_tag vote_question_path(@question), method: :post, remote: true, data: {type: :json}, class: 'quesion-voting'
-          = hidden_field_tag :rate, -1
-          = submit_tag 'vote down', class: 'btn btn-outline-danger btn-sm'
+        = link_to 'vote down', downvote_question_path(@question), method: :post, remote: true, data: { type: :json }, class: 'quesion-voting btn btn-outline-danger btn-sm'
         = link_to 'Unvote', unvote_question_path(@question), method: :delete, remote: true, data: {type: :json}, class: 'unvote-question', style: display_voted(@question)
+  .question-comments
+    - @question.comments.each do |comment|
+      = render 'comments/comment', comment: comment
+  - if user_signed_in?
+    .new-question-comment
+      = render 'comments/form_question', question: @question
   .row
     .answers
       | Answers:
-      .answer-errors
+      .answers-errors
       = render 'answers', question: @question
   .row
     = render 'answers/form', {question: @question, answer: @answer}
+script type="text/html" id="answer_template"
+  = render 'answers/answer-cable'

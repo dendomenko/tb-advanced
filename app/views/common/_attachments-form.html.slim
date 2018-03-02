@@ -1,4 +1,7 @@
 .nested-fields
-  = f.label :file
-  = f.file_field :file
-  = link_to_remove_association "remove file", f
+  .file-field
+  .file-controls
+    span
+      = link_to 'add file', '', class: 'add-file'
+    span
+      = link_to 'remove file', '', class: 'remove-file'

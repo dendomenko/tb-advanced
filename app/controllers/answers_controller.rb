@@ -4,24 +4,24 @@ class AnswersController < ApplicationController
   before_action :set_answer, except: %i[new create]
   before_action :author?, only: %i[destroy update]
 
+  after_action :publish_answer, only: :create
+
   include Voted
+  include Commented
 
   def show; end
 
   def new
-    @answer = @question.answers.new
+    @answer_form = AnswerForm.new(current_user, @question)
   end
 
   def create
-    @answer = @question.answers.new(answer_params)
-    @answer.user = current_user
-    @answer.save
+    @answer_form = AnswerForm.new(current_user, @question)
+    @answer_form.submit(params)
   end
 
   def destroy
     @answer.destroy
-    # redirect_to question_path(@question),
-    #             notice: 'Your answer was successfully deleted.'
   end
 
   def update
@@ -34,13 +34,25 @@ class AnswersController < ApplicationController
 
   private
 
+  def publish_answer
+    return unless @answer_form.valid?
+    ActionCable.server.broadcast(
+      "question-#{@question.id}",
+      @answer_form.answer.as_json(
+          only: [:id, :body, :question_id, :rating, :user_id],
+          methods: :question_author_id,
+          include: :attachments
+      )
+    )
+  end
+
   def author?
     return nil if @answer.author? current_user
     redirect_to question_path(@question), notice: 'You are not author of this answer!'
   end
 
   def answer_params
-    params.require(:answer).permit(:body, attachments_attributes: [:file])
+    params.require(:answer).permit(:body)
   end
 
   def set_question

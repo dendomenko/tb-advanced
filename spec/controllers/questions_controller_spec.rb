@@ -24,8 +24,8 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:question)).to eq(question)
     end
 
-    it 'builds new answer' do
-      expect(assigns(:question).answers.first).to be_a_new(Answer)
+    it 'builds new answer form' do
+      expect(assigns(:answer_form)).to be_a(AnswerForm)
     end
 
 
@@ -38,13 +38,10 @@ RSpec.describe QuestionsController, type: :controller do
     sign_in_user
     before { get :new }
 
-    it 'assigns a new Question to @question' do
-      expect(assigns(:question)).to be_a_new(Question)
+    it 'assigns a new QuestionForm to @question_form' do
+      expect(assigns(:question_form)).to be_a(QuestionForm)
     end
 
-    it 'builds new attachment for question' do
-      expect(assigns(:question).attachments.first).to be_a_new(Attachment)
-    end
 
     it 'renders new view' do
       expect(response).to render_template :new
@@ -55,25 +52,20 @@ RSpec.describe QuestionsController, type: :controller do
     sign_in_user
     context 'with valid attributes' do
       it 'saves the new question in the database' do
-        expect { post :create, params: { question: attributes_for(:question) } }
+        expect { post :create, params: { question_form: attributes_for(:question) } }
             .to change(Question, :count).by(1)
-      end
-
-      it 'redirects to show view' do
-        post :create, params: { question: attributes_for(:question) }
-        expect(response).to redirect_to question_path(assigns(:question))
       end
     end
 
     context 'with invalid attributes' do
       it 'does not save the question' do
         expect do
-          post :create, params: { question: attributes_for(:invalid_question) }
+          post :create, params: { question_form: attributes_for(:invalid_question) }
         end.to_not change(Question, :count)
       end
 
       it 're-renders new view' do
-        post :create, params: { question: attributes_for(:invalid_question) }
+        post :create, params: { question_form: attributes_for(:invalid_question) }
         expect(response).to render_template :new
       end
     end
@@ -130,7 +122,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe 'POST #vote' do
+  describe 'POST #upvote #downvote' do
 
     let(:question) { create(:question) }
     context 'Authenticated user' do
@@ -138,24 +130,24 @@ RSpec.describe QuestionsController, type: :controller do
       let(:my_question) { create(:question, user: @user) }
 
       it 'adds positive vote to question' do
-        expect { post :vote, params: { id: question, rate: 1 }, format: :json }
+        expect { post :upvote, params: { id: question }, format: :json }
             .to change(question, :rating).by(1)
       end
 
       it 'adds negative vote to question' do
-        expect { post :vote, params: { id: question, rate: -1 }, format: :json }
+        expect { post :downvote, params: { id: question }, format: :json }
             .to change(question, :rating).by(-1)
       end
 
       it 'adds positive vote to his own question' do
-        expect { post :vote, params: { id: my_question, rate: 1 }, format: :json }
+        expect { post :upvote, params: { id: my_question}, format: :json }
             .to change(question, :rating).by(0)
       end
     end
 
     context 'Non-authenticated user' do
       it 'tries to add vote' do
-        expect { post :vote, params: { id: question, rate: 1 }, format: :json }
+        expect { post :upvote, params: { id: question, rate: 1 }, format: :json }
             .to change(question, :rating).by(0)
       end
     end
@@ -170,6 +162,15 @@ RSpec.describe QuestionsController, type: :controller do
 
     it 'remove current_user`s vote' do
       expect { delete_request }.to change(question.votes, :count).by(-1)
+    end
+  end
+
+  describe 'POST #comment' do
+    sign_in_user
+    let(:question) { create(:question) }
+    it 'add current_user comment to question' do
+      expect { post :comment, params: { id: question, comment: attributes_for(:comment) } }
+        .to change(Comment, :count).by(1)
     end
   end
 end

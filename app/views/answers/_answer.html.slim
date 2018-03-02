@@ -3,13 +3,9 @@
     =answer.body
   .voting
     div id=("answer_#{answer.id}-errors")
-    = form_tag vote_question_answer_path(@question, answer), method: :post, remote: true, data: { type: :json }, class: 'answer-voting'
-      = hidden_field_tag :rate, 1
-      = submit_tag 'vote up', class: 'btn btn-outline-success btn-sm'
+    = link_to 'vote up', upvote_question_answer_path(@question, answer), method: :post, remote: true, data: { type: :json }, class: 'answer-voting btn btn-outline-success btn-sm'
     p id=("rating_#{answer.id}") = answer.rating
-    = form_tag vote_question_answer_path(@question, answer), method: :post, remote: true, data: { type: :json }, class: 'answer-voting'
-      = hidden_field_tag :rate, -1
-      = submit_tag 'vote down', class: 'btn btn-outline-danger btn-sm'
+    = link_to 'vote down', downvote_question_answer_path(@question, answer), method: :post, remote: true, data: { type: :json }, class: 'answer-voting btn btn-outline-danger btn-sm'
     = link_to 'Unvote', unvote_question_answer_path(@question, answer), method: :delete, remote: true, data: {type: :json, id: answer.id}, class: "unvote-answer", style: display_voted(answer)
   ul.answer-attachments
     -answer.attachments.each do |a|
@@ -31,3 +27,8 @@
         = f.label :body
         = f.text_area :body
         = f.submit 'Save'
+  div class=("answer-comments-#{answer.id}")
+    - answer.comments.each do |comment|
+      = render 'comments/comment', comment: comment
+  - if user_signed_in?
+    = render 'comments/form_answer', answer: answer

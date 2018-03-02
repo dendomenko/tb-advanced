@@ -2,15 +2,25 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'questions#index'
 
-  resources :questions, except: %i[edit] do
-    post 'vote', on: :member
-    delete 'unvote', on: :member
-    resources :answers, except: %i[edit] do
+  concern :votable do
+    member do
+      post :upvote
+      post :downvote
+      delete :unvote
+    end
+  end
+
+  concern :commentable do
+    post :comment, on: :member
+  end
+
+  resources :questions, except: %i[edit], concerns: [:votable, :commentable] do
+    resources :answers, except: %i[edit], concerns: [:votable, :commentable] do
       patch 'best', on: :member
-      post 'vote', on: :member
-      delete 'unvote', on: :member
     end
   end
 
   resources :attachments, only: :destroy
+
+  mount ActionCable.server => "/cable"
 end

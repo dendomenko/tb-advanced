@@ -21,7 +21,7 @@ RSpec.describe AnswersController, type: :controller do
     before { get :new, params: { question_id: question } }
 
     it 'assigns a new Answer of question to @answer' do
-      expect(assigns(:answer)).to be_a_new(Answer)
+      expect(assigns(:answer_form)).to be_a(AnswerForm)
     end
 
     it 'renders new view' do
@@ -35,7 +35,7 @@ RSpec.describe AnswersController, type: :controller do
       it 'saves the new answer of question in the database' do
         expect do
           post :create, params: { question_id: question,
-                                  answer:
+                                  answer_form:
                                   attributes_for(:answer,
                                                  question: question) },
                         format: :js
@@ -44,7 +44,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirects to show view' do
         post :create, params: { question_id: question,
-                                answer: attributes_for(:answer,
+                                answer_form: attributes_for(:answer,
                                                        question: question,
                                                        user: @user) },
                       format: :js
@@ -57,14 +57,14 @@ RSpec.describe AnswersController, type: :controller do
       it 'does not save the answer' do
         expect do
           post :create, params: { question_id: question,
-                                  answer: attributes_for(:invalid_answer) },
+                                  answer_form: attributes_for(:invalid_answer) },
                         format: :js
         end.to_not change(Answer, :count)
       end
 
       it 're-renders new view' do
         post :create, params: { question_id: question,
-                                answer: attributes_for(:invalid_answer) },
+                                answer_form: attributes_for(:invalid_answer) },
                       format: :js
         expect(response).to render_template :create
       end
@@ -159,7 +159,7 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
-  describe 'POST #vote' do
+  describe 'POST #upvote #downvote' do
 
     let(:question) { create(:question) }
     let(:answer) { create(:answer, question: question) }
@@ -168,24 +168,24 @@ RSpec.describe AnswersController, type: :controller do
       let(:my_answer) { create(:answer, question: question, user: @user) }
 
       it 'adds positive vote to question' do
-        expect { post :vote, params: { question_id: question.id, id: answer, rate: 1 }, format: :json }
+        expect { post :upvote, params: { question_id: question.id, id: answer }, format: :json }
             .to change(answer, :rating).by(1)
       end
 
       it 'adds negative vote to question' do
-        expect { post :vote, params: { question_id: question.id, id: answer, rate: -1 }, format: :json }
+        expect { post :downvote, params: { question_id: question.id, id: answer}, format: :json }
             .to change(answer, :rating).by(-1)
       end
 
       it 'adds positive vote to his own question' do
-        expect { post :vote, params: { question_id: question.id, id: my_answer, rate: 1 }, format: :json }
+        expect { post :upvote, params: { question_id: question.id, id: my_answer }, format: :json }
             .to change(answer, :rating).by(0)
       end
     end
 
     context 'Non-authenticated user' do
       it 'tries to add vote' do
-        expect { post :vote, params: { question_id: question.id, id: answer, rate: 1 }, format: :json }
+        expect { post :upvote, params: { question_id: question.id, id: answer }, format: :json }
             .to change(answer, :rating).by(0)
       end
     end
@@ -201,6 +201,16 @@ RSpec.describe AnswersController, type: :controller do
 
     it 'remove current_user`s vote' do
       expect { delete_request }.to change(answer.votes, :count).by(-1)
+    end
+  end
+
+  describe 'POST #comment' do
+    sign_in_user
+    let(:question) { create(:question) }
+    let(:answer) { create(:answer, question:question) }
+    it 'add current_user comment to answer' do
+      expect { post :comment, params: { id: answer, question_id: question, comment: attributes_for(:comment) } }
+          .to change(Comment, :count).by(1)
     end
   end
 end

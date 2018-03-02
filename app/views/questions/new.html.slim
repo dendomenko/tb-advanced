@@ -2,7 +2,7 @@ h1.text-center New Question
 .container
   .row.text-center.align-items-center
     .col
-      = form_for @question, class: 'form-group' do |f|
+      = form_for @question_form, url: questions_path, html: { multipart: true }, class: 'form-group' do |f|
         .form-group
           = f.label :title
           = f.text_field :title, class: 'form-control'
@@ -11,8 +11,5 @@ h1.text-center New Question
           = f.text_area :body, class: 'form-control'
         p Attachments:
         p
-          = f.fields_for :attachments do |attachment|
-            = render 'common/attachments-form', f: attachment
-          .links
-            = link_to_add_association 'add file', f, :attachments, partial: 'common/attachments-form'
+          = render 'common/attachments-form', f: f
         = f.submit 'Create', class: 'btn btn-outline-success'
