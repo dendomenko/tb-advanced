@@ -169,4 +169,13 @@ RSpec.describe QuestionsController, type: :controller do
       expect { delete_request }.to change(question.votes, :count).by(-1)
     end
   end
+
+  describe 'POST #comment' do
+    sign_in_user
+    let(:question) { create(:question) }
+    it 'add current_user comment to question' do
+      expect { post :comment, params: { id: question, comment: attributes_for(:comment) } }
+        .to change(Comment, :count).by(1)
+    end
+  end
 end

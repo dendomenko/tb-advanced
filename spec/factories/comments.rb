@@ -1,5 +1,6 @@
 FactoryBot.define do
-  factory :comments do
-    
+  factory :comment do
+    text 'Text comment'
+    user
   end
 end
