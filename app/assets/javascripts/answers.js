@@ -19,8 +19,8 @@ function voteAnswerEvent() {
 
 function answerEditEvent() {
     $('.edit-answer-link').click(function (e) {
-        var answer_id;
         e.preventDefault();
+        var answer_id;
         $(this).hide();
         answer_id = $(this).data('answerId');
         $('form#edit-answer-' + answer_id).show();

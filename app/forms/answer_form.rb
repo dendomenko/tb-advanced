@@ -11,7 +11,7 @@ class AnswerForm
 
   validates :body, presence: true
 
-  delegate :question_id, :body,:user_id, to: :answer
+  delegate :question_id, :body, :user_id, to: :answer
 
   def initialize(user, question)
     @user = user

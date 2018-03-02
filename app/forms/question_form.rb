@@ -9,7 +9,7 @@ class QuestionForm
 
   validates :body, :title, presence: true
 
-  delegate :title, :body,:user_id, to: :question
+  delegate :title, :body, :user_id, to: :question
 
   def initialize(user)
     @user = user

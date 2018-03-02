@@ -27,7 +27,7 @@ module Voted
   def save_vote
     respond_to do |format|
       if @vote.save
-        format.json { render json: {id: @votable.id, rating: @votable.rating } }
+        format.json { render json: { id: @votable.id, rating: @votable.rating } }
       else
         format.json do
           render json: { id: @votable.id, errors: @vote.errors.messages.values },

@@ -1,17 +1,17 @@
-<div class="container text-left border" id="answer_{{answer_id}}"><p class="answer">{{body}}</p>
+<div class="container text-left border" id="answer_{{id}}"><p class="answer">{{body}}</p>
   <div class="voting">
-    <div id="answer_{{ answer_id}}-errors"></div>
+    <div id="answer_{{ id}}-errors"></div>
     <a data-type="json" class="answer-voting btn btn-outline-success btn-sm" data-remote="true" rel="nofollow"
-       data-method="post" href="/questions/{{question_id }}/answers/{{ answer_id }}/upvote">
+       data-method="post" href="/questions/{{question_id }}/answers/{{ id }}/upvote">
        vote up
     </a>
-    <p id="rating_{{ answer_id }}">0</p>
+    <p id="rating_{{ id }}">0</p>
     <a data-type="json" class="answer-voting btn btn-outline-danger btn-sm"
        data-remote="true" rel="nofollow" data-method="post"
-       href="/questions/{{question_id}}/answers/{{answer_id}}/downvote">
+       href="/questions/{{question_id}}/answers/{{id}}/downvote">
        vote down
     </a>
-    <a data-type="json" data-id="{{answer_id }}" class="unvote-answer" style="display: none" data-remote="true" rel="nofollow" data-method="delete" href="/questions/{{ question_id }}/answers/{{ answer_id }}/unvote">
+    <a data-type="json" data-id="{{id }}" class="unvote-answer" style="display: none" data-remote="true" rel="nofollow" data-method="delete" href="/questions/{{ question_id }}/answers/{{ id }}/unvote">
     Unvote
     </a>
   </div>
@@ -23,13 +23,13 @@
     {{/attachments}}
     </ul>
     {{#author}}
-    <a class="btn btn-outline-success btn-sm best-answer-link" data-answer-id="{{ answer_id }}" data-remote="true" rel="nofollow"
-       data-method="patch" href="/questions/{{ question_id }}/answers/{{ answer_id }}/best">
+    <a class="btn btn-outline-success btn-sm best-answer-link" data-answer-id="{{ id }}" data-remote="true" rel="nofollow"
+       data-method="patch" href="/questions/{{ question_id }}/answers/{{ id }}/best">
        Best Answer
     </a>
     {{/author}}
     {{#isLogged}}
-    <form class="new_comment" id="new_comment" action="/questions/{{ question_id }}/answers/{{answer_id}}/comment" accept-charset="UTF-8" data-remote="true" method="post">
+    <form class="new_comment" id="new_comment" action="/questions/{{ question_id }}/answers/{{id}}/comment" accept-charset="UTF-8" data-remote="true" method="post">
         <input name="utf8" value="✓" type="hidden">
         <div class="form-group">
             <label for="comment_text">Text</label>
