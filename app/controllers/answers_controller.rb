@@ -43,13 +43,6 @@ class AnswersController < ApplicationController
           methods: :question_author_id,
           include: :attachments
       )
-      # question_id: @question.id,
-      # question_author_id: @question.user_id,
-      # answer_id: @answer_form.answer.id,
-      # body: @answer_form.answer.body,
-      # rating: @answer_form.answer.rating,
-      # user_id: @answer_form.answer.user_id,
-      # attachments: @answer_form.answer.attachments
     )
   end
 
