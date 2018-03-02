@@ -11,7 +11,4 @@ class Question < ApplicationRecord
 
   validates :body, :title, presence: true
 
-
-  # accepts_nested_attributes_for :attachments, reject_if: :all_blank,
-  #                                             allow_destroy: true
 end
