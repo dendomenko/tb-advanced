@@ -2,7 +2,7 @@ module Commented
   extend ActiveSupport::Concern
 
   included do
-    before_action :authenticate_user!, only: :comment
+    # before_action :authenticate_user!, only: :comment
     before_action :find_commentable, only: :comment
 
     after_action :publish_comment, only: :comment

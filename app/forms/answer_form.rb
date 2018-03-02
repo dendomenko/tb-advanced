@@ -14,7 +14,7 @@ class AnswerForm
   delegate :question_id, :body,:user_id, to: :answer
 
   def initialize(user, question)
-    @testuser = user
+    @user = user
     @question = question
   end
 
@@ -27,7 +27,7 @@ class AnswerForm
     params[:file]&.each do |file|
       answer.attachments.build(file: file)
     end
-    answer.user = @testuser
+    answer.user = @user
     if valid?
       answer.save!
       true

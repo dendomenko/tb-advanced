@@ -13,14 +13,11 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    # @answer = @question.answers.build
-    @answer_form = AnswerForm.new('current_user', @question)
+    @answer_form = AnswerForm.new(current_user, @question)
   end
 
   def new
-    # @question = current_user.questions.build
-    # @question.attachments.build
-    @question_form = QuestionForm.new('current_user')
+    @question_form = QuestionForm.new(current_user)
   end
 
   def create
@@ -30,12 +27,6 @@ class QuestionsController < ApplicationController
     else
       render :new
     end
-    # @question = current_user.questions.new(question_params)
-    # if @question.save
-    #   redirect_to @question, notice: 'Your question successfully created.'
-    # else
-    #   render :new
-    # end
   end
 
   def destroy
@@ -55,7 +46,7 @@ class QuestionsController < ApplicationController
   private
 
   def publish_question
-    return if @question_form.question.valid?
+    return unless @question_form.valid?
     ActionCable.server.broadcast(
         'questions',
         ApplicationController.render(

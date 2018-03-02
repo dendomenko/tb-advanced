@@ -12,7 +12,7 @@ class QuestionForm
   delegate :title, :body,:user_id, to: :question
 
   def initialize(user)
-    @testuser = user
+    @user = user
   end
 
   def question
@@ -24,8 +24,8 @@ class QuestionForm
     params[:file]&.each do |file|
       question.attachments.build(file: file)
     end
-    question.user = @testuser
-    if valid?
+    question.user = @user
+    if question.valid?
       question.save!
       true
     else

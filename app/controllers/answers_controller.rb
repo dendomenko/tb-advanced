@@ -13,22 +13,16 @@ class AnswersController < ApplicationController
   end
 
   def new
-    @answer_form = AnswerForm.new('current_user', @question)
-    # @answer = @question.answers.new
+    @answer_form = AnswerForm.new(current_user, @question)
   end
 
   def create
     @answer_form = AnswerForm.new(current_user, @question)
     @answer_form.submit(params)
-    # @answer = @question.answers.new(answer_params)
-    # @answer.user = current_user
-    # @answer.save
   end
 
   def destroy
     @answer.destroy
-    # redirect_to question_path(@question),
-    #             notice: 'Your answer was successfully deleted.'
   end
 
   def update
@@ -42,7 +36,7 @@ class AnswersController < ApplicationController
   private
 
   def publish_answer
-    return if @answer_form.answer.valid?
+    return unless @answer_form.valid?
     ActionCable.server.broadcast(
       "question-#{@question.id}",
       question_id: @question.id,
