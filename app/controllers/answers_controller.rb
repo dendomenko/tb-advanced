@@ -9,23 +9,19 @@ class AnswersController < ApplicationController
   include Voted
   include Commented
 
-  def show; end
-
-  def new
-    @answer_form = AnswerForm.new(current_user, @question)
-  end
+  respond_to :js
 
   def create
     @answer_form = AnswerForm.new(current_user, @question)
-    @answer_form.submit(params)
+    respond_with(@answer_form.submit(params))
   end
 
   def destroy
-    @answer.destroy
+    respond_with(@answer.destroy)
   end
 
   def update
-    @answer.update(answer_params)
+    respond_with(@answer.update(answer_params))
   end
 
   def best
@@ -39,9 +35,9 @@ class AnswersController < ApplicationController
     ActionCable.server.broadcast(
       "question-#{@question.id}",
       @answer_form.answer.as_json(
-          only: [:id, :body, :question_id, :rating, :user_id],
-          methods: :question_author_id,
-          include: :attachments
+        only: [:id, :body, :question_id, :rating, :user_id],
+        methods: :question_author_id,
+        include: :attachments
       )
     )
   end

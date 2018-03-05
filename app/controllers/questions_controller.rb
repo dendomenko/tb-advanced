@@ -8,16 +8,19 @@ class QuestionsController < ApplicationController
   include Voted
   include Commented
 
+  respond_to :html, except: [:update]
+  respond_to :js, only: [:update]
+
   def index
-    @questions = Question.all
+    respond_with(@questions = Question.all)
   end
 
   def show
-    @answer_form = AnswerForm.new(current_user, @question)
+    respond_with(@answer_form = AnswerForm.new(current_user, @question))
   end
 
   def new
-    @question_form = QuestionForm.new(current_user)
+    respond_with(@question_form = QuestionForm.new(current_user))
   end
 
   def create
@@ -30,12 +33,12 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
-    redirect_to questions_path, notice: 'Your question was successfully deleted.'
+    respond_with(@question.destroy)
+    # redirect_to questions_path, notice: 'Your question was successfully deleted.'
   end
 
   def update
-    @question.update(question_params)
+    respond_with(@question.update(question_params))
   end
 
   def upvote
