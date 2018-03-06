@@ -42,6 +42,9 @@ gem 'carrierwave'
 # Use for thin controllers
 gem 'responders', '~> 2.0'
 
+gem 'omniauth'
+gem 'omniauth-facebook'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
