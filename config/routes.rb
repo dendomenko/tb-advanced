@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   end
 
   resources :questions, except: %i[edit], concerns: [:votable, :commentable] do
-    resources :answers, except: %i[edit], concerns: [:votable, :commentable] do
+    resources :answers, except: %i[edit new show], concerns: [:votable, :commentable] do
       patch 'best', on: :member
     end
   end

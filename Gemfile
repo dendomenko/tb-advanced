@@ -39,6 +39,9 @@ gem 'slim-rails'
 gem 'bootstrap', '~> 4.0.0'
 # Use for file uploading
 gem 'carrierwave'
+# Use for thin controllers
+gem 'responders', '~> 2.0'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
