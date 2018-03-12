@@ -52,6 +52,7 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+  OmniAuth.config.test_mode = true
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!

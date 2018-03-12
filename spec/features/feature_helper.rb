@@ -1,6 +1,8 @@
 require 'rails_helper'
 require 'capybara/poltergeist'
 require "puma"
+require 'capybara/email/rspec'
+
 
 RSpec.configure do |config|
   Capybara.javascript_driver = :poltergeist
