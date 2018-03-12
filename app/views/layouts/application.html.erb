@@ -9,33 +9,33 @@
 </head>
 
 <body data-current-user="<%= current_user&.id %>">
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="<%= root_path %>">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-  <a class="navbar-brand" href="<%= root_path %>">Home</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="<%= questions_path %>">Questions</a>
-      </li>
-    </ul>
-    <% if user_signed_in? %>
-      <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'btn btn-outline-danger' %>
-    <% else %>
-      <%= link_to 'Sign in', new_user_session_path, class: 'btn btn-outline-success' %>
-      <%= link_to 'Sign up', new_user_registration_path, class: 'btn btn-outline-primary' %>
-    <% end %>
-  </div>
-</nav>
-
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="<%= questions_path %>">Questions</a>
+        </li>
+      </ul>
+      <% if user_signed_in? %>
+        <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'btn btn-outline-danger' %>
+      <% else %>
+        <%= link_to 'Sign in', new_user_session_path, class: 'btn btn-outline-success' %>
+        <%= link_to 'Sign up', new_user_registration_path, class: 'btn btn-outline-primary' %>
+      <% end %>
+    </div>
+  </nav>
+</header>
 <main role="main">
-
+  <div class="container mt-5">
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
-
+  </div>
   <%= yield %>
 
 </main>
