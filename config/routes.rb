@@ -14,6 +14,9 @@ Rails.application.routes.draw do
     post :comment, on: :member
   end
 
+  get 'confirm/:link', to: 'users#confirm', as: 'confirm'
+  post 'send_confirmation', to: 'users#send_confirmation'
+
   resources :questions, except: %i[edit], concerns: [:votable, :commentable] do
     resources :answers, except: %i[edit new show], concerns: [:votable, :commentable] do
       patch 'best', on: :member
