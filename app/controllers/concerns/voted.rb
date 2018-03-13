@@ -6,13 +6,15 @@ module Voted
   end
 
   def upvote
-    authorize @votable, :vote?
+    authorize @votable, :present?
+    authorize @votable, :not_author?
     @vote = @votable.add_vote(current_user.id, 1)
     save_vote
   end
 
   def downvote
-    authorize @votable, :vote?
+    authorize @votable, :present?
+    authorize @votable, :not_author?
     @vote = @votable.add_vote(current_user.id, -1)
     save_vote
   end

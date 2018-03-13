@@ -28,7 +28,7 @@ feature 'Answer the question', %q{
     click_on 'Add Answer'
 
     expect(page).to have_content 'You need to sign in or sign up'
-    expect(current_path).to eq new_user_session_path
+    expect(current_path).to eq question_path(question)
   end
 
   scenario 'User try create invalid answer', js: true do

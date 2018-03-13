@@ -15,10 +15,6 @@ class QuestionPolicy < ApplicationPolicy
     true if user.present? && user == question.user
   end
 
-  def vote?
-    true if user.present? && user != question.user
-  end
-
   private
 
   def question

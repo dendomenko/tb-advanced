@@ -60,7 +60,7 @@ feature 'Rate question', %q{
         within '.voting' do
           click_on 'vote up'
         end
-        expect(page).to have_content 'Author can\'t vote!'
+        expect(page).to have_content 'Author can not vote for his own question'
       end
     end
   end

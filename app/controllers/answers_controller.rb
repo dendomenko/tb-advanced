@@ -1,8 +1,6 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: %i[index show]
   before_action :set_question
   before_action :set_answer, except: %i[new create]
-  before_action :author?, only: %i[destroy update]
 
   after_action :publish_answer, only: :create
 
@@ -13,10 +11,12 @@ class AnswersController < ApplicationController
 
   def create
     @answer_form = AnswerForm.new(current_user, @question)
+    authorize(@answer_form.answer)
     respond_with(@answer_form.submit(params))
   end
 
   def destroy
+    authorize @answer
     respond_with(@answer.destroy)
   end
 
@@ -40,11 +40,6 @@ class AnswersController < ApplicationController
         include: :attachments
       )
     )
-  end
-
-  def author?
-    return nil if @answer.author? current_user
-    redirect_to question_path(@question), notice: 'You are not author of this answer!'
   end
 
   def answer_params

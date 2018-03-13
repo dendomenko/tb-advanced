@@ -1,7 +1,5 @@
 class QuestionsController < ApplicationController
-  # before_action :authenticate_user!, except: %i[index show]
   before_action :load_question, only: %i[show destroy update vote unvote]
-  # before_action :author?, only: %i[destroy update]
 
   after_action :publish_question, only: [:create]
 
@@ -37,8 +35,8 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
+    authorize @question
     respond_with(@question.destroy)
-    # redirect_to questions_path, notice: 'Your question was successfully deleted.'
   end
 
   def update
@@ -57,11 +55,6 @@ class QuestionsController < ApplicationController
         )
     )
   end
-
-  # def author?
-  #   return nil if @question.author? current_user
-  #   redirect_to questions_path, notice: 'You are not author of this question!'
-  # end
 
   def load_question
     @question = Question.find(params[:id])

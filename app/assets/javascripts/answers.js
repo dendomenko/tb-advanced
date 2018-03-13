@@ -1,10 +1,11 @@
 function voteAnswerEvent() {
-    $('.answer-voting').bind('ajax:success', function (e) {
+    function showNewAnswerRating(e) {
         var response;
         response = JSON.parse(e.detail[2].response);
         $('#rating_' + response.id).html(response.rating);
         $('[data-id=' + response.id + ']').show();
-    }).bind('ajax:error', function (e) {
+    }
+    function showAnswerVotingErrors(e) {
         var response;
         response = JSON.parse(e.detail[2].response);
         console.log(response);
@@ -14,7 +15,8 @@ function voteAnswerEvent() {
         $.each(response.errors, function (index, value) {
             $('#answer_' + response.id + '-errors').html(value);
         });
-    });
+    }
+    $('.answer-voting').bind('ajax:success', showNewAnswerRating).bind('ajax:error', showAnswerVotingErrors);
 }
 
 function answerEditEvent() {

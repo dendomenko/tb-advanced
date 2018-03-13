@@ -57,11 +57,11 @@ feature 'Rate answer', %q{
         visit question_path(question)
       end
 
-      scenario 'vote up answer', js: true do
+      scenario 'vote up answer' do
         within "#answer_#{my_answer.id}" do
           click_on 'vote up'
         end
-        expect(page).to have_content 'Author can\'t vote!'
+        expect(page).to have_content 'Author can not vote for his own answer'
       end
     end
   end
