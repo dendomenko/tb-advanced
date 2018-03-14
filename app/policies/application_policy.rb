@@ -34,10 +34,6 @@ class ApplicationPolicy
     false
   end
 
-  def present?
-    true if user.present?
-  end
-
   def not_author?
     true if user != record.user
   end

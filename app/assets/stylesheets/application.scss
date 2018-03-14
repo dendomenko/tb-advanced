@@ -1,3 +1,9 @@
 @import "bootstrap";
 @import "answers";
 @import "questions";
+@import "votes";
+@import "comment";
+
+body {
+  padding-top: 65px;
+}

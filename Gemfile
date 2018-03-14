@@ -47,7 +47,8 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 # Use pundit for authorization
 gem 'pundit'
-
+# Use octions_helper for icons
+gem 'octicons_helper'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

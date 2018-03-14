@@ -15,7 +15,6 @@ RSpec.describe AnswerPolicy do
     it { should_not permit(:update)  }
     it { should_not permit(:edit)    }
     it { should_not permit(:destroy) }
-    it { should_not permit(:present) }
   end
 
   context "for an user" do
@@ -27,7 +26,6 @@ RSpec.describe AnswerPolicy do
     it { should_not permit(:update)  }
     it { should_not permit(:edit)    }
     it { should_not permit(:destroy) }
-    it { should permit(:present) }
     it { should permit(:not_author) }
   end
 
@@ -42,7 +40,6 @@ RSpec.describe AnswerPolicy do
     it { should permit(:edit)    }
     it { should permit(:destroy) }
     it { should_not permit(:not_author) }
-    it { should permit(:present) }
 
   end
 end
