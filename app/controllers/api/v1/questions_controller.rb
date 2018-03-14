@@ -12,8 +12,6 @@ module Api
       end
 
       def create
-        # binding.pry
-        # skip_authorization
         @question = current_resource_owner.questions.create(question_params)
         respond_with @question
       end
