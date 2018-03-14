@@ -49,6 +49,9 @@ gem 'omniauth-twitter'
 gem 'pundit'
 # Use octions_helper for icons
 gem 'octicons_helper'
+# Use doorkeeper for OAuth
+gem 'doorkeeper', '4.2.6'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -69,6 +72,7 @@ group :test do
   gem 'database_cleaner'
   gem 'poltergeist'
   gem 'capybara-email'
+  gem 'json_spec'
 end
 
 group :development do
