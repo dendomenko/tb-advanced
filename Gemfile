@@ -51,7 +51,10 @@ gem 'pundit'
 gem 'octicons_helper'
 # Use doorkeeper for OAuth
 gem 'doorkeeper', '4.2.6'
-
+# Use active_model_serializers for model serialization
+gem 'active_model_serializers'
+gem 'oj'
+gem 'oj_mimic_json'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
