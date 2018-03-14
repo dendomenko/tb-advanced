@@ -25,7 +25,6 @@ feature 'Create comment for question', %q{
         within '.new-question-comment' do
           fill_in 'Text', with: 'Test comment'
           click_on 'Add Comment'
-
         end
         within '.question-comments' do
           expect(page).to have_content 'Test comment'

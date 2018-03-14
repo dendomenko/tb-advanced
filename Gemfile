@@ -41,11 +41,14 @@ gem 'bootstrap', '~> 4.0.0'
 gem 'carrierwave'
 # Use for thin controllers
 gem 'responders', '~> 2.0'
-
+# Use omniauth for social networks authentications
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
-
+# Use pundit for authorization
+gem 'pundit'
+# Use octions_helper for icons
+gem 'octicons_helper'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

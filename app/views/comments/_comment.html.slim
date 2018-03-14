@@ -1,5 +1,4 @@
-.row.comment
-  .container
-    p= comment.user.email
-  .container
-    p= comment.text
+.comment
+  | Comment by
+  span.text-right.font-italic<= "#{comment.user.email} #{datetime(comment.created_at)}"
+  p= comment.text

@@ -2,15 +2,19 @@ module Voted
   extend ActiveSupport::Concern
 
   included do
+    before_action :authenticate_user!, only: %i[upvote downvote unvote]
     before_action :find_votable, only: %i[upvote downvote unvote]
   end
 
   def upvote
+    authorize @votable, :not_author?
     @vote = @votable.add_vote(current_user.id, 1)
     save_vote
   end
 
   def downvote
+    authorize @votable, :present?
+    authorize @votable, :not_author?
     @vote = @votable.add_vote(current_user.id, -1)
     save_vote
   end

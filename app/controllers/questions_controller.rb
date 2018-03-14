@@ -1,7 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :authenticate_user!, except: %i[index show]
   before_action :load_question, only: %i[show destroy update vote unvote]
-  before_action :author?, only: %i[destroy update]
 
   after_action :publish_question, only: [:create]
 
@@ -12,7 +10,8 @@ class QuestionsController < ApplicationController
   respond_to :js, only: [:update]
 
   def index
-    respond_with(@questions = Question.all)
+    @questions = Question.all
+    respond_with(authorize(@questions))
   end
 
   def show
@@ -20,11 +19,14 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    respond_with(@question_form = QuestionForm.new(current_user))
+    @question_form = QuestionForm.new(current_user)
+    authorize(@question_form.question)
+    respond_with(@question_form)
   end
 
   def create
     @question_form = QuestionForm.new(current_user)
+    authorize(@question_form.question)
     if @question_form.submit(params)
       redirect_to @question_form.question, notice: 'Your question successfully created.'
     else
@@ -33,17 +35,12 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
+    authorize @question
     respond_with(@question.destroy)
-    # redirect_to questions_path, notice: 'Your question was successfully deleted.'
   end
 
   def update
     respond_with(@question.update(question_params))
-  end
-
-  def upvote
-    @vote = @votable.add_vote(current_user.id, 1)
-    save_vote
   end
 
   private
@@ -57,11 +54,6 @@ class QuestionsController < ApplicationController
           locals: { question: @question_form.question }
         )
     )
-  end
-
-  def author?
-    return nil if @question.author? current_user
-    redirect_to questions_path, notice: 'You are not author of this question!'
   end
 
   def load_question

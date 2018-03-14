@@ -19,14 +19,14 @@ feature 'Rate question', %q{
 
       scenario 'User vote up question', js: true do
         within '.voting' do
-          click_on 'vote up'
+          find('.octicon-thumbsup').click
           expect(page).to have_content '1'
         end
       end
 
       scenario 'User vote down question', js: true do
         within '.voting' do
-          click_on 'vote down'
+          find('.octicon-thumbsdown').click
           expect(page).to have_content '-1'
         end
       end
@@ -42,9 +42,9 @@ feature 'Rate question', %q{
 
       scenario 'User vote up question', js: true do
         within '.voting' do
-          click_on 'vote up'
-          expect(page).to have_content 'You already have been voted!'
+          find('.octicon-thumbsup').click
         end
+        expect(page).to have_content 'You already have been voted!'
       end
     end
 
@@ -58,9 +58,9 @@ feature 'Rate question', %q{
 
       scenario 'User vote up question', js: true do
         within '.voting' do
-          click_on 'vote up'
+          find('.octicon-thumbsup').click
         end
-        expect(page).to have_content 'Author can\'t vote!'
+        expect(page).to have_content 'Author can not vote for his own question'
       end
     end
   end
@@ -73,7 +73,7 @@ feature 'Rate question', %q{
 
     scenario 'tries vote up question', js: true do
       within '.voting' do
-        click_on 'vote up'
+        find('.octicon-thumbsup').click
       end
       expect(page).to have_content 'You need to sign in or sign up before continuing.'
     end

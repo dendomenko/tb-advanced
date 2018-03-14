@@ -20,14 +20,14 @@ feature 'Rate answer', %q{
 
       scenario 'vote up answer', js: true do
         within "#answer_#{answer.id}" do
-          click_on 'vote up'
+          find('.octicon-thumbsup').click
           expect(page).to have_content '1'
         end
       end
 
       scenario 'vote down answer', js: true do
         within "#answer_#{answer.id}" do
-          click_on 'vote down'
+          find('.octicon-thumbsdown').click
           expect(page).to have_content '-1'
         end
       end
@@ -43,7 +43,7 @@ feature 'Rate answer', %q{
 
       scenario 'tries vote up answer', js: true do
         within "#answer_#{answer.id}" do
-          click_on 'vote up'
+          find('.octicon-thumbsup').click
         end
         expect(page).to have_content 'You already have been voted!'
       end
@@ -57,11 +57,11 @@ feature 'Rate answer', %q{
         visit question_path(question)
       end
 
-      scenario 'vote up answer', js: true do
+      scenario 'vote up answer', js:true do
         within "#answer_#{my_answer.id}" do
-          click_on 'vote up'
+          find('.octicon-thumbsup').click
         end
-        expect(page).to have_content 'Author can\'t vote!'
+        expect(page).to have_content 'Author can not vote for his own answer'
       end
     end
   end
@@ -72,9 +72,9 @@ feature 'Rate answer', %q{
       visit question_path(question)
     end
 
-    scenario 'tries vote up answer', js: true do
+    scenario 'tries vote up answer', js:true do
       within "#answer_#{answer.id}" do
-        click_on 'vote up'
+        find('.octicon-thumbsup').click
       end
       expect(page).to have_content 'You need to sign in or sign up before continuing.'
     end
