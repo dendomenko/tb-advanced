@@ -8,12 +8,12 @@ module Api
       end
 
       def show
-        @answer = @question.answers.where(id: params[:id]).first
+        @answer = @question.answers.find_by_id(params[:id])
         respond_with @answer
       end
 
       def create
-        @answer = @question.answers.create( answer_params.merge(user_id: current_resource_owner.id) )
+        @answer = @question.answers.create(answer_params.merge(user_id: current_resource_owner.id))
         respond_with(@question, @answer)
       end
 
