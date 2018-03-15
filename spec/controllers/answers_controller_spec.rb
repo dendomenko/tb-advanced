@@ -133,7 +133,7 @@ RSpec.describe AnswersController, type: :controller do
       expect(response).to render_template :best
     end
   end
-  
+
   it_behaves_like 'Votable' do
     let!(:question) { create(:question) }
     let(:options) { {question_id: question.id} }
@@ -145,13 +145,9 @@ RSpec.describe AnswersController, type: :controller do
     let(:delete_request) { delete :unvote, params: {question_id: question.id, id: voted_votable, format: :json } }
   end
 
-  describe 'POST #comment' do
-    sign_in_user
+  it_behaves_like 'Commentable' do
     let(:question) { create(:question) }
-    let(:answer) { create(:answer, question:question) }
-    it 'add current_user comment to answer' do
-      expect { post :comment, params: { id: answer, question_id: question, comment: attributes_for(:comment) } }
-          .to change(Comment, :count).by(1)
-    end
+    let(:options) { { question_id: question.id } }
+    let(:commentable) { create(:answer, question: question) }
   end
 end

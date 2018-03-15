@@ -123,7 +123,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   it_behaves_like 'Votable' do
-    let(:options) { Hash.new }
+    let(:options) { {} }
 
     let(:votable) { create(:question) }
     let(:my_votable) { create(:question, user: @user) }
@@ -133,12 +133,8 @@ RSpec.describe QuestionsController, type: :controller do
     let(:delete_request) { delete :unvote, params: { id: voted_votable, format: :json } }
   end
 
-  describe 'POST #comment' do
-    sign_in_user
-    let(:question) { create(:question) }
-    it 'add current_user comment to question' do
-      expect { post :comment, params: { id: question, comment: attributes_for(:comment) } }
-        .to change(Comment, :count).by(1)
-    end
+  it_behaves_like 'Commentable' do
+    let(:options) { {} }
+    let(:commentable) { create(:question) }
   end
 end
