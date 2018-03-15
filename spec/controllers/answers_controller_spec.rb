@@ -134,58 +134,20 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
-  describe 'POST #upvote #downvote' do
+  it_behaves_like 'Votable' do
+    let!(:question) { create(:question) }
+    let(:options) { {question_id: question.id} }
+    let(:votable) { create(:answer, question: question) }
+    let(:my_votable) { create(:answer, question: question, user: @user) }
 
-    let(:question) { create(:question) }
-    let(:answer) { create(:answer, question: question) }
-    context 'Authenticated user' do
-      sign_in_user
-      let(:my_answer) { create(:answer, question: question, user: @user) }
-
-      it 'adds positive vote to question' do
-        expect { post :upvote, params: { question_id: question.id, id: answer }, format: :json }
-            .to change(answer, :rating).by(1)
-      end
-
-      it 'adds negative vote to question' do
-        expect { post :downvote, params: { question_id: question.id, id: answer}, format: :json }
-            .to change(answer, :rating).by(-1)
-      end
-
-      it 'adds positive vote to his own question' do
-        expect { post :upvote, params: { question_id: question.id, id: my_answer }, format: :json }
-            .to change(answer, :rating).by(0)
-      end
-    end
-
-    context 'Non-authenticated user' do
-      it 'tries to add vote' do
-        expect { post :upvote, params: { question_id: question.id, id: answer }, format: :json }
-            .to change(answer, :rating).by(0)
-      end
-    end
-  end
-
-  describe 'DELETE #unvote' do
-    sign_in_user
     let(:another_user) { create(:user) }
-    let(:question) {create(:question)}
-    let(:answer) { create(:answer, question:question, user: another_user) }
-    let!(:vote) { create(:vote, votable: answer, user: @user, rate: 1) }
-    let(:delete_request) { delete :unvote, params: { id: answer, question_id: question, format: :json } }
-
-    it 'remove current_user`s vote' do
-      expect { delete_request }.to change(answer.votes, :count).by(-1)
-    end
+    let(:voted_votable) { create(:answer, question: question, user: another_user) }
+    let(:delete_request) { delete :unvote, params: {question_id: question.id, id: voted_votable, format: :json } }
   end
 
-  describe 'POST #comment' do
-    sign_in_user
+  it_behaves_like 'Commentable' do
     let(:question) { create(:question) }
-    let(:answer) { create(:answer, question:question) }
-    it 'add current_user comment to answer' do
-      expect { post :comment, params: { id: answer, question_id: question, comment: attributes_for(:comment) } }
-          .to change(Comment, :count).by(1)
-    end
+    let(:options) { { question_id: question.id } }
+    let(:commentable) { create(:answer, question: question) }
   end
 end

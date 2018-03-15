@@ -35,7 +35,7 @@ class AnswersController < ApplicationController
     ActionCable.server.broadcast(
       "question-#{@question.id}",
       @answer_form.answer.as_json(
-        only: [:id, :body, :question_id, :rating, :user_id],
+        only: %i[id body question_id rating user_id],
         methods: :question_author_id,
         include: :attachments
       )

@@ -48,11 +48,11 @@ class QuestionsController < ApplicationController
   def publish_question
     return unless @question_form.valid?
     ActionCable.server.broadcast(
-        'questions',
-        ApplicationController.render(
-          partial: 'questions/question_cable',
-          locals: { question: @question_form.question }
-        )
+      'questions',
+      ApplicationController.render(
+        partial: 'questions/question_cable',
+        locals: { question: @question_form.question }
+      )
     )
   end
 
@@ -61,6 +61,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, attachments_attributes: [:file, :_destroy])
+    params.require(:question).permit(:title, :body, attachments_attributes: %i[file _destroy])
   end
 end
