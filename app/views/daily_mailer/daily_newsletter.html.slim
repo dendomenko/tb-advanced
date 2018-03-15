@@ -1,0 +1,7 @@
+div Hello, =@email
+p Here new question on our website for today:
+div
+  ul
+  - @questions.each do |question|
+    li= link_to question.title.truncate(30), question
+div Sincerely, Administration
