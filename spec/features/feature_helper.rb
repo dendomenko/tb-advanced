@@ -3,7 +3,6 @@ require 'capybara/poltergeist'
 require "puma"
 require 'capybara/email/rspec'
 
-
 RSpec.configure do |config|
   Capybara.javascript_driver = :poltergeist
   options = {js_errors: false}
@@ -39,5 +38,3 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 end
-
-Capybara.server = :puma
