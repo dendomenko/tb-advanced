@@ -2,16 +2,9 @@ require 'rails_helper'
 
 RSpec.describe 'Profile API' do
   describe 'GET /me' do
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        get '/api/v1/profiles/me', params: { format: :json }
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token is invalid' do
-        get '/api/v1/profiles/me', params: { format: :json, access_token: '1234' }
-        expect(response.status).to eq 401
-      end
+    it_behaves_like 'API Authenticable' do
+      let(:empty_request) { get '/api/v1/profiles/me', params: { format: :json } }
+      let(:wrong_token_request) { get '/api/v1/profiles/me', params: { format: :json, access_token: '1234' } }
     end
 
     context 'authorized' do
@@ -39,16 +32,9 @@ RSpec.describe 'Profile API' do
   end
 
   describe 'GET /profiles' do
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        get '/api/v1/profiles', params: { format: :json }
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token is invalid' do
-        get '/api/v1/profiles', params: { format: :json, access_token: '1234' }
-        expect(response.status).to eq 401
-      end
+    it_behaves_like 'API Authenticable' do
+      let(:empty_request) { get '/api/v1/profiles', params: { format: :json } }
+      let(:wrong_token_request) { get '/api/v1/profiles', params: { format: :json, access_token: '1234' } }
     end
 
     context 'authorized' do
@@ -56,7 +42,7 @@ RSpec.describe 'Profile API' do
       let(:access_token) { create(:access_token, resource_owner_id: me.id) }
       let!(:user) { create(:user) }
 
-      before { get '/api/v1/profiles/me', params: { format: :json, access_token: access_token.token } }
+      before { get '/api/v1/profiles', params: { format: :json, access_token: access_token.token } }
 
       it 'returns 200 status' do
         expect(response).to have_http_status(:ok)
@@ -64,7 +50,7 @@ RSpec.describe 'Profile API' do
 
       %w(id email).each do |attr|
         it "contains #{attr}" do
-          expect(response.body).to be_json_eql(me.send(attr.to_sym).to_json).at_path(attr)
+          expect(response.body).to be_json_eql(user.send(attr.to_sym).to_json).at_path("0/#{attr}")
         end
       end
 

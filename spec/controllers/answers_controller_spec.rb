@@ -133,50 +133,16 @@ RSpec.describe AnswersController, type: :controller do
       expect(response).to render_template :best
     end
   end
+  
+  it_behaves_like 'Votable' do
+    let!(:question) { create(:question) }
+    let(:options) { {question_id: question.id} }
+    let(:votable) { create(:answer, question: question) }
+    let(:my_votable) { create(:answer, question: question, user: @user) }
 
-  describe 'POST #upvote #downvote' do
-
-    let(:question) { create(:question) }
-    let(:answer) { create(:answer, question: question) }
-    context 'Authenticated user' do
-      sign_in_user
-      let(:my_answer) { create(:answer, question: question, user: @user) }
-
-      it 'adds positive vote to question' do
-        expect { post :upvote, params: { question_id: question.id, id: answer }, format: :json }
-            .to change(answer, :rating).by(1)
-      end
-
-      it 'adds negative vote to question' do
-        expect { post :downvote, params: { question_id: question.id, id: answer}, format: :json }
-            .to change(answer, :rating).by(-1)
-      end
-
-      it 'adds positive vote to his own question' do
-        expect { post :upvote, params: { question_id: question.id, id: my_answer }, format: :json }
-            .to change(answer, :rating).by(0)
-      end
-    end
-
-    context 'Non-authenticated user' do
-      it 'tries to add vote' do
-        expect { post :upvote, params: { question_id: question.id, id: answer }, format: :json }
-            .to change(answer, :rating).by(0)
-      end
-    end
-  end
-
-  describe 'DELETE #unvote' do
-    sign_in_user
     let(:another_user) { create(:user) }
-    let(:question) {create(:question)}
-    let(:answer) { create(:answer, question:question, user: another_user) }
-    let!(:vote) { create(:vote, votable: answer, user: @user, rate: 1) }
-    let(:delete_request) { delete :unvote, params: { id: answer, question_id: question, format: :json } }
-
-    it 'remove current_user`s vote' do
-      expect { delete_request }.to change(answer.votes, :count).by(-1)
-    end
+    let(:voted_votable) { create(:answer, question: question, user: another_user) }
+    let(:delete_request) { delete :unvote, params: {question_id: question.id, id: voted_votable, format: :json } }
   end
 
   describe 'POST #comment' do
