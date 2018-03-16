@@ -1,5 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe DailyDigestJob, type: :job do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'perform daily digest newsletter' do
+    expect(Subscription).to receive(:send_daily_newsletter)
+    DailyDigestJob.perform_now
+  end
 end
