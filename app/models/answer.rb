@@ -10,7 +10,7 @@ class Answer < ApplicationRecord
   validates :body, presence: true
   validates_uniqueness_of :best, if: :best, scope: :question_id
 
-  scope :best_answer, -> { where(best: true).limit(1) }
+  scope :best_answer, -> { where(best: true) }
   scope :answers_without_best, -> { where(best: false) }
 
   after_create :answer_notification

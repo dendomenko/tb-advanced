@@ -17,13 +17,19 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
           <a class="nav-link" href="<%= questions_path %>">Questions</a>
         </li>
       </ul>
+      <%= form_tag search_searches_path, class: 'form-inline mt-2 mt-md-0' do %>
+        <div class="input-group.mb-3">
+          <%= select_tag :model, options_for_select(models), class: 'btn btn-outline-secondary dropdown-toggle' %>
+          <%= text_field_tag :query, nil, placeholder: 'Search', class: 'form-control mr-sm-2' %>
+        </div>
+        <%= submit_tag "Search", class: 'btn btn-outline-success my-2 my-sm-0' %>
+      <% end %>
       <% if user_signed_in? %>
         <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'btn btn-outline-danger' %>
       <% else %>
