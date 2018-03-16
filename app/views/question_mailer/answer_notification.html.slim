@@ -1,0 +1,17 @@
+div Hello, =@email
+div>
+  |
+    To question
+  '
+  =link_to @question.title.truncate(30), @question
+  '
+  |
+    was added new answer
+div
+  |
+    Click
+  '
+  =link_to 'here', question_subscription_url(@question, @subscription), method: :delete
+  '
+  |
+    to unsubscribe for question updates
