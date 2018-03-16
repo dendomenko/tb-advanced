@@ -7,6 +7,7 @@ h1.text-center= @question.title
       p.question-rating= @question.rating
       = link_to octicon("thumbsdown", height: 40), downvote_question_path(@question), method: :post, remote: true, data: { type: :json }, class: 'quesion-voting'
       = link_to octicon("x", height: 40), unvote_question_path(@question), method: :delete, remote: true, data: { type: :json }, class: 'unvote-question', style: display_voted(@question)
+      = subscription_link(@question)
     .text-center.align-items-center.col-sm-11
       .col.info
         p.text-left= @question.body

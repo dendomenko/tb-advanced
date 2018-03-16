@@ -1,5 +1,5 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  before_action :set_auth, except: [:confirm]
+  before_action :set_auth
 
   def facebook
     @user = User.find_for_oauth(@auth)
