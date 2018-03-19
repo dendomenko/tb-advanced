@@ -60,8 +60,8 @@ gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', require: nil
 gem 'whenever', :require => false
 # Use sphinx as full text search
-# gem 'mysql2'
-# gem 'thinking-sphinx'
+gem 'mysql2'
+gem 'thinking-sphinx'
 
 # Use Capistrano for deployment
 group :development do
