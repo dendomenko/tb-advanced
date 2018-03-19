@@ -31,6 +31,10 @@ Rails.application.routes.draw do
     resources :subscriptions, only: %i[create destroy]
   end
 
+  resource :searches, only: [] do
+    post 'search'
+  end
+
   resources :attachments, only: :destroy
 
   mount ActionCable.server => "/cable"

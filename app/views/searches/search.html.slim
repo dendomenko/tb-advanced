@@ -1,0 +1,9 @@
+= form_tag search_searches_path, class: 'form-inline mt-2 mt-md-0' do
+  .input-group.mb-3
+    = select_tag :model, options_for_select(models, @model), class: 'btn btn-outline-secondary dropdown-toggle'
+    = text_field_tag :query, @query, placeholder: 'Search', class: 'form-control'
+    = submit_tag "Search", class: 'btn btn-outline-success my-2 my-sm-0'
+.results
+  -@result.each do |data|
+    .result
+      = render "#{data.class.to_s.downcase}_search", data: data
