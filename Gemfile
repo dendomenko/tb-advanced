@@ -60,14 +60,17 @@ gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', require: nil
 gem 'whenever', :require => false
 # Use sphinx as full text search
-gem 'mysql2'
-gem 'thinking-sphinx'
+# gem 'mysql2'
+# gem 'thinking-sphinx'
 
 # Use Capistrano for deployment
 group :development do
-  gem 'capistrano-rails'
-  gem 'capistrano-rvm'
-  gem 'capistrano3-unicorn'
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano-sidekiq', require: false
+  gem 'capistrano3-unicorn', require: false
 end
 
 group :development, :test do
