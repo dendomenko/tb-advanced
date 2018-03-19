@@ -3,7 +3,7 @@ working_directory root
 
 pid "#{root}/tmp/pids/unicorn.pid"
 
-listen "#{app_path}/tmp/sockets/unicorn.tb-advanced.sock", backlog: 64
+listen "#{root}/tmp/sockets/unicorn.tb-advanced.sock", backlog: 64
 
 # logging
 stderr_path "log/unicorn.stderr.log"
@@ -14,7 +14,7 @@ worker_processes 2
 
 # use correct Gemfile on restarts
 before_exec do |server|
-  ENV['BUNDLE_GEMFILE'] = "#{app_path}Gemfile"
+  ENV['BUNDLE_GEMFILE'] = "#{root}Gemfile"
 end
 
 # preload
