@@ -1,0 +1,5 @@
+production:
+  pid_file: /home/deployer/tb-advanced/shared/tmp/searchd.pid
+  indices_location: /home/deployer/tb-advanced/shared/db/sphinx
+  configuration_file: /home/deployer/tb-advanced/shared/production.sphinx.conf
+  binlog_path: /home/deployer/tb-advanced/shared/binlog
