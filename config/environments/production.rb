@@ -86,9 +86,12 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
-  Rails.application.routes.default_url_options[:host] = 'http://54.186.176.148'
-  config.action_mailer.default_url_options = { :host => 'http://54.186.176.148' }
+  config.action_mailer.default_url_options = { :host => '54.186.176.148' }
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.perform_deliveries = true
+  ActionMailer::Base.raise_delivery_errors = true
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
 end

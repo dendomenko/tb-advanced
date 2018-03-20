@@ -12,7 +12,7 @@ set :linked_files, fetch(:linked_files, []).push('config/database.yml')
 set :linked_files, fetch(:linked_files, []).push('config/secrets.yml')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
-after 'deploy:publishing', 'deploy:restart'
+after 'deploy:publishing', 'deploy:restart', 'ts:restart'
 
 namespace :deploy do
   task :restart do
@@ -22,5 +22,12 @@ namespace :deploy do
 
   task :stop do
     invoke 'unicorn:stop'
+  end
+end
+
+namespace :ts do
+  task :restart do
+    invoke 'thinking_sphinx:stop'
+    invoke 'thinking_sphinx:start'
   end
 end
