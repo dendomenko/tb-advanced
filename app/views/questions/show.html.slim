@@ -13,11 +13,12 @@
         .col.info
           p.text-left= @question.body
           ul.question-attachments
-            - @question.attachments.each do |a|
-              li
-                = link_to a.file.identifier, a.file.url
-                - if a.attachable.author? current_user
-                  = link_to 'Remove file', attachment_path(a), method: :delete, class: 'btn btn-outline-danger btn-sm'
+            -cache collection_relation_cache_key_for(:attachment, @question)
+              - @question.attachments.each do |a|
+                li
+                  = link_to a.file.identifier, a.file.url
+                  - if a.attachable.author? current_user
+                    = link_to 'Remove file', attachment_path(a), method: :delete, class: 'btn btn-outline-danger btn-sm'
     .question-comments.row
       .col-md-8.border.comments
         - @question.comments.each do |comment|

@@ -15,12 +15,13 @@
       p.answer
         = answer.body
       ul.answer-attachments
-        -answer.attachments.each do |a|
-          li
-            = link_to a.file.identifier, a.file.url
-            |
-            - if a.attachable.author? current_user
-              = link_to 'Remove file', attachment_path(a), method: :delete, class: 'btn btn-outline-danger btn-sm'
+        -cache collection_relation_cache_key_for(:attachment, answer)
+          -answer.attachments.each do |a|
+            li
+              = link_to a.file.identifier, a.file.url
+              |
+              - if a.attachable.author? current_user
+                = link_to 'Remove file', attachment_path(a), method: :delete, class: 'btn btn-outline-danger btn-sm'
 
     .controls.col-md-12
       - if answer.question.author? current_user
