@@ -1,35 +1,37 @@
-h1.text-center= @question.title
-.container.question data={'question-id': @question.id }
-  .question-errors
-  .question-data.row
-    .voting.col-sm-1
-      = link_to octicon("thumbsup", height: 40), upvote_question_path(@question), method: :post, remote: true, data: { type: :json }, class: 'quesion-voting'
-      p.question-rating= @question.rating
-      = link_to octicon("thumbsdown", height: 40), downvote_question_path(@question), method: :post, remote: true, data: { type: :json }, class: 'quesion-voting'
-      = link_to octicon("x", height: 40), unvote_question_path(@question), method: :delete, remote: true, data: { type: :json }, class: 'unvote-question', style: display_voted(@question)
-      = subscription_link(@question)
-    .text-center.align-items-center.col-sm-11
-      .col.info
-        p.text-left= @question.body
-        ul.question-attachments
-          - @question.attachments.each do |a|
-            li
-              = link_to a.file.identifier, a.file.url
-              - if a.attachable.author? current_user
-                = link_to 'Remove file', attachment_path(a), method: :delete, class: 'btn btn-outline-danger btn-sm'
-  .question-comments.row
-    .col-md-8.border.comments
-      - @question.comments.each do |comment|
-        = render 'comments/comment', comment: comment
-    - if user_signed_in?
-      .new-question-comment.col-md-4
-        = render 'comments/form_question', question: @question
-  .row.mt-3
-    .answers.col-md-12
-      h4.text-center Answers
-      #answers-errors
-      = render 'answers', question: @question
-  .col-md-12
-    = render 'answers/form', {question: @question, answer: @answer}
+- cache @question do
+  h1.text-center= @question.title
+  .container.question data={'question-id': @question.id }
+    .question-errors
+    .question-data.row
+      .voting.col-sm-1
+        = link_to octicon("thumbsup", height: 40), upvote_question_path(@question), method: :post, remote: true, data: { type: :json }, class: 'quesion-voting'
+        p.question-rating= @question.rating
+        = link_to octicon("thumbsdown", height: 40), downvote_question_path(@question), method: :post, remote: true, data: { type: :json }, class: 'quesion-voting'
+        = link_to octicon("x", height: 40), unvote_question_path(@question), method: :delete, remote: true, data: { type: :json }, class: 'unvote-question', style: display_voted(@question)
+        = subscription_link(@question)
+      .text-center.align-items-center.col-sm-11
+        .col.info
+          p.text-left= @question.body
+          ul.question-attachments
+            - @question.attachments.each do |a|
+              li
+                = link_to a.file.identifier, a.file.url
+                - if a.attachable.author? current_user
+                  = link_to 'Remove file', attachment_path(a), method: :delete, class: 'btn btn-outline-danger btn-sm'
+    .question-comments.row
+      .col-md-8.border.comments
+        - @question.comments.each do |comment|
+          = render 'comments/comment', comment: comment
+      - if user_signed_in?
+        .new-question-comment.col-md-4
+          = render 'comments/form_question', question: @question
+    .row.mt-3
+      .answers.col-md-12
+        h4.text-center Answers
+        #answers-errors
+        = render 'answers', question: @question
+    .col-md-12
+      = render 'answers/form', {question: @question, answer: @answer}
+
 script type="text/html" id="answer_template"
   = render 'answers/answer-cable'

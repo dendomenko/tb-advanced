@@ -12,6 +12,7 @@ gem 'rails', '~> 5.1.5'
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'unicorn'
+gem 'puma'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -63,6 +64,7 @@ gem 'whenever', :require => false
 gem 'mysql2'
 gem 'thinking-sphinx'
 
+gem 'redis-rails'
 # Use Capistrano for deployment
 group :development do
   gem 'capistrano', require: false

@@ -1,7 +1,8 @@
-.container
-  h1.text-center All Questions
-  .row.questions
-    = render @questions
+- cache collection_cache_key_for :question
+  .container
+    h1.text-center All Questions
+    .row.questions
+      = render @questions
 
-  .row
-    p= link_to 'Ask question', new_question_path, class: 'btn btn-success'
+    .row
+      p= link_to 'Ask question', new_question_path, class: 'btn btn-success'
