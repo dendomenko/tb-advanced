@@ -9,3 +9,28 @@
 .question-errors, #answers-errors {
   color: red
 }
+
+.ask-question {
+  width: 100%;
+  background-color: #3498db;
+  text-transform: uppercase;
+}
+
+.cardic {
+  position: relative;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+.rating, .answers {
+  font-size: 14px;
+  text-transform: lowercase;
+}
+
+.has-best {
+  background-color: #1abc9c !important;
+}
