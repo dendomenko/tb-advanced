@@ -3,6 +3,11 @@
 }
 
 .comments  {
-  height: 180px;
+  max-height: 180px;
+  min-height: 50px;
   overflow-y: scroll;
+}
+
+.question-comments {
+  padding-top: 10px;
 }

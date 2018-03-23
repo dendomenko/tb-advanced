@@ -39,10 +39,24 @@ function unvoteAnswerEvent() {
     });
 }
 
+function showAnswerCommentForm() {
+
+    $('.show-answer-comment-form').click(function (e) {
+        e.preventDefault();
+        $(this).parent().parent().find('.answer-comment-form').toggleClass('hidden');
+
+    });
+
+    $('.add-comment').click(function (e) {
+        $(this).parent().parent().addClass('hidden');
+    });
+}
+
 function answerEvents() {
     answerEditEvent();
     voteAnswerEvent();
     unvoteAnswerEvent();
+    showAnswerCommentForm();
 }
 
 function answerChannel() {
@@ -91,7 +105,7 @@ function commentsChannel() {
             received: function (data) {
                 switch (data.type) {
                     case 'Question':
-                        $('.question-comments > .comments').append(data.html);
+                        $('.question-comments > .row > .comments').append(data.html);
                         break;
                     case 'Answer':
                         $('.answer-comments-'+data.id).append(data.html);

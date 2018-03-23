@@ -9,11 +9,14 @@ class Question < ApplicationRecord
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
   belongs_to :user
+  acts_as_taggable
 
   validates :body, :title, presence: true
 
   after_create :subscribe_user
   after_update :question_update_notification
+
+  default_scope { order(created_at: :desc) }
 
   private
 

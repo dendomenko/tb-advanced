@@ -12,35 +12,32 @@
 
 <body data-current-user="<%= current_user&.id %>">
 <div class="container-fluid">
-  <div class="row">
-    <header>
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand" href="<%= root_path %>">Home</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="<%= questions_path %>">Questions</a>
-            </li>
-          </ul>
-          <%= form_tag search_searches_path, class: 'form-inline mt-2 mt-md-0' do %>
-            <div class="input-group.mb-3">
-              <%= select_tag :model, options_for_select(models), class: 'btn btn-outline-secondary dropdown-toggle' %>
-              <%= text_field_tag :query, nil, placeholder: 'Search', class: 'form-control mr-sm-2' %>
-            </div>
+  <header id="header">
+    <div class="row">
+      <div class="col-md-2 logo text-center">
+        <a href="<%= root_path %>">Home</a>
+      </div>
+      <div class="col-md-8">
+        <%= form_tag search_searches_path, class: 'form-inline mt-2 mt-md-0' do %>
+          <div class="input-group.mb-3">
+            <%= select_tag :model, options_for_select(models), class: 'btn btn-outline-secondary dropdown-toggle' %>
+            <%= text_field_tag :query, @query, placeholder: 'Search', class: 'form-control mr-sm-2' %>
             <%= submit_tag "Search", class: 'btn btn-outline-success my-2 my-sm-0' %>
-          <% end %>
-          <% if user_signed_in? %>
-            <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'btn btn-outline-danger' %>
-          <% else %>
-            <%= link_to 'Sign in', new_user_session_path, class: 'btn btn-outline-success' %>
-            <%= link_to 'Sign up', new_user_registration_path, class: 'btn btn-outline-primary' %>
-          <% end %>
-        </div>
-      </nav>
-    </header>
+          </div>
+        <% end %>
+      </div>
+      <div class="col-md-2 text-center">
+        <% if user_signed_in? %>
+          <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'btn btn-lg btn-outline-danger' %>
+        <% else %>
+          <%= link_to 'Sign in', new_user_session_path, class: 'btn btn-lg btn-outline-success' %>
+          <%= link_to 'Sign up', new_user_registration_path, class: 'btn btn-lg btn-outline-primary' %>
+        <% end %>
+      </div>
+    </div>
+
+  </header>
+  <div class="row">
     <div class="col-md-2 border-right">
       <div class="side-menu border-bottom">
         <p><%= link_to 'Ask a question', new_question_path, class: 'btn btn-primary ask-question' %>
@@ -48,10 +45,10 @@
       <div class="side-menu list-group border-bottom">
         <%= link_to questions_path, class: 'list-group-item list-group-item-action' do %>
           <span><%= octicon("question") %> Question</span>
-          <% end %>
+        <% end %>
       </div>
       <div class="side-menu ">
-        ©2018  <br>
+        ©2018 <br>
         <a href="https://qaengine.enginethemes.com/term/">Terms &amp; Privacy</a>
       </div>
     </div>
@@ -64,8 +61,32 @@
       <% end %>
       <%= yield %>
     </div>
-    <div class="col-md-2 border-left">
-      test
+    <div class="col-md-2 border-left right-column">
+      <div>
+        <div class="total">
+          <p class="text-grey">Questions</p>
+          <p>
+            <span><%= Question.count %></span>
+          </p>
+        </div>
+        <div class="total">
+          <p class="text-grey">Answers</p>
+          <p>
+            <span><%= Answer.count %></span>
+          </p>
+        </div>
+        <div class="total">
+          <p class="text-grey">Comments</p>
+          <p>
+            <span><%= Comment.count %></span>
+          </p>
+        </div>
+      </div>
+      <div class="tags">
+        <p class="border-bottom text-uppercase">
+          most used tags
+        </p>
+      </div>
     </div>
   </div>
 </div>

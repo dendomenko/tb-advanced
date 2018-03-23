@@ -61,6 +61,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, attachments_attributes: %i[file _destroy])
+    params.require(:question).permit(:title, :tag_list, :body, attachments_attributes: %i[file _destroy])
   end
 end

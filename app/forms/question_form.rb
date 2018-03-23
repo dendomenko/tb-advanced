@@ -21,6 +21,7 @@ class QuestionForm
 
   def submit(params)
     question.attributes = params.require(:question_form).permit(:title, :body)
+    question.tag_list.add(params[:tags])
     params[:file]&.each do |file|
       question.attachments.build(file: file)
     end

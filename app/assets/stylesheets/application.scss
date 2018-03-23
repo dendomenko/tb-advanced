@@ -6,13 +6,18 @@
 @import "searches";
 
 body {
-  padding-top: 65px;
+  //padding-top: 55px;
   font-family: "Lato";
+}
+
+.container-fluid {
+  padding: 0px;
 }
 
 .side-menu {
   padding-bottom: 15px;
   padding-top: 10px;
+  padding-left: 15px;
 }
 
 .circle {
@@ -33,4 +38,27 @@ body {
 
 .text-black {
   color: black;
+}
+
+.right-column{
+  background: #eef1f7;
+}
+
+#header {
+  min-height: 50px;
+  background-color: rgba(1, 0, 17, 0.9);
+  color: #1abc9c;
+  padding-left: 20px;
+  line-height: 80px;
+}
+
+.logo {
+  font-size: 32px;
+  color: #000;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.hidden {
+  display: none;
 }

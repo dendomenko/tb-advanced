@@ -65,6 +65,8 @@ gem 'mysql2'
 gem 'thinking-sphinx'
 
 gem 'redis-rails'
+
+gem 'acts-as-taggable-on', '~> 5.0'
 # Use Capistrano for deployment
 group :development do
   gem 'capistrano', require: false
