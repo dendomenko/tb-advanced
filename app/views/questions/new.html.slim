@@ -11,7 +11,8 @@ h1.text-center New Question
           = f.text_area :body, class: 'form-control'
         .form-group
           = label_tag 'Tags (divided by comma(","))'
-          = text_field_tag :tags, nil, class: 'form-control'
+          / = text_field_tag :tag_list, nil, class: 'form-control'
+          = f.text_field :tag_list, class: 'form-control'
         p Attachments:
         p
           = render 'common/attachments-form', f: f

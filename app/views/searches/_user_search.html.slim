@@ -1,2 +1,5 @@
-h3.span.badge.badge-secondary.text-uppercase.font-big User
-.data= data.email
+.row
+  .result.font-big.border-bottom
+    = image_tag avatar_url(data, 35), class: 'rounded-circle'
+    '
+    = data.email

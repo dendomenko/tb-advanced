@@ -5,6 +5,6 @@ module SearchesHelper
 
   def link_to_question(comment)
     question = comment.commentable.is_a?(Question ) ? comment.commentable : comment.commentable.question
-    link_to 'Comment', question, class: 'font-big badge badge-primary text-uppercase'
+    link_to question.title, question
   end
 end

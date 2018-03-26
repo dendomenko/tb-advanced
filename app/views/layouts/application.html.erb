@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" integrity="sha256-BJ/G+e+y7bQdrYkS2RBTyNfBHpA9IuGaPmf9htub5MQ=" crossorigin="anonymous" />
   <title>TbAdvanced</title>
   <%= csrf_meta_tags %>
 
@@ -86,6 +87,11 @@
         <p class="border-bottom text-uppercase">
           most used tags
         </p>
+      </div>
+      <div id='tag_cloud'>
+        <% Question.tag_counts.each do |tag| %>
+          <h3><%= link_to tag.name.upcase, tag_path(tag.name), class: 'badge badge-pill badge-light' %> x <%= tag.taggings_count %></h3>
+        <% end %>
       </div>
     </div>
   </div>

@@ -9,7 +9,7 @@ class Question < ApplicationRecord
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
   belongs_to :user
-  acts_as_taggable
+  acts_as_taggable_on :tag
 
   validates :body, :title, presence: true
 

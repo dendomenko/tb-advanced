@@ -10,7 +10,11 @@ class QuestionsController < ApplicationController
   respond_to :js, only: [:update]
 
   def index
-    @questions = Question.all
+    if params[:tag]
+      @questions = Question.tagged_with(params[:tag])
+    else
+      @questions = Question.all
+    end
     respond_with(authorize(@questions))
   end
 

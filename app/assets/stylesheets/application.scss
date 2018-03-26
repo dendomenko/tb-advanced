@@ -4,14 +4,19 @@
 @import "votes";
 @import "comment";
 @import "searches";
+@import url('https://fonts.googleapis.com/css?family=Lato');
 
 body {
-  //padding-top: 55px;
   font-family: "Lato";
 }
 
 .container-fluid {
-  padding: 0px;
+  padding: 0;
+}
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .side-menu {

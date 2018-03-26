@@ -4,9 +4,11 @@
     .question-errors
     .question-data.row
       .voting.col-sm-1
-        = link_to octicon("thumbsup", height: 24), upvote_question_path(@question), method: :post, remote: true, data: { type: :json }, class: 'question-voting'
+        = link_to upvote_question_path(@question), method: :post, remote: true, data: { type: :json }, class: 'question-voting' do
+          span.oi.oi-chevron-top
         p.circle.question-rating= @question.rating
-        = link_to octicon("thumbsdown", height: 24), downvote_question_path(@question), method: :post, remote: true, data: { type: :json }, class: 'question-voting'
+        = link_to downvote_question_path(@question), method: :post, remote: true, data: { type: :json }, class: 'question-voting' do
+          span.oi.oi-chevron-bottom
         = link_to octicon("x", height: 24), unvote_question_path(@question), method: :delete, remote: true, data: { type: :json }, class: 'unvote-question', style: display_voted(@question)
         = subscription_link(@question)
       .align-items-center.col-sm-11
