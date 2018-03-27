@@ -1,4 +1,6 @@
 class Comment < ApplicationRecord
+  searchkick
+
   belongs_to :user
   belongs_to :commentable, polymorphic: true, touch: true
 

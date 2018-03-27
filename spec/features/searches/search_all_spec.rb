@@ -12,7 +12,7 @@ feature 'Search data', %q{
   given!(:user) { create(:user, email: 'test@user.com') }
 
   describe "Searching for All" do
-    it 'search all', sphinx: true do
+    it 'search all', js: true do
       ThinkingSphinx::Test.index
       visit questions_path
       fill_in "query", with: 'Test'

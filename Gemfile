@@ -61,8 +61,9 @@ gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', require: nil
 gem 'whenever', :require => false
 # Use sphinx as full text search
-gem 'mysql2'
-gem 'thinking-sphinx'
+# gem 'mysql2'
+# gem 'thinking-sphinx'
+gem 'searchkick'
 
 gem 'redis-rails'
 
@@ -88,7 +89,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
+  gem 'faker'
   gem 'capybara'
   gem 'launchy'
   gem 'database_cleaner'

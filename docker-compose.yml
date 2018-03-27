@@ -1,0 +1,43 @@
+version: '3'
+services:
+  db:
+    container_name: db
+    image: postgres:latest
+    ports:
+      - "5555:5555"
+  web:
+    container_name: web
+    build: .
+    command: rails server --port 3000 --binding 0.0.0.0
+    ports:
+      - "3000:3000"
+    depends_on:
+      - 'db'
+      - 'redis'
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    volumes:
+      - .:/var/ruby/moviebase
+  sidekiq:
+    container_name: sidekiq
+    build: .
+    volumes:
+      - .:/var/ruby/moviebase
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    command: bundle exec sidekiq
+  redis:
+    container_name: redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
+  elasticsearch:
+    container_name: elasticsearch
+    image: elasticsearch
+    ports:
+      - "9200:9200"

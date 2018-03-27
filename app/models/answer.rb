@@ -1,4 +1,6 @@
 class Answer < ApplicationRecord
+  searchkick
+
   include Author
   include Votable
 
