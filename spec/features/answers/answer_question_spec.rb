@@ -13,11 +13,11 @@ feature 'Answer the question', %q{
     sign_in user
 
     visit question_path(question)
-    fill_in 'Body', with: 'Test answer'
+    fill_in 'Body', with: 'test answer'
     click_on 'Add Answer'
 
     within '.answers' do
-      expect(page).to have_content 'Test answer'
+      expect(page).to have_content 'test answer'
     end
     expect(current_path).to eq question_path(question)
   end
@@ -53,14 +53,14 @@ feature 'Answer the question', %q{
       end
 
       Capybara.using_session('user') do
-        fill_in 'Body', with: 'Test answer'
+        fill_in 'Body', with: 'test answer'
         click_on 'Add Answer'
 
-        expect(page).to have_content 'Test answer'
+        expect(page).to have_content 'test answer'
       end
 
       Capybara.using_session('guest') do
-        expect(page).to have_content 'Test answer'
+        expect(page).to have_content 'test answer'
       end
     end
   end

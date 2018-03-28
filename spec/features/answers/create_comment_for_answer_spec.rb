@@ -24,18 +24,19 @@ feature 'Create comment for answer', %q{
 
       Capybara.using_session('user') do
         within "#answer_#{answer.id}" do
-          fill_in 'Text', with: 'Test comment'
+          click_on 'Comment'
+          fill_in 'Text', with: 'test comment'
           click_on 'Add Comment'
         end
         within ".answer-comments-#{answer.id}" do
-          expect(page).to have_content 'Test comment'
+          expect(page).to have_content 'test comment'
           expect(page).to have_content user.email
         end
       end
 
       Capybara.using_session('guest') do
         within ".answer-comments-#{answer.id}" do
-          expect(page).to have_content 'Test comment'
+          expect(page).to have_content 'test comment'
           expect(page).to have_content user.email
         end
       end

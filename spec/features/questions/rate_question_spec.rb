@@ -19,14 +19,14 @@ feature 'Rate question', %q{
 
       scenario 'User vote up question', js: true do
         within '.voting' do
-          find('.octicon-thumbsup').click
+          find('.oi-chevron-top').click
           expect(page).to have_content '1'
         end
       end
 
       scenario 'User vote down question', js: true do
         within '.voting' do
-          find('.octicon-thumbsdown').click
+          find('.oi-chevron-bottom').click
           expect(page).to have_content '-1'
         end
       end
@@ -42,7 +42,7 @@ feature 'Rate question', %q{
 
       scenario 'User vote up question', js: true do
         within '.voting' do
-          find('.octicon-thumbsup').click
+          find('.oi-chevron-top').click
         end
         expect(page).to have_content 'You already have been voted!'
       end
@@ -58,7 +58,7 @@ feature 'Rate question', %q{
 
       scenario 'User vote up question', js: true do
         within '.voting' do
-          find('.octicon-thumbsup').click
+          find('.oi-chevron-top').click
         end
         expect(page).to have_content 'Author can not vote for his own question'
       end
@@ -73,7 +73,7 @@ feature 'Rate question', %q{
 
     scenario 'tries vote up question', js: true do
       within '.voting' do
-        find('.octicon-thumbsup').click
+        find('.oi-chevron-top').click
       end
       expect(page).to have_content 'You need to sign in or sign up before continuing.'
     end

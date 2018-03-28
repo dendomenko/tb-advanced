@@ -10,7 +10,7 @@ RSpec.describe 'Questions API' do
     context 'authorized' do
       let(:access_token) { create(:access_token) }
       let!(:questions) { create_list(:question, 2) }
-      let(:question) { questions.first }
+      let(:question) { questions.last }
       let!(:answer) { create(:answer, question: question) }
       let!(:comment) { create(:comment, commentable_type: 'Question', commentable_id: question.id) }
       let!(:attachment) { create(:attachment, attachable_type: 'Question', attachable_id: question.id) }
@@ -25,7 +25,7 @@ RSpec.describe 'Questions API' do
         expect(response.body).to have_json_size(2)
       end
 
-      %w(id title body created_at updated_at).each do |attr|
+      %w(id title body created_at).each do |attr|
         it "question object contains #{attr}" do
           expect(response.body).to be_json_eql(question.send(attr.to_sym).to_json).at_path("0/#{attr}")
         end
@@ -40,7 +40,7 @@ RSpec.describe 'Questions API' do
           expect(response.body).to have_json_size(1).at_path("0/answers")
         end
 
-        %w(id body created_at updated_at best).each do |attr|
+        %w(id body created_at best).each do |attr|
           it "answer object contains #{attr}" do
             expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("0/answers/0/#{attr}")
           end
@@ -72,7 +72,7 @@ RSpec.describe 'Questions API' do
         expect(response).to be_success
       end
 
-      %w(id title body created_at updated_at).each do |attr|
+      %w(id title body created_at).each do |attr|
         it "question object contains #{attr}" do
           expect(response.body).to be_json_eql(question.send(attr.to_sym).to_json).at_path("#{attr}")
         end

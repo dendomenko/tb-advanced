@@ -17,6 +17,8 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
   config.before(:suite) do
+    # and disable callbacks
+    Searchkick.disable_callbacks
     DatabaseCleaner.clean_with(:truncation)
   end
 
@@ -33,10 +35,6 @@ RSpec.configure do |config|
   end
 
   config.after(:each) do
-    DatabaseCleaner.clean
-  end
-
-  config.append_after(:each) do
     DatabaseCleaner.clean
   end
 end

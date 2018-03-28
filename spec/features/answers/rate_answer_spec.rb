@@ -20,14 +20,14 @@ feature 'Rate answer', %q{
 
       scenario 'vote up answer', js: true do
         within "#answer_#{answer.id}" do
-          find('.octicon-thumbsup').click
+          find('.oi-chevron-top').click
           expect(page).to have_content '1'
         end
       end
 
       scenario 'vote down answer', js: true do
         within "#answer_#{answer.id}" do
-          find('.octicon-thumbsdown').click
+          find('.oi-chevron-bottom').click
           expect(page).to have_content '-1'
         end
       end
@@ -43,9 +43,9 @@ feature 'Rate answer', %q{
 
       scenario 'tries vote up answer', js: true do
         within "#answer_#{answer.id}" do
-          find('.octicon-thumbsup').click
+          find('.oi-chevron-top').click
         end
-        expect(page).to have_content 'You already have been voted!'
+        expect(page).to have_content 'you already have been voted!'
       end
     end
 
@@ -59,7 +59,7 @@ feature 'Rate answer', %q{
 
       scenario 'vote up answer', js:true do
         within "#answer_#{my_answer.id}" do
-          find('.octicon-thumbsup').click
+          find('.oi-chevron-top').click
         end
         expect(page).to have_content 'Author can not vote for his own answer'
       end
@@ -74,9 +74,9 @@ feature 'Rate answer', %q{
 
     scenario 'tries vote up answer', js:true do
       within "#answer_#{answer.id}" do
-        find('.octicon-thumbsup').click
+        find('.oi-chevron-top').click
       end
-      expect(page).to have_content 'You need to sign in or sign up before continuing.'
+      expect(page).to have_content 'you need to sign in or sign up before continuing.'
     end
   end
 end
