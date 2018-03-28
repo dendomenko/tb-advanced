@@ -45,7 +45,8 @@
       </div>
       <div class="side-menu list-group border-bottom">
         <%= link_to questions_path, class: 'list-group-item list-group-item-action' do %>
-          <span><%= octicon("question") %> Question</span>
+          <span class="oi oi-question-mark"></span>
+          &nbsp;Questions
         <% end %>
       </div>
       <div class="side-menu ">
@@ -89,8 +90,13 @@
         </p>
       </div>
       <div id='tag_cloud'>
-        <% Question.tag_counts.each do |tag| %>
-          <h3><%= link_to tag.name.upcase, tag_path(tag.name), class: 'badge badge-pill badge-light' %> x <%= tag.taggings_count %></h3>
+        <% Question.tag_counts.order(taggings_count: :desc).each do |tag| %>
+          <h3>
+            <%= link_to tag_path(tag.name), class: 'badge badge-pill badge-light' do %>
+              <%= tag.name.upcase %>
+              <span class="badge badge-dark counter"><%= tag.taggings_count %></span>
+            <% end %>
+          </h3>
         <% end %>
       </div>
     </div>

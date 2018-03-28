@@ -1,6 +1,6 @@
 - cache @question do
-  h1.border-bottom= @question.title
-  .container.question data={'question-id': @question.id }
+  h1.border-bottom.mt-2= @question.title
+  .container-fluid.question data={'question-id': @question.id }
     .question-errors
     .question-data.row
       .voting.col-sm-1
@@ -9,7 +9,8 @@
         p.circle.question-rating= @question.rating
         = link_to downvote_question_path(@question), method: :post, remote: true, data: { type: :json }, class: 'question-voting' do
           span.oi.oi-chevron-bottom
-        = link_to octicon("x", height: 24), unvote_question_path(@question), method: :delete, remote: true, data: { type: :json }, class: 'unvote-question', style: display_voted(@question)
+        = link_to unvote_question_path(@question), method: :delete, remote: true, data: { type: :json }, class: 'unvote-question', style: display_voted(@question) do
+          span.oi.oi-x
         = subscription_link(@question)
       .align-items-center.col-sm-11
         .col.info.border-bottom
