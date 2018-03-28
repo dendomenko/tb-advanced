@@ -11,7 +11,6 @@ gem 'rails', '~> 5.1.5'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'unicorn'
 gem 'puma'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -68,15 +67,6 @@ gem 'searchkick'
 gem 'redis-rails'
 
 gem 'acts-as-taggable-on', '~> 5.0'
-# Use Capistrano for deployment
-group :development do
-  gem 'capistrano', require: false
-  gem 'capistrano-bundler', require: false
-  gem 'capistrano-rails', require: false
-  gem 'capistrano-rvm', require: false
-  gem 'capistrano-sidekiq', require: false
-  gem 'capistrano3-unicorn', require: false
-end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
