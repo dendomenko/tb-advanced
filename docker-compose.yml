@@ -11,6 +11,7 @@ services:
     command: rails server --port 3000 --binding 0.0.0.0
     ports:
       - "3000:3000"
+      - "8080:8080"
     depends_on:
       - 'db'
       - 'redis'
