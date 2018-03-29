@@ -13,7 +13,7 @@
 </head>
 
 <body data-current-user="<%= current_user&.id %>">
-<div class="container-fluid">
+<main role="main" class="container-fluid">
   <header id="header">
     <div class="row">
       <div class="col-md-2 logo text-center">
@@ -48,6 +48,10 @@
         <%= link_to questions_path, class: 'list-group-item list-group-item-action' do %>
           <span class="oi oi-question-mark"></span>
           &nbsp;Questions
+        <% end %>
+        <%= link_to tags_path, class: 'list-group-item list-group-item-action' do %>
+          <span class="oi oi-tag"></span>
+          &nbsp;Tags
         <% end %>
       </div>
       <div class="side-menu ">
@@ -91,7 +95,7 @@
         </p>
       </div>
       <div id='tag_cloud'>
-        <% Question.tag_counts.order(taggings_count: :desc).each do |tag| %>
+        <% Question.tag_counts.order(taggings_count: :desc).limit(5).each do |tag| %>
           <h3>
             <%= link_to tag_path(tag.name), class: 'badge badge-pill badge-light' do %>
               <%= tag.name.upcase %>
@@ -99,9 +103,11 @@
             <% end %>
           </h3>
         <% end %>
+        <%= link_to 'more tags', tags_path %>
       </div>
     </div>
   </div>
-</div>
+</main>
 </body>
+
 </html>

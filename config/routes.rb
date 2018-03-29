@@ -32,6 +32,8 @@ Rails.application.routes.draw do
     resources :subscriptions, only: %i[create destroy]
   end
 
+  resource :tags, only: [:show]
+
   resource :searches, only: [] do
     post 'search'
   end

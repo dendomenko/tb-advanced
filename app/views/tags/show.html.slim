@@ -1,0 +1,10 @@
+h2.border-bottom
+  | Tags by popularity
+.container-flex
+  - @tags.each do |tag|
+    .item-flex
+      h4
+        = link_to tag_path(tag.name), class: 'badge badge-pill badge-light mt-3' do
+          = tag.name.upcase
+          span class="badge badge-dark counter"
+            = tag.taggings_count
