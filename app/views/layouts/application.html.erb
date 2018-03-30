@@ -9,7 +9,7 @@
 
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_pack_tag 'hello_vue' %>
+  <%= javascript_pack_tag 'questions' %>
 </head>
 
 <body data-current-user="<%= current_user&.id %>">
@@ -17,7 +17,9 @@
   <header id="header">
     <div class="row">
       <div class="col-md-2 logo text-center">
-        <a href="<%= root_path %>">Home</a>
+        <a href="<%= root_path %>">
+          <img src="/images/home.png" alt="rss feed" style="height: 46px" />
+        </a>
       </div>
       <div class="col-md-8">
         <%= form_tag search_searches_path, class: 'form-inline mt-2 mt-md-0' do %>
@@ -56,7 +58,7 @@
       </div>
       <div class="side-menu ">
         ©2018 <br>
-        <a href="https://qaengine.enginethemes.com/term/">Terms &amp; Privacy</a>
+        <a href="/">Terms &amp; Privacy</a>
       </div>
     </div>
     <div class="col-md-8">

@@ -57,7 +57,7 @@
 import TurbolinksAdapter from 'vue-turbolinks';
 import Vue from 'vue/dist/vue.esm'
 import App from '../app.vue'
-import Voting from '../components/voting.vue'
+import Voting from '../components/voting'
 
 Vue.use(TurbolinksAdapter);
 
