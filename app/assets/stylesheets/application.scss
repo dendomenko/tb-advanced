@@ -4,7 +4,94 @@
 @import "votes";
 @import "comment";
 @import "searches";
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+html,body {
+  height: 100%;
+}
 
 body {
-  padding-top: 65px;
+  font-family: "Lato";
+}
+
+.container-fluid {
+  padding: 0;
+  height:100%;
+  min-height:100%;
+}
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.container-fluid, .row {
+  height: inherit;
+}
+
+.side-menu {
+  padding-bottom: 15px;
+  padding-top: 10px;
+  padding-left: 15px;
+}
+
+.circle {
+  margin-top: 15px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 14px;
+  color: #000;
+  line-height: 48px;
+  text-align: center;
+  background: #fff;
+  border: solid rgba(174, 174, 174, 0.73) 1px;
+}
+
+.text-grey {
+  color: grey;
+}
+
+.text-black {
+  color: black;
+}
+
+.right-column{
+  background: #eef1f7;
+}
+
+#header {
+  min-height: 50px;
+  background-color: rgba(1, 0, 17, 0.9);
+  color: #1abc9c;
+  padding-left: 20px;
+  line-height: 80px;
+}
+
+.logo {
+  font-size: 32px;
+  color: #000;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.counter {
+  font-size: 12px;
+  position: relative;
+  bottom: 10px;
+}
+
+.container-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item-flex {
+  flex-basis: 245px;
+  flex-grow: 0;
+  flex-shrink: 0;
 }

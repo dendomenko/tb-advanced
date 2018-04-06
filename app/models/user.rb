@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  searchkick
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook twitter]

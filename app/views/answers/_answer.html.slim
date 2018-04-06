@@ -1,16 +1,17 @@
 - cache answer do
-  .row.mt-3.text-left.border id=("answer_#{answer.id}")
+  .row.text-left.border-bottom class=(answer.best? ? 'has-best' : '' ) id=("answer_#{answer.id}")
     .col-md-12
       h6.text-right.font-italic
-        - if answer.best?
-          span.badge-best.badge.badge-success This is the best answer
         = answer.user.email
     .voting.col-sm-1
       div id=("answer_#{answer.id}-errors")
-      = link_to octicon("thumbsup", height: 30), upvote_question_answer_path(@question, answer), method: :post, remote: true, data: { type: :json }, class: 'answer-voting'
-      p id=("rating_#{answer.id}") = answer.rating
-      = link_to octicon("thumbsdown", height: 30), downvote_question_answer_path(@question, answer), method: :post, remote: true, data: { type: :json }, class: 'answer-voting'
-      = link_to octicon("x", height: 30), unvote_question_answer_path(@question, answer), method: :delete, remote: true, data: {type: :json, id: answer.id}, class: "unvote-answer", style: display_voted(answer)
+      = link_to upvote_question_answer_path(@question, answer), method: :post, remote: true, data: { type: :json }, class: 'answer-voting' do
+        span.oi.oi-chevron-top
+      p.circle id=("rating_#{answer.id}") = answer.rating
+      = link_to downvote_question_answer_path(@question, answer), method: :post, remote: true, data: { type: :json }, class: 'answer-voting' do
+        span.oi.oi-chevron-bottom
+      = link_to unvote_question_answer_path(@question, answer), method: :delete, remote: true, data: {type: :json, id: answer.id}, class: "unvote-answer", style: display_voted(answer) do
+        span.oi.oi-x
     .col-sm-11
       p.answer
         = answer.body
@@ -22,22 +23,27 @@
               |
               - if a.attachable.author? current_user
                 = link_to 'Remove file', attachment_path(a), method: :delete, class: 'btn btn-outline-danger btn-sm'
-
-    .controls.col-md-12
-      - if answer.question.author? current_user
-        = link_to 'Best Answer', best_question_answer_path(answer.question, answer), method: :patch, remote: true, class: 'btn btn-outline-success btn-sm best-answer-link', data: {answer_id: answer.id}
-      - if user_signed_in? && answer.author?(current_user)
-        = link_to 'Edit', '', class: 'edit-answer-link btn btn-outline-primary btn-sm', data: { answer_id: answer.id }
-        = link_to('Delete', question_answer_path(@question, answer),
-                method: :delete, remote: true, class: 'btn btn-outline-danger btn-sm delete-answer-link')
-        p
-          = form_for [@question, answer], remote: true, html: {id: "edit-answer-#{answer.id}"} do |f|
-            = f.label :body
-            = f.text_area :body
-            = f.submit 'Save'
-    .comments.col-md-8.border class=("answer-comments-#{answer.id}")
-      - answer.comments.each do |comment|
-        = render 'comments/comment', comment: comment
-    - if user_signed_in?
-      .col-md-4
-        = render 'comments/form_answer', answer: answer
+      .row
+        .controls.col-md-12
+          - if (!answer.best?) && (answer.question.author? current_user)
+            = link_to 'Best Answer', best_question_answer_path(answer.question, answer), method: :patch, remote: true, class: 'btn btn-outline-success btn-sm best-answer-link', data: {answer_id: answer.id}
+          - if user_signed_in? && answer.author?(current_user)
+            = link_to 'Edit', '', class: 'edit-answer-link btn btn-outline-primary btn-sm', data: { answer_id: answer.id }
+            = link_to('Delete', question_answer_path(@question, answer),
+                    method: :delete, remote: true, class: 'btn btn-outline-danger btn-sm delete-answer-link')
+            p
+              = form_for [@question, answer], remote: true, html: {id: "edit-answer-#{answer.id}"} do |f|
+                = f.label :body
+                = f.text_area :body
+                = f.submit 'Save'
+      .row
+        .col-md-12.text-left.text-uppercase
+          | Comments:
+        .comments.col-md-8.border-bottom class=("answer-comments-#{answer.id}")
+          - answer.comments.each do |comment|
+            = render 'comments/comment', comment: comment
+        - if user_signed_in?
+          .col-md-4
+            p.text-uppercase = link_to 'Comment', '#', class: 'show-answer-comment-form'
+            .answer-comment-form.hidden
+              = render 'comments/form_answer', answer: answer

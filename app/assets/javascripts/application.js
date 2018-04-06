@@ -17,3 +17,7 @@
 //= require bootstrap-sprockets
 //= require mustache
 //= require_tree .
+
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})

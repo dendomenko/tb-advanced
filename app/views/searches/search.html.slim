@@ -1,9 +1,39 @@
-= form_tag search_searches_path, class: 'form-inline mt-2 mt-md-0' do
-  .input-group.mb-3
-    = select_tag :model, options_for_select(models, @model), class: 'btn btn-outline-secondary dropdown-toggle'
-    = text_field_tag :query, @query, placeholder: 'Search', class: 'form-control'
-    = submit_tag "Search", class: 'btn btn-outline-success my-2 my-sm-0'
 .results
-  -@result.each do |data|
-    .result
-      = render "#{data.class.to_s.downcase}_search", data: data
+  ul.nav.nav-tabs id="myTab" role="tablist"
+    li.nav-item
+      a.nav-link.active id="question-tab" data-toggle="tab" href="#question" role="tab" aria-controls="question" aria-selected="true"
+        | Questions
+        '
+        span.badge.badge-primary=@result.grep(Question).count
+    li.nav-item
+      a.nav-link id="answer-tab" data-toggle="tab" href="#answer" role="tab" aria-controls="answer" aria-selected="false"
+        | Answers
+        '
+        span.badge.badge-primary=@result.grep(Answer).count
+    li.nav-item
+      a.nav-link id="comment-tab" data-toggle="tab" href="#comment" role="tab" aria-controls="comment" aria-selected="false"
+        | Comments
+        '
+        span.badge.badge-primary=@result.grep(Comment).count
+    li.nav-item
+      a.nav-link id="user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="user" aria-selected="false"
+        | Users
+        '
+        span.badge.badge-primary=@result.grep(User).count
+  div.tab-content id="myTabContent"
+    div.tab-pane.fade.show.active id="question" role="tabpanel" aria-labelledby="question-tab"
+      .container-fluid
+        .questions
+          -@result.grep(Question).each do |data|
+            = render data
+    div.tab-pane.fade id="answer" role="tabpanel" aria-labelledby="answer-tab"
+      .container-fluid
+        .questions
+          -@result.grep(Answer).each do |data|
+            = render("#{data.class.to_s.downcase}_search", data: data)
+    div.tab-pane.fade id="comment" role="tabpanel" aria-labelledby="comment-tab"
+      -@result.grep(Comment).each do |data|
+        = render("#{data.class.to_s.downcase}_search", data: data)
+    div.tab-pane.fade id="user" role="tabpanel" aria-labelledby="user-tab"
+      -@result.grep(User).each do |data|
+        = render("#{data.class.to_s.downcase}_search", data: data)

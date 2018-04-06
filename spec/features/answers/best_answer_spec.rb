@@ -31,7 +31,7 @@ feature 'Make answer as the best answer for question', %q{
         scenario ' choose best answer', js: true do
           within '.answers' do
             click_on 'Best Answer'
-            expect(page).to have_content 'This is the best answer'
+            expect(page).to have_css 'div.row.text-left.border-bottom.has-best'
           end
           expect(current_path).to eq question_path(question)
         end
@@ -43,8 +43,9 @@ feature 'Make answer as the best answer for question', %q{
 
         within "#answer_#{answer.id}" do
           click_on 'Best Answer'
-          expect(page).to have_content 'This is the best answer'
         end
+        expect(page).to have_css 'div.row.text-left.border-bottom.has-best'
+
         expect(current_path).to eq question_path(question)
       end
     end

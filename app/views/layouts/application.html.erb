@@ -3,49 +3,113 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" integrity="sha256-BJ/G+e+y7bQdrYkS2RBTyNfBHpA9IuGaPmf9htub5MQ=" crossorigin="anonymous"/>
   <title>TbAdvanced</title>
   <%= csrf_meta_tags %>
 
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'questions' %>
 </head>
 
 <body data-current-user="<%= current_user&.id %>">
-<header>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="<%= root_path %>">Home</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="<%= questions_path %>">Questions</a>
-        </li>
-      </ul>
-      <%= form_tag search_searches_path, class: 'form-inline mt-2 mt-md-0' do %>
-        <div class="input-group.mb-3">
-          <%= select_tag :model, options_for_select(models), class: 'btn btn-outline-secondary dropdown-toggle' %>
-          <%= text_field_tag :query, nil, placeholder: 'Search', class: 'form-control mr-sm-2' %>
-        </div>
-        <%= submit_tag "Search", class: 'btn btn-outline-success my-2 my-sm-0' %>
-      <% end %>
-      <% if user_signed_in? %>
-        <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'btn btn-outline-danger' %>
-      <% else %>
-        <%= link_to 'Sign in', new_user_session_path, class: 'btn btn-outline-success' %>
-        <%= link_to 'Sign up', new_user_registration_path, class: 'btn btn-outline-primary' %>
-      <% end %>
+<main role="main" class="container-fluid">
+  <header id="header">
+    <div class="row">
+      <div class="col-md-2 logo text-center">
+        <a href="<%= root_path %>">
+          <img src="/images/home.png" alt="rss feed" style="height: 46px" />
+        </a>
+      </div>
+      <div class="col-md-8">
+        <%= form_tag search_searches_path, class: 'form-inline mt-2 mt-md-0' do %>
+          <div class="input-group.mb-3">
+            <%= select_tag :model, options_for_select(models), class: 'btn btn-outline-secondary dropdown-toggle' %>
+            <%= text_field_tag :query, @query, placeholder: 'Search', class: 'form-control mr-sm-2' %>
+            <%= submit_tag "Search", class: 'btn btn-outline-success my-2 my-sm-0' %>
+          </div>
+        <% end %>
+      </div>
+      <div class="col-md-2 text-center">
+        <% if user_signed_in? %>
+          <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'btn btn-lg btn-outline-danger' %>
+        <% else %>
+          <%= link_to 'Sign in', new_user_session_path, class: 'btn btn-lg btn-outline-success' %>
+          <%= link_to 'Sign up', new_user_registration_path, class: 'btn btn-lg btn-outline-primary' %>
+        <% end %>
+      </div>
     </div>
-  </nav>
-</header>
-<main role="main" class="container">
-  <div class="container">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-  </div>
-  <%= yield %>
 
+  </header>
+  <div class="row">
+    <div class="col-md-2 border-right">
+      <div class="side-menu border-bottom">
+        <p><%= link_to 'Ask a question', new_question_path, class: 'btn btn-primary ask-question' %>
+      </div>
+      <div class="side-menu list-group border-bottom">
+        <%= link_to questions_path, class: 'list-group-item list-group-item-action' do %>
+          <span class="oi oi-question-mark"></span>
+          &nbsp;Questions
+        <% end %>
+        <%= link_to tags_path, class: 'list-group-item list-group-item-action' do %>
+          <span class="oi oi-tag"></span>
+          &nbsp;Tags
+        <% end %>
+      </div>
+      <div class="side-menu ">
+        ©2018 <br>
+        <a href="/">Terms &amp; Privacy</a>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <% if notice %>
+        <p class="notice text-center"><%= notice %></p>
+      <% end %>
+      <% if alert %>
+        <p class="alert text-center"><%= alert %></p>
+      <% end %>
+      <%= yield %>
+    </div>
+    <div class="col-md-2 border-left right-column">
+      <div>
+        <div class="total">
+          <p class="text-grey">Questions</p>
+          <p>
+            <span><%= Question.count %></span>
+          </p>
+        </div>
+        <div class="total">
+          <p class="text-grey">Answers</p>
+          <p>
+            <span><%= Answer.count %></span>
+          </p>
+        </div>
+        <div class="total">
+          <p class="text-grey">Comments</p>
+          <p>
+            <span><%= Comment.count %></span>
+          </p>
+        </div>
+      </div>
+      <div class="tags">
+        <p class="border-bottom text-uppercase">
+          most used tags
+        </p>
+      </div>
+      <div id='tag_cloud'>
+        <% Question.tag_counts.order(taggings_count: :desc).limit(5).each do |tag| %>
+          <h3>
+            <%= link_to tag_path(tag.name), class: 'badge badge-pill badge-light' do %>
+              <%= tag.name.upcase %>
+              <span class="badge badge-dark counter"><%= tag.taggings_count %></span>
+            <% end %>
+          </h3>
+        <% end %>
+        <%= link_to 'more tags', tags_path %>
+      </div>
+    </div>
+  </div>
 </main>
 </body>
+
 </html>

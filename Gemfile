@@ -11,7 +11,6 @@ gem 'rails', '~> 5.1.5'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'unicorn'
 gem 'puma'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -61,19 +60,17 @@ gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', require: nil
 gem 'whenever', :require => false
 # Use sphinx as full text search
-gem 'mysql2'
-gem 'thinking-sphinx'
+# gem 'mysql2'
+# gem 'thinking-sphinx'
+gem 'searchkick'
 
 gem 'redis-rails'
-# Use Capistrano for deployment
-group :development do
-  gem 'capistrano', require: false
-  gem 'capistrano-bundler', require: false
-  gem 'capistrano-rails', require: false
-  gem 'capistrano-rvm', require: false
-  gem 'capistrano-sidekiq', require: false
-  gem 'capistrano3-unicorn', require: false
-end
+
+gem 'acts-as-taggable-on', '~> 5.0'
+
+gem 'webpacker'
+
+gem 'rack-cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -86,7 +83,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
+  gem 'faker'
   gem 'capybara'
   gem 'launchy'
   gem 'database_cleaner'

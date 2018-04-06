@@ -1,2 +1,21 @@
-= link_to 'Answer', data.question, class: 'badge badge-primary'
-.data= data.body
+.row.text-left.border-bottom class=(data.best? ? 'has-best' : '' ) id=("answer_#{data.id}")
+  h3
+    | Question:
+    '
+    = link_to data.question.title, data.question
+  .col-md-12
+    h6.text-right.font-italic
+      = data.user.email
+  .voting.col-sm-1
+    div id=("answer_#{data.id}-errors")
+    p.circle id=("rating_#{data.id}") = data.rating
+  .col-sm-11
+    p.answer
+      = data.body
+    ul.answer-attachments
+      -data.attachments.each do |a|
+        li
+          = link_to a.file.identifier, a.file.url
+          |
+          - if a.attachable.author? current_user
+            = link_to 'Remove file', attachment_path(a), method: :delete, class: 'btn btn-outline-danger btn-sm'

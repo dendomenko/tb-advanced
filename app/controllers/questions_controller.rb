@@ -10,7 +10,11 @@ class QuestionsController < ApplicationController
   respond_to :js, only: [:update]
 
   def index
-    @questions = Question.all
+    if params[:tag]
+      @questions = Question.tagged_with(params[:tag])
+    else
+      @questions = Question.all
+    end
     respond_with(authorize(@questions))
   end
 
@@ -61,6 +65,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, attachments_attributes: %i[file _destroy])
+    params.require(:question).permit(:title, :tag_list, :body, attachments_attributes: %i[file _destroy])
   end
 end

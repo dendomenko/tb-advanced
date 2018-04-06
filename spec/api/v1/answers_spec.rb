@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Questions API' do
+RSpec.describe 'Answers API' do
   describe 'GET /index' do
     let!(:question) { create(:question) }
     it_behaves_like 'API Authenticable' do
@@ -25,7 +25,7 @@ RSpec.describe 'Questions API' do
         expect(response.body).to have_json_size(2)
       end
 
-      %w[id body created_at updated_at].each do |attr|
+      %w[id body created_at].each do |attr|
         it "answer object contains #{attr}" do
           expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("0/#{attr}")
         end
@@ -56,7 +56,7 @@ RSpec.describe 'Questions API' do
         expect(response).to be_success
       end
 
-      %w[id body created_at updated_at].each do |attr|
+      %w[id body created_at].each do |attr|
         it "question object contains #{attr}" do
           expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path(attr)
         end

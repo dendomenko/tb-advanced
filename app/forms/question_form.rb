@@ -9,6 +9,8 @@ class QuestionForm
 
   validates :body, :title, presence: true
 
+  attr_accessor :tag_list
+
   delegate :title, :body, :user_id, to: :question
 
   def initialize(user)
@@ -20,7 +22,7 @@ class QuestionForm
   end
 
   def submit(params)
-    question.attributes = params.require(:question_form).permit(:title, :body)
+    question.attributes = params.require(:question_form).permit(:title, :body, :tag_list)
     params[:file]&.each do |file|
       question.attachments.build(file: file)
     end

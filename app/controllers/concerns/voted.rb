@@ -30,6 +30,7 @@ module Voted
 
   def save_vote
     respond_to do |format|
+      puts 'test -----------------------------------------------------------------------------------------------------'
       if @vote.save
         format.json { render json: { id: @votable.id, rating: @votable.rating } }
       else

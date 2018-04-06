@@ -19,4 +19,9 @@ module ApplicationHelper
     max_updated_at = klass.maximum(:updated_at).try(:utc).try(:to_s, :number)
     "#{model.to_s.pluralize}/#{resource.class}/#{resource.id}/collection-#{max_updated_at}"
   end
+
+  def avatar_url(user, size)
+    gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
+    "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
+  end
 end

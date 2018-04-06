@@ -1,5 +1,5 @@
 - cache comment do
-  .comment
+  .comment.border-bottom.text-right
     | Comment by
-    span.text-right.font-italic<= "#{comment.user.email} #{datetime(comment.created_at)}"
-    p= comment.text
+    span.font-italic<= "#{comment.user.email} #{datetime(comment.created_at)}"
+    p.text-left= comment.text

@@ -23,6 +23,7 @@ feature 'Create comment for question', %q{
 
       Capybara.using_session('user') do
         within '.new-question-comment' do
+          click_on 'Comment'
           fill_in 'Text', with: 'Test comment'
           click_on 'Add Comment'
         end

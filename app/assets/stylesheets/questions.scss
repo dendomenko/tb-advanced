@@ -9,3 +9,48 @@
 .question-errors, #answers-errors {
   color: red
 }
+
+.ask-question {
+  width: 100%;
+  background-color: #3498db;
+  text-transform: uppercase;
+}
+
+.cardic {
+  position: relative;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+.rating, .answers {
+  font-size: 14px;
+  text-transform: lowercase;
+}
+
+.has-best {
+  background-color: #1abc9c1a !important;
+}
+
+.total {
+  margin-top: 50px;
+  border-left: 4px solid #3498db;
+  margin-bottom: 30px;
+  line-height: .6;
+}
+
+.total p {
+  padding-left: 5px;
+}
+
+.total p span {
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 30px;
+  display: block;
+  color: #2c3e50;
+  padding-top: 16px;
+}

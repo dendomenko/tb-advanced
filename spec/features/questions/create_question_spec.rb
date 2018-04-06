@@ -12,7 +12,7 @@ feature 'Create question', %q{
     sign_in user
 
     visit questions_path
-    click_on 'Ask question'
+    click_on 'Ask a question'
     fill_in 'Title', with: 'Test question'
     fill_in 'Body', with: 'test test'
     click_on 'Create'
@@ -22,7 +22,7 @@ feature 'Create question', %q{
 
   scenario 'Not authenticated user tries creates question' do
     visit questions_path
-    click_on 'Ask question'
+    click_on 'Ask a question'
 
     expect(page).to have_content 'You need to sign in or sign up'
   end
@@ -39,7 +39,7 @@ feature 'Create question', %q{
       end
 
       Capybara.using_session('user') do
-        click_on 'Ask question'
+        click_on 'Ask a question'
         fill_in 'Title', with: 'Test question'
         fill_in 'Body', with: 'test text'
         click_on 'Create'

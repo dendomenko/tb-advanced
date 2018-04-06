@@ -12,8 +12,11 @@ function editQuestionEvent() {
 
 function voteQuestionEvent() {
     function showNewRating(e) {
+        console.log('test');
         var response;
         response = JSON.parse(e.detail[2].response);
+
+
         $('.question-rating').html(response.rating);
         $('.unvote-question').show();
     }
@@ -31,11 +34,13 @@ function voteQuestionEvent() {
         });
     }
 
-    $('.quesion-voting').bind('ajax:success', showNewRating).bind('ajax:error', showVotingErrors);
+    $('.question-voting').bind('ajax:success', showNewRating).bind('ajax:error', showVotingErrors);
 }
 
 function unvoteQuesionEvent() {
     function removeVote(e) {
+        console.log('test');
+
         var xhr;
         xhr = e.detail[2];
         $('.question-rating').html(xhr.responseText);
@@ -45,10 +50,23 @@ function unvoteQuesionEvent() {
     $('.unvote-question').bind('ajax:success', removeVote);
 }
 
+function showQuestionCommentForm() {
+    function toggleForm(e) {
+        e.preventDefault();
+        $('.question-comment-form').toggleClass('hidden');
+    }
+    $('.show-question-comment-form').click(toggleForm);
+
+    $('.add-comment').click(function (e) {
+       $(this).parent().parent().addClass('hidden');
+    });
+}
+
 function questionEvents() {
     editQuestionEvent();
     voteQuestionEvent();
     unvoteQuesionEvent();
+    showQuestionCommentForm();
 }
 
 function questionChannel() {

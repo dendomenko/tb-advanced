@@ -24,6 +24,11 @@ config/database.yml
 .idea/
 
 public/uploads/
+public/packs/
 
 config/*.sphinx.conf
-db/sphinx
+db/sphinx/public/packs
+/public/packs-test
+/node_modules
+yarn-debug.log*
+.yarn-integrity

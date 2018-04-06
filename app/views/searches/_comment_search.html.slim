@@ -1,2 +1,8 @@
-= link_to_question(data)
-.data= data.text
+h3
+  | Question:
+  '
+  = link_to_question(data)
+.comment.border-bottom.text-right
+  | Comment by
+  span.font-italic<= "#{data.user.email} #{datetime(data.created_at)}"
+  p.text-left= data.text

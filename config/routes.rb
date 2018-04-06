@@ -24,12 +24,15 @@ Rails.application.routes.draw do
   get 'confirm/:link', to: 'users#confirm', as: 'confirm'
   post 'send_confirmation', to: 'users#send_confirmation'
 
+  get 'tags/:tag', to: 'questions#index', as: :tag
   resources :questions, except: %i[edit], concerns: [:votable, :commentable] do
     resources :answers, except: %i[edit new show], concerns: [:votable, :commentable] do
       patch 'best', on: :member
     end
     resources :subscriptions, only: %i[create destroy]
   end
+
+  resource :tags, only: [:show]
 
   resource :searches, only: [] do
     post 'search'

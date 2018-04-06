@@ -16,14 +16,14 @@ feature 'Get updates of question to email', %q{
 
     scenario 'User subscribe for question' do
       visit question_path(question)
-      find('.octicon-mail').click
+      find('.oi-envelope-open').click
       expect(page).to have_content 'Subscribed for question updates'
     end
 
     scenario 'User unsubscribe from question' do
       subscription
       visit question_path(question)
-      find('.octicon-stop').click
+      find('.oi-ban').click
       expect(page).to have_content 'Unsubscribed for question updates'
     end
   end
@@ -31,7 +31,7 @@ feature 'Get updates of question to email', %q{
   describe 'Non-authenticated user' do
     scenario 'User does not see subscribe button' do
       visit question_path(question)
-      expect(page).to_not have_css '.octicon-mail'
+      expect(page).to_not have_css '.oi-envelope-open'
     end
   end
 end
