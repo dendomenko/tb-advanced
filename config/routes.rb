@@ -52,4 +52,12 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  namespace :api do
+    namespace :v2 do
+      post 'auth_user' => 'authentication#authenticate_user'
+      get 'home' => 'home#index'
+    end
+  end
+
 end
