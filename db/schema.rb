@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180323152619) do
+ActiveRecord::Schema.define(version: 20180406100521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,21 @@ ActiveRecord::Schema.define(version: 20180323152619) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "genres", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "movies", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.date "year"
+    t.string "poster"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer "resource_owner_id", null: false
     t.bigint "application_id", null: false
@@ -93,6 +108,22 @@ ActiveRecord::Schema.define(version: 20180323152619) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
+  end
+
+  create_table "people", force: :cascade do |t|
+    t.string "first_name"
+    t.string "middle_name"
+    t.string "last_name"
+    t.date "birthday"
+    t.string "country"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "positions", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "questions", force: :cascade do |t|
@@ -153,6 +184,26 @@ ActiveRecord::Schema.define(version: 20180323152619) do
     t.boolean "admin"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "video_genres", force: :cascade do |t|
+    t.bigint "genre_id"
+    t.bigint "movie_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["genre_id"], name: "index_video_genres_on_genre_id"
+    t.index ["movie_id"], name: "index_video_genres_on_movie_id"
+  end
+
+  create_table "video_positions", force: :cascade do |t|
+    t.bigint "movie_id"
+    t.bigint "person_id"
+    t.bigint "position_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["movie_id"], name: "index_video_positions_on_movie_id"
+    t.index ["person_id"], name: "index_video_positions_on_person_id"
+    t.index ["position_id"], name: "index_video_positions_on_position_id"
   end
 
   create_table "votes", force: :cascade do |t|
