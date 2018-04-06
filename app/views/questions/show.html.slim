@@ -3,16 +3,9 @@
   #question.container-fluid.question data={'question-id': @question.id }
     .question-errors
     .question-data.row
-      / .voting.col-sm-1
-        / = link_to upvote_question_path(@question), method: :post, remote: true, data: { type: :json }, class: 'question-voting' do
-        /   span.oi.oi-chevron-top
-        / p.circle.question-rating= @question.rating
-        / = link_to downvote_question_path(@question), method: :post, remote: true, data: { type: :json }, class: 'question-voting' do
-        /   span.oi.oi-chevron-bottom
-        / = link_to unvote_question_path(@question), method: :delete, remote: true, data: { type: :json }, class: 'unvote-question', style: display_voted(@question) do
-        /   span.oi.oi-x
-        / = subscription_link(@question)
-      voting v-bind:id="#{@question.id}" v-bind:initial-rating="#{@question.rating}"
+      .col-sm-1
+        voting v-bind:initial-rating="#{@question.rating}" v-bind:url="'#{question_url(@question)}'" v-bind:initial-is-voted="#{@question.voted?(current_user&.id)}"
+        subscription v-bind:url="'#{question_url(@question)}'" v-bind:initial-is-subscribed="#{@question.subscribed?(current_user&.id)}"
       .align-items-center.col-sm-11
         .col.info.border-bottom
           p.text-left= @question.body
@@ -45,4 +38,3 @@
 
 script type="text/html" id="answer_template"
   = render 'answers/answer-cable'
-  / = javascript_pack_tag 'questions'

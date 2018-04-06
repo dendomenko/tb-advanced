@@ -20,6 +20,8 @@ services:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
     volumes:
       - .:/var/ruby/moviebase
+    stdin_open: true
+    tty: true
   sidekiq:
     container_name: sidekiq
     build: .
