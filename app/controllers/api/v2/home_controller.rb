@@ -4,7 +4,7 @@ module Api
       before_action :authenticate_request!
 
       def index
-        render json: { logget_id: true }
+        render json: { logged_id: true }
       end
     end
   end

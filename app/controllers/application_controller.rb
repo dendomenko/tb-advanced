@@ -1,13 +1,17 @@
 require 'application_responder'
 
 class ApplicationController < ActionController::Base
-  include Pundit
-  self.responder = ApplicationResponder
-  respond_to :html, :json
+  # include Pundit
+  # self.responder = ApplicationResponder
+  # respond_to :html, :json
+  #
+  # protect_from_forgery with: :exception
+  #
+  # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-  protect_from_forgery with: :exception
-
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  def index
+    render inline: '', layout: 'application' # Avoid having an empty view file.
+  end
 
   private
 
