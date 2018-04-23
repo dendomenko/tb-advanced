@@ -5,6 +5,14 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  namespace :api do
+    namespace :v2 do
+      post 'auth_user' => 'authentication#authenticate_user'
+      get 'home' => 'home#index'
+      resources :movies, only: %i[index show]
+    end
+  end
+
   get '/', to: 'application#index', format: false
   get '/*path', to: 'application#index', format: false
 
@@ -55,12 +63,4 @@ Rails.application.routes.draw do
       end
     end
   end
-
-  namespace :api do
-    namespace :v2 do
-      post 'auth_user' => 'authentication#authenticate_user'
-      get 'home' => 'home#index'
-    end
-  end
-
 end

@@ -4,14 +4,16 @@
         <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
         <b-navbar-brand href="#">
-            <img src="/images/home.png" alt="rss feed" style="height: 46px"/>
+            <router-link to="/">
+                <img src="/images/home.png" alt="rss feed" style="height: 46px"/>
+            </router-link>
         </b-navbar-brand>
 
         <b-collapse is-nav id="nav_collapse">
 
             <b-navbar-nav>
-                <b-nav-item href="#">Link</b-nav-item>
-                <b-nav-item href="#" disabled>Disabled</b-nav-item>
+                <router-link to="/movies" class="nav-link">Movies</router-link>
+                <router-link to="/actors" class="nav-link">Actors</router-link>
             </b-navbar-nav>
 
             <b-nav-form>

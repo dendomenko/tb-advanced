@@ -2,7 +2,8 @@ import Vue from "vue/dist/vue.esm";
 
 const state = {
   isLogged: false,
-  authToken: ""
+  authToken: null,
+  userId: null
 };
 
 const mutations = {
@@ -13,16 +14,24 @@ const mutations = {
         // response.json();
         state.isLogged = true;
         state.authToken = response.data.auth_token;
+        state.userId = response.data.user.id;
         Vue.localStorage.set("authToken", state.authToken);
+        Vue.localStorage.set("userId", state.userId);
       })
       .catch(error => {
-        rootState.errors.errorState = error.body.errors[0];
         console.log(error.body.errors[0]);
       });
   },
   'SIGN_OUT'(state) {
     state.isLogged = false;
+    state.userId = null;
+    state.authToken = null;
+
     Vue.localStorage.set("authToken", null);
+    Vue.localStorage.set("userId", null);
+  },
+  'SIGN_UP'(state, { email, password }) {
+    console.log('Should be implemented');
   }
 };
 
@@ -31,6 +40,9 @@ const actions = {
     commit("SIGN_IN", user);
   },
   signOut: ({ commit }) => {
+    commit("SIGN_OUT");
+  },
+  signUp: ({ commit }, payload) => {
     commit("SIGN_OUT");
   }
 };

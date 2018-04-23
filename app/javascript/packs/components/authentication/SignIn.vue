@@ -3,20 +3,18 @@
         <div class="col-md-4"></div>
         <div class="col-md-4">
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-                <b-form-group id="exampleInputGroup1"
-                              label="Email address:"
-                              label-for="exampleInput1">
-                    <b-form-input id="exampleInput1"
+                <b-form-group label="Email address:"
+                              label-for="email">
+                    <b-form-input id="email"
                                   type="email"
                                   v-model="form.email"
                                   required
                                   placeholder="Enter email">
                     </b-form-input>
                 </b-form-group>
-                <b-form-group id="exampleInputGroup2"
-                              label="Your Name:"
-                              label-for="exampleInput2">
-                    <b-form-input id="exampleInput2"
+                <b-form-group label="Your Password:"
+                              label-for="password">
+                    <b-form-input id="password"
                                   type="password"
                                   v-model="form.password"
                                   required
@@ -50,7 +48,7 @@
             }),
             onSubmit(evt) {
                 evt.preventDefault();
-                this.signIn(this.form);
+                this.signIn(this.form).then(response => console.log(response));
             },
             onReset(evt) {
                 evt.preventDefault();
