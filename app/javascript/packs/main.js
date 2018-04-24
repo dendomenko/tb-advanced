@@ -14,6 +14,7 @@ Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 Vue.use(VueLocalStorage);
 Vue.use(TurbolinksAdapter);
+Vue.use(require('vue-moment'));
 
 Vue.http.options.root = "http://localhost:3000/api/v2/";
 

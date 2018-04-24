@@ -2,7 +2,7 @@ module Api
   module V2
     class MoviesController < Api::V2::ApplicationController
       def index
-        render json: Movie.all
+        render json: Movie.all.order(:created_at)
       end
 
       def show

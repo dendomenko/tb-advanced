@@ -31,7 +31,7 @@
                 movies: []
             }
         },
-        beforeMount() {
+        created() {
             Vue.http.get('movies')
                 .then(response => {
                     this.movies = response.data;
