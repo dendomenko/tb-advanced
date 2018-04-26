@@ -20,6 +20,10 @@ class Question < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
+  def subscribed?(user_id)
+    subscriptions.find_by(user_id: user_id) ? true : false
+  end
+
   private
 
   def subscribe_user

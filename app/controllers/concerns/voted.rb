@@ -13,7 +13,6 @@ module Voted
   end
 
   def downvote
-    authorize @votable, :present?
     authorize @votable, :not_author?
     @vote = @votable.add_vote(current_user.id, -1)
     save_vote
@@ -30,12 +29,11 @@ module Voted
 
   def save_vote
     respond_to do |format|
-      puts 'test -----------------------------------------------------------------------------------------------------'
       if @vote.save
-        format.json { render json: { id: @votable.id, rating: @votable.rating } }
+        format.json { render json: { rating: @votable.rating } }
       else
         format.json do
-          render json: { id: @votable.id, errors: @vote.errors.messages.values },
+          render json: { errors: @vote.errors.messages },
                  status: 422
         end
       end

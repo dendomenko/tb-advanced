@@ -5,42 +5,54 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
-  use_doorkeeper
-  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
-  root to: 'questions#index'
-
-  concern :votable do
-    member do
-      post :upvote
-      post :downvote
-      delete :unvote
+  namespace :api do
+    namespace :v2 do
+      post 'auth_user' => 'authentication#authenticate_user'
+      get 'home' => 'home#index'
+      resources :movies, only: %i[index show]
+      resources :news, only: %i[index show]
     end
   end
 
-  concern :commentable do
-    post :comment, on: :member
-  end
+  get '/', to: 'application#index', format: false
+  get '/*path', to: 'application#index', format: false
 
-  get 'confirm/:link', to: 'users#confirm', as: 'confirm'
-  post 'send_confirmation', to: 'users#send_confirmation'
-
-  get 'tags/:tag', to: 'questions#index', as: :tag
-  resources :questions, except: %i[edit], concerns: [:votable, :commentable] do
-    resources :answers, except: %i[edit new show], concerns: [:votable, :commentable] do
-      patch 'best', on: :member
-    end
-    resources :subscriptions, only: %i[create destroy]
-  end
-
-  resource :tags, only: [:show]
-
-  resource :searches, only: [] do
-    post 'search'
-  end
-
-  resources :attachments, only: :destroy
-
-  mount ActionCable.server => "/cable"
+  # use_doorkeeper
+  # devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+  # root to: 'questions#index'
+  #
+  # concern :votable do
+  #   member do
+  #     post :upvote
+  #     post :downvote
+  #     delete :unvote
+  #   end
+  # end
+  #
+  # concern :commentable do
+  #   post :comment, on: :member
+  # end
+  #
+  # get 'confirm/:link', to: 'users#confirm', as: 'confirm'
+  # post 'send_confirmation', to: 'users#send_confirmation'
+  #
+  # get 'tags/:tag', to: 'questions#index', as: :tag
+  # resources :questions, except: %i[edit], concerns: [:votable, :commentable] do
+  #   resources :answers, except: %i[edit new show], concerns: [:votable, :commentable] do
+  #     patch 'best', on: :member
+  #   end
+  #   resource :subscriptions, only: %i[create destroy]
+  # end
+  #
+  # resource :tags, only: [:show]
+  #
+  # resource :searches, only: [] do
+  #   post 'search'
+  # end
+  #
+  # resources :attachments, only: :destroy
+  #
+  # mount ActionCable.server => "/cable"
 
   namespace :api do
     namespace :v1 do

@@ -3,15 +3,8 @@
     .col-md-12
       h6.text-right.font-italic
         = answer.user.email
-    .voting.col-sm-1
-      div id=("answer_#{answer.id}-errors")
-      = link_to upvote_question_answer_path(@question, answer), method: :post, remote: true, data: { type: :json }, class: 'answer-voting' do
-        span.oi.oi-chevron-top
-      p.circle id=("rating_#{answer.id}") = answer.rating
-      = link_to downvote_question_answer_path(@question, answer), method: :post, remote: true, data: { type: :json }, class: 'answer-voting' do
-        span.oi.oi-chevron-bottom
-      = link_to unvote_question_answer_path(@question, answer), method: :delete, remote: true, data: {type: :json, id: answer.id}, class: "unvote-answer", style: display_voted(answer) do
-        span.oi.oi-x
+    .col-md-1
+      voting v-bind:initial-rating="#{answer.rating}" v-bind:url="'#{question_answer_url(answer.question, answer)}'" v-bind:initial-is-voted="#{answer.voted?(current_user&.id)}"
     .col-sm-11
       p.answer
         = answer.body
