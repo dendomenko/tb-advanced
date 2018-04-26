@@ -7,19 +7,17 @@
 </template>
 
 <script>
-    import Vue from "vue/dist/vue.esm";
+  import {mapGetters} from 'vuex';
 
-    export default {
-        data(){
-            return {
-                item: {}
-            }
-        },
-        created() {
-            Vue.http.get('news/' + this.$route.params.id)
-                .then(response => {
-                    this.item = response.data;
-                });
-        }
+  export default {
+    computed: {
+      ...mapGetters({
+        loading: 'news_item/loading',
+        item: 'news_item/item'
+      })
+    },
+    created() {
+      this.$store.dispatch('news_item/loadNewsItem', this.$route.params.id);
     }
+  }
 </script>

@@ -24,11 +24,6 @@
     },
     created() {
       this.$store.dispatch('movie/loadMovie', this.$route.params.id);
-      //
-      // Vue.http.get('movies/' + this.$route.params.id)
-      //   .then(response => {
-      //     this.movie = response.data;
-      //   });
     },
     components: {
       appActor: Actor

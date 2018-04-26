@@ -1,16 +1,16 @@
 import api from "../../api";
 
 const state = {
-  list: [],
-  loading: false
+  loading: false,
+  item: {}
 };
 
 const getters = {
   loading(state) {
     return state.loading;
   },
-  list(state) {
-    return state.list;
+  item(state) {
+    return state.item;
   }
 };
 
@@ -18,21 +18,22 @@ const mutations = {
   SET_LOADING(state, loading) {
     state.loading = loading;
   },
-  SET_NEWS(state, data) {
-    state.list = data.news;
+  SET_NEWS_ITEM(state, data) {
+    state.item = data;
   }
 };
 
 const actions = {
-  loadNews: ({ commit }) => {
+  loadNewsItem({commit}, id) {
     commit("SET_LOADING", true);
     return api.news
-      .index()
+      .getNewsItem(id)
       .then(data => {
-        commit("SET_NEWS", data);
+        console.log(data);
+        commit("SET_NEWS_ITEM", data);
       })
       .catch(() => {
-        commit("SET_NEWS", { news: [] });
+        commit("SET_NEWS_ITEM", {});
       })
       .finally(() => {
         commit("SET_LOADING", false);
@@ -44,6 +45,6 @@ export default {
   namespaced: true,
   state,
   mutations,
-  actions,
-  getters
+  getters,
+  actions
 };

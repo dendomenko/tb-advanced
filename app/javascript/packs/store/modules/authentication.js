@@ -30,7 +30,7 @@ const mutations = {
     state.userId = null;
     state.authToken = null;
   },
-  SIGN_UP(state, {email, password}) {
+  SIGN_UP(state, { email, password }) {
     console.log('Should be implemented');
   }
 };
@@ -41,9 +41,10 @@ const actions = {
       .signIn(data)
       .then(data => {
         commit("SIGN_IN", data);
+        commit("error/CLEAN_ERROR", null, { root: true });
       })
       .catch((error) => {
-        commit('error/SET_ERROR', error.body.error, {root: true});
+        commit("error/SET_ERROR", error.body.error, { root: true });
       });
   },
   signOut: ({commit}) => {

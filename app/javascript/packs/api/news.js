@@ -1,6 +1,6 @@
 import Vue from "vue/dist/vue.esm";
 
-const toNews = (item) => {
+const toNews = item => {
   const newsItem = {
     id: item.id,
     title: item.title,
@@ -17,9 +17,9 @@ export const index = () =>
         const data = response.data;
         const news = [];
         data.forEach(item => {
-          news.push(toNews(item, false));
+          news.push(toNews(item));
         });
-        return resolve({news});
+        return resolve({ news });
       })
       .catch(error => reject(error));
   });
@@ -30,7 +30,7 @@ export const getNewsItem = id =>
       .get(`news/${id}`)
       .then(response => {
         const data = response.data;
-        const newsItem = toNews(data, true);
+        const newsItem = toNews(data);
         return resolve(newsItem);
       })
       .catch(error => reject(error));

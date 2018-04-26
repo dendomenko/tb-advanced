@@ -6,6 +6,7 @@ import error from "./modules/error";
 import movies from "./modules/movies";
 import movie from "./modules/movie";
 import news from "./modules/news";
+import news_item from "./modules/news_item";
 
 Vue.use(Vuex);
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
     authentication,
     movies,
     movie,
-    news
+    news,
+    news_item
   }
 });
