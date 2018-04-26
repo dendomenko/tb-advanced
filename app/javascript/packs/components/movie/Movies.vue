@@ -23,19 +23,17 @@
 </template>
 
 <script>
-    import Vue from "vue/dist/vue.esm";
+  import { mapGetters } from 'vuex';
 
-    export default {
-        data() {
-            return {
-                movies: []
-            }
-        },
-        created() {
-            Vue.http.get('movies')
-                .then(response => {
-                    this.movies = response.data;
-                });
-        }
+  export default {
+    computed: {
+      ...mapGetters({
+        loading: 'movies/loading',
+        movies: 'movies/list'
+      })
+    },
+    created() {
+        this.$store.dispatch('movies/loadMovies');
     }
+  }
 </script>

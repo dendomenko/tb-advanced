@@ -1,5 +1,3 @@
-import Vue from "vue/dist/vue.esm";
-
 const state = {
   isLogged: false,
   authToken: null,

@@ -3,31 +3,27 @@
         <template slot="header">
             Latest News About Movies And TV-Series
         </template>
-        <template slot="lead">
-        </template>
         <hr class="my-4">
         <app-news v-for="item in news" :news="item"></app-news>
     </b-jumbotron>
 </template>
 
 <script>
-    import Vue from "vue/dist/vue.esm";
-    import News from './News.vue';
+  import News from './News.vue';
+  import {mapGetters} from 'vuex';
 
-    export default {
-        data() {
-            return {
-                news: []
-            }
-        },
-        components: {
-            appNews: News
-        },
-        created() {
-            Vue.http.get('news')
-                .then(response => {
-                    this.news = response.data;
-                });
-        }
+  export default {
+    computed: {
+      ...mapGetters({
+        loading: 'news/loading',
+        news: 'news/list'
+      })
+    },
+    components: {
+      appNews: News
+    },
+    created() {
+      this.$store.dispatch('news/loadNews');
     }
+  }
 </script>

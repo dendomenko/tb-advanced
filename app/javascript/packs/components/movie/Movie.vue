@@ -12,23 +12,26 @@
 </template>
 
 <script>
-    import Vue from "vue/dist/vue.esm";
-    import Actor from "./Actor.vue";
+  import Actor from "./Actor.vue";
+  import {mapGetters} from 'vuex';
 
-    export default {
-        data() {
-            return {
-                movie: {}
-            }
-        },
-        created() {
-            Vue.http.get('movies/' + this.$route.params.id)
-                .then(response => {
-                    this.movie = response.data;
-                });
-        },
-        components: {
-            appActor: Actor
-        }
+  export default {
+    computed: {
+      ...mapGetters({
+        loading: 'movie/loading',
+        movie: 'movie/item'
+      })
+    },
+    created() {
+      this.$store.dispatch('movie/loadMovie', this.$route.params.id);
+      //
+      // Vue.http.get('movies/' + this.$route.params.id)
+      //   .then(response => {
+      //     this.movie = response.data;
+      //   });
+    },
+    components: {
+      appActor: Actor
     }
+  }
 </script>
