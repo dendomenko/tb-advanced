@@ -1,25 +1,29 @@
 <template>
     <b-alert
             class="text-center"
-            :show="showDismissibleAlert"
+            :show="showError"
             dismissible
             variant="danger"
-            @dismissed="showDismissibleAlert=false">
+            @dismissed="hideErrors">
         {{ errorText }}
     </b-alert>
 </template>
 
 <script>
-    export default {
-        data () {
-            return {
-                showDismissibleAlert: true
-            }
-        },
-        computed: {
-          errorText() {
-            return this.$store.getters.getErrorText;
-          }
-        }
+  import {mapGetters} from 'vuex';
+  import {mapActions} from 'vuex';
+
+  export default {
+    computed: {
+      ...mapGetters({
+        errorText: 'error/errorText',
+        showError: 'error/show'
+      })
+    },
+    methods: {
+      ...mapActions({
+        hideErrors: 'error/cleanError'
+      })
     }
+  }
 </script>

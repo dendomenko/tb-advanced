@@ -30,37 +30,44 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
+  import {mapGetters} from 'vuex';
 
-    export default {
-        data() {
-            return {
-                form: {
-                    email: '',
-                    password: '',
-                },
-                show: true
-            }
+  export default {
+    data() {
+      return {
+        form: {
+          email: '',
+          password: '',
         },
-        methods: {
-            ...mapActions({
-                signIn: "signIn",
-            }),
-            onSubmit(evt) {
-                evt.preventDefault();
-                this.signIn(this.form).then(response => console.log(response));
-            },
-            onReset(evt) {
-                evt.preventDefault();
-                /* Reset our form values */
-                this.form.email = '';
-                this.form.password = '';
-                /* Trick to reset/clear native browser form validation state */
-                this.show = false;
-                this.$nextTick(() => {
-                    this.show = true
-                });
+        show: true
+      }
+    },
+    computed: {
+      ...mapGetters({
+        isLogged: 'authentication/isLogged'
+      })
+    },
+    methods: {
+      onSubmit(evt) {
+        evt.preventDefault();
+        this.$store.dispatch('authentication/signIn', this.form)
+          .then(() => {
+            if (this.isLogged) {
+              this.$router.push('/');
             }
-        }
+          });
+      },
+      onReset(evt) {
+        evt.preventDefault();
+        /* Reset our form values */
+        this.form.email = '';
+        this.form.password = '';
+        /* Trick to reset/clear native browser form validation state */
+        this.show = false;
+        this.$nextTick(() => {
+          this.show = true
+        });
+      }
     }
+  }
 </script>

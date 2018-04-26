@@ -47,16 +47,17 @@
 
 <script>
     import { mapActions } from 'vuex';
+    import { mapGetters } from 'vuex';
 
     export default {
         computed: {
-            isLogged() {
-                return this.$store.getters.isLogged;
-            }
+          ...mapGetters({
+            isLogged: 'authentication/isLogged'
+          })
         },
         methods: {
             ...mapActions({
-                signOut: "signOut"
+                signOut: "authentication/signOut"
             })
         }
     }
