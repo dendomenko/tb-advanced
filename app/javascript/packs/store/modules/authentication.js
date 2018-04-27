@@ -29,9 +29,6 @@ const mutations = {
     state.isLogged = false;
     state.userId = null;
     state.authToken = null;
-  },
-  SIGN_UP(state, { email, password }) {
-    console.log('Should be implemented');
   }
 };
 
@@ -50,8 +47,16 @@ const actions = {
   signOut: ({commit}) => {
     commit("SIGN_OUT");
   },
-  signUp: ({commit}, payload) => {
-    commit("SIGN_OUT");
+  signUp: ({commit}, data) => {
+    return api.user
+      .signUp(data)
+      .then(data => {
+        commit("SIGN_IN", data);
+        commit("error/CLEAN_ERROR", null, { root: true });
+      })
+      .catch((error) => {
+        commit("error/SET_ERROR", error.body.error, { root: true });
+      });
   }
 };
 
