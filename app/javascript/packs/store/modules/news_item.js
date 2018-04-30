@@ -29,7 +29,6 @@ const actions = {
     return api.news
       .getNewsItem(id)
       .then(data => {
-        console.log(data);
         commit("SET_NEWS_ITEM", data);
       })
       .catch(() => {

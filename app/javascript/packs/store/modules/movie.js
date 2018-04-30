@@ -29,7 +29,6 @@ const actions = {
     return api.movies
       .getMovie(id)
       .then(data => {
-        console.log(data);
         commit("SET_MOVIE", data);
       })
       .catch(() => {

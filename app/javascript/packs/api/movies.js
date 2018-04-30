@@ -22,7 +22,6 @@ export const index = () =>
         const data = response.data;
         const movies = [];
         data.forEach(item => {
-          // console.log(item);
           movies.push(toMovie(item, false));
         });
         return resolve({movies});
@@ -36,7 +35,6 @@ export const getMovie = id =>
       .get(`movies/${id}`)
       .then(response => {
         const data = response.data;
-        console.log(data);
         const movie = toMovie(data, true);
         return resolve(movie);
       })

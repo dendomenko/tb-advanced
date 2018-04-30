@@ -20,7 +20,6 @@ const getters = {
 
 const mutations = {
   SIGN_IN(state, data) {
-    console.log(data);
     state.isLogged = true;
     state.authToken = data.authToken;
     state.userId = data.userId;
