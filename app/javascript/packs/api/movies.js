@@ -10,6 +10,7 @@ const toMovie = (item, full) => {
   if (full) {
     movie.actors = item.actors;
     movie.directors = item.directors;
+    movie.comments = item.comments;
   }
   return movie;
 };

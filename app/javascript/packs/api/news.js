@@ -4,7 +4,8 @@ const toNews = item => {
   const newsItem = {
     id: item.id,
     title: item.title,
-    description: item.description
+    description: item.description,
+    comments: item.comments
   };
   return newsItem;
 };

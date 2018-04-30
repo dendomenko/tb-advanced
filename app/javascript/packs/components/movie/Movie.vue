@@ -1,6 +1,6 @@
 <template>
-    <div class="row">
-        <div class="container">
+    <div class="container">
+        <div class="row">
             <h1>{{ movie.title}}({{ movie.year | moment("YYYY") }})</h1>
             <p>{{ movie.description }}</p>
             <p></p>
@@ -8,11 +8,17 @@
                 <app-actor :actor="actor"></app-actor>
             </div>
         </div>
+        <div class="row">
+            <div v-for="comment in movie.comments">
+                <app-comment :comment="comment"></app-comment>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
   import Actor from "./Actor.vue";
+  import Comment from "../comment/Comment.vue";
   import {mapGetters} from 'vuex';
 
   export default {
@@ -26,7 +32,8 @@
       this.$store.dispatch('movie/loadMovie', this.$route.params.id);
     },
     components: {
-      appActor: Actor
+      appActor: Actor,
+      appComment: Comment
     }
   }
 </script>
