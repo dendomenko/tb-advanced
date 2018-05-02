@@ -20,6 +20,9 @@ const mutations = {
   },
   SET_MOVIE(state, data) {
     state.item = data;
+  },
+  APPEND_COMMENT(state, comment) {
+    state.item.comments.push(comment);
   }
 };
 

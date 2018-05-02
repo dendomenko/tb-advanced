@@ -4,7 +4,8 @@ module Api
       before_action :authenticate_request!
 
       def create
-        render json: { created: @current_user.comments.create(comment_params)}
+        comment = @current_user.comments.create(comment_params)
+        render json: comment, status: :created
       end
 
       private

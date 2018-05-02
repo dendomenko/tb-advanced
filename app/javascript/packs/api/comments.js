@@ -15,7 +15,7 @@ export const addComment = (payload) =>
       })
       .then(response => {
         const data = response.data;
-        console.log(data);
+        // console.log(data);
         return resolve({
           data
         });

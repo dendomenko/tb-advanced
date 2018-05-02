@@ -20,6 +20,9 @@ const mutations = {
   },
   SET_NEWS_ITEM(state, data) {
     state.item = data;
+  },
+  APPEND_COMMENT(state, comment) {
+    state.item.comments.push(comment);
   }
 };
 

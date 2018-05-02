@@ -9,6 +9,7 @@
             </div>
         </div>
         <div class="row">
+            <strong class="text-center">Comments</strong>
             <div v-for="comment in movie.comments">
                 <app-comment :comment="comment"></app-comment>
             </div>

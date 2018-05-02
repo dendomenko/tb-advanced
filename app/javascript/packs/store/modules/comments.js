@@ -21,8 +21,17 @@ const actions = {
     commit("SET_LOADING", true);
     return api.comments
       .addComment(payload)
-      .then(data => {
-        console.log(data);
+      .then(response => {
+        switch (payload.commentable_type) {
+          case "Movie":
+            commit("movie/APPEND_COMMENT", response.data, { root: true });
+            break;
+          case "News":
+            commit("news_item/APPEND_COMMENT", response.data, { root: true });
+            break;
+          default:
+            break;
+        }
       })
       .catch((error) => {
         console.log(error);
