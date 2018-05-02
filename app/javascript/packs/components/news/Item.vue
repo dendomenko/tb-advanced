@@ -9,7 +9,7 @@
             <div v-for="comment in item.comments">
                 <app-comment :comment="comment"></app-comment>
             </div>
-            <app-commnent-form commentable-type="News"></app-commnent-form>
+            <app-comment-form commentable-type="News"></app-comment-form>
         </div>
     </div>
 </template>
@@ -28,7 +28,7 @@
     },
     components: {
       appComment: Comment,
-      appCommnentForm: CommentForm
+      appCommentForm: CommentForm
     },
     created() {
       this.$store.dispatch('news_item/loadNewsItem', this.$route.params.id);

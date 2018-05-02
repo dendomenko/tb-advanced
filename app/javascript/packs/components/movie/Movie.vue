@@ -13,12 +13,16 @@
                 <app-comment :comment="comment"></app-comment>
             </div>
         </div>
+        <div class="row">
+            <app-comment-form commentable-type="Movie"></app-comment-form>
+        </div>
     </div>
 </template>
 
 <script>
   import Actor from "./Actor.vue";
   import Comment from "../comment/Comment.vue";
+  import CommentForm from "../comment/CommentForm.vue";
   import {mapGetters} from 'vuex';
 
   export default {
@@ -33,7 +37,8 @@
     },
     components: {
       appActor: Actor,
-      appComment: Comment
+      appComment: Comment,
+      appCommentForm: CommentForm
     }
   }
 </script>
