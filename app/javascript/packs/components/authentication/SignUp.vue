@@ -42,45 +42,56 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
+  import {mapActions} from 'vuex';
+  import {mapGetters} from 'vuex';
 
-    export default {
-        data() {
-            return {
-                form: {
-                    email: '',
-                    password: '',
-                    passwordConfirmation: ''
-                },
-                invalidPassword: false,
-                show: true
-            }
+  export default {
+    data() {
+      return {
+        form: {
+          email: '',
+          password: '',
+          passwordConfirmation: ''
         },
-        methods: {
-            ...mapActions({
-                signUp: "signUp",
-            }),
-            onSubmit(e) {
-                e.preventDefault();
-                this.signUp(this.form);
-            },
-            onReset(e) {
-                e.preventDefault();
-                this.form.email = '';
-                this.form.password = '';
-                this.form.passwordConfirmation = '';
-                /* Trick to reset/clear native browser form validation state */
-                this.show = false;
-                this.$nextTick(() => {
-                    this.show = true
-                });
-            },
-            validatePassword(e) {
-                // e.preventDefault();
-                if (e.target.id === 'password-confirmation' || e.target.id === 'password') {
-                    this.invalidPassword = this.form.password !== this.form.passwordConfirmation;
-                }
+        invalidPassword: false,
+        show: true
+      }
+    },
+    computed: {
+      ...mapGetters({
+        isLogged: 'authentication/isLogged'
+      })
+    },
+    methods: {
+      ...mapActions({
+        signUp: "authentication/signUp",
+      }),
+      onSubmit(e) {
+        e.preventDefault();
+        this.signUp(this.form)
+          .then(() => {
+            if (this.isLogged) {
+              this.$router.push('/');
             }
+          });
+      },
+      onReset(e) {
+        e.preventDefault();
+        this.form.email = '';
+        this.form.password = '';
+        this.form.passwordConfirmation = '';
+        /* Trick to reset/clear native browser form validation state */
+        this.show = false;
+        this.$nextTick(() => {
+          this.show = true
+        });
+      },
+      validatePassword(e) {
+        // e.preventDefault();
+        if (e.target.id === 'password-confirmation' || e.target.id === 'password') {
+          this.invalidPassword = this.form.password !== this.form.passwordConfirmation;
         }
+      }
     }
+  }
 </script>

@@ -12,7 +12,6 @@ function editQuestionEvent() {
 
 function voteQuestionEvent() {
     function showNewRating(e) {
-        console.log('test');
         var response;
         response = JSON.parse(e.detail[2].response);
 

@@ -8,9 +8,11 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v2 do
       post 'auth_user' => 'authentication#authenticate_user'
+      post 'sign_up' => 'authentication#sign_up'
       get 'home' => 'home#index'
       resources :movies, only: %i[index show]
       resources :news, only: %i[index show]
+      resources :comments, only: %i[create]
     end
   end
 

@@ -6,5 +6,7 @@ class Movie < ApplicationRecord
   has_many :people, through: :video_positions
   has_many :positions, through: :video_positions
 
+  has_many :comments, as: :commentable, dependent: :destroy
+
   validates :title, :description, :year, presence: true
 end
