@@ -9,7 +9,7 @@
             <div v-for="comment in item.comments">
                 <app-comment :comment="comment"></app-comment>
             </div>
-            <app-commnent-form></app-commnent-form>
+            <app-commnent-form commentable-type="News"></app-commnent-form>
         </div>
     </div>
 </template>

@@ -1,8 +1,8 @@
 <template>
     <div>
         <b-form @submit="onSubmit" v-if="isLogged">
-            <b-form-textarea id="textarea1"
-                             v-model="text"
+            <b-form-textarea id="comment"
+                             v-model="form.text"
                              placeholder="Enter something"
                              :rows="3"
                              :max-rows="6">
@@ -18,13 +18,19 @@
   export default {
     data() {
       return {
-        text: ''
+        form: {
+          text: '',
+          commentable_type: this.commentableType,
+          commentable_id: this.$route.params.id
+        }
       }
     },
+    props: ['commentableType'],
     computed: {
       ...mapGetters({
         isLogged: 'authentication/isLogged',
-        loading: 'comments/loading'
+        loading: 'comments/loading',
+        userId: 'authentication/userId'
       })
     },
     methods: {

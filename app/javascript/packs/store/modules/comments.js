@@ -24,8 +24,8 @@ const actions = {
       .then(data => {
         console.log(data);
       })
-      .catch(() => {
-        console.log("test");
+      .catch((error) => {
+        console.log(error);
       })
       .finally(() => {
         commit("SET_LOADING", false);
