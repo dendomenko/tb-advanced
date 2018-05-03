@@ -36,7 +36,10 @@
     methods: {
       onSubmit(evt) {
         evt.preventDefault();
-        this.$store.dispatch('comments/addComment', this.form);
+        this.$store.dispatch('comments/addComment', this.form)
+          .then(() => {
+            this.form.text = '';
+          });
       }
     }
   }

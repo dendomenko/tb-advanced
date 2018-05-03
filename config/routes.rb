@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       get 'home' => 'home#index'
       resources :movies, only: %i[index show]
       resources :news, only: %i[index show]
-      resources :comments, only: %i[create]
+      resources :comments, only: %i[create destroy]
     end
   end
 

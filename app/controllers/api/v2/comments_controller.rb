@@ -8,6 +8,11 @@ module Api
         render json: comment, status: :created
       end
 
+      def destroy
+        @current_user.comments.find(params[:id]).delete
+        render json: {}, status: :no_content
+      end
+
       private
 
       def comment_params

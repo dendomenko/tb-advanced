@@ -19,15 +19,15 @@ const mutations = {
 const actions = {
   addComment({commit}, payload) {
     commit("SET_LOADING", true);
-    return api.comments
+    return api.comments // TODO: find a more beautiful solution
       .addComment(payload)
       .then(response => {
         switch (payload.commentable_type) {
           case "Movie":
-            commit("movie/APPEND_COMMENT", response.data, { root: true });
+            commit("movie/APPEND_COMMENT", response.data, {root: true});
             break;
           case "News":
-            commit("news_item/APPEND_COMMENT", response.data, { root: true });
+            commit("news_item/APPEND_COMMENT", response.data, {root: true});
             break;
           default:
             break;
@@ -39,6 +39,9 @@ const actions = {
       .finally(() => {
         commit("SET_LOADING", false);
       });
+  },
+  deleteComment({commit}, id) {
+    return api.comments.deleteComment(id);
   }
 };
 
