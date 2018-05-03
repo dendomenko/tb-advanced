@@ -1,5 +1,5 @@
 class MovieSerializer < ActiveModel::Serializer
-  attributes :id, :title, :description, :year, :actors, :directors
+  attributes :id, :title, :description, :year, :actors, :directors, :rating
 
   has_many :comments
 
@@ -9,5 +9,9 @@ class MovieSerializer < ActiveModel::Serializer
 
   def directors
     object.people.joins(:positions).where("positions.title LIKE 'Director'").select('people.*, positions.title as position')
+  end
+
+  def rating
+    object.movie_ratings.average(:rating) || 0
   end
 end

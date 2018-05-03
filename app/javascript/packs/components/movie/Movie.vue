@@ -15,12 +15,15 @@
             <div class="col-md-12">
                 <strong>Rating:</strong>
                 <app-star-rating
-                    v-bind:increment="0.5"
-                    v-bind:max-rating="10"
-                    inactive-color="#000"
-                    active-color="#cc1166"
-                    v-bind:star-size="32"
-                    >
+                        :increment="0.5"
+                        :max-rating="10"
+                        :rating="parseInt(movie.rating)"
+                        :read-only="!isLogged"
+                        @rating-selected ="setRating"
+                        inactive-color="#000"
+                        active-color="#cc1166"
+                        :star-size="32"
+                >
                 </app-star-rating>
             </div>
         </div>
@@ -47,8 +50,18 @@
     computed: {
       ...mapGetters({
         loading: 'movie/loading',
-        movie: 'movie/item'
+        movie: 'movie/item',
+        isLogged: 'authentication/isLogged'
       })
+    },
+    methods: {
+      setRating: function(rating){
+        console.log('in set rating');
+        this.$store.dispatch('movie/rateMovie', { id: this.movie.id, rating }).then((response) => {
+          console.log(response);
+          this.movie.rating = parseInt(response);
+        })
+      }
     },
     created() {
       this.$store.dispatch('movie/loadMovie', this.$route.params.id);

@@ -40,6 +40,9 @@ const actions = {
       .finally(() => {
         commit("SET_LOADING", false);
       });
+  },
+  rateMovie({commit}, { id, rating }) {
+    return api.movies.rateMovie(id, rating).then(data => data);
   }
 };
 

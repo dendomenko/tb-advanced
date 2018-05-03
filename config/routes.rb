@@ -10,7 +10,9 @@ Rails.application.routes.draw do
       post 'auth_user' => 'authentication#authenticate_user'
       post 'sign_up' => 'authentication#sign_up'
       get 'home' => 'home#index'
-      resources :movies, only: %i[index show]
+      resources :movies, only: %i[index show] do
+        post 'rate', on: :member
+      end
       resources :news, only: %i[index show]
       resources :comments, only: %i[create destroy]
     end
