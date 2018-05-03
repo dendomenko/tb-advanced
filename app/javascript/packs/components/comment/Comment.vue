@@ -1,5 +1,5 @@
 <template>
-    <div v-if="exist">
+    <div class="col-md-12" v-if="exist">
         <p><strong>{{ comment.user.email }}</strong></p>
         <p>{{ comment.text }}</p>
         <strong v-if="comment.user.id === userId" @click="deleteComment">X</strong>

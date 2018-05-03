@@ -6,8 +6,8 @@
             <p>{{ item.description }}</p>
         </div>
         <div class="row">
+            <strong class="text-center">Comments</strong>
             <div v-for="comment in item.comments">
-                <strong class="text-center">Comments</strong>
                 <app-comment :comment="comment"></app-comment>
             </div>
             <app-comment-form commentable-type="News"></app-comment-form>
