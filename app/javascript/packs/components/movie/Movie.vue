@@ -43,7 +43,6 @@
   import Actor from "./Actor.vue";
   import Comment from "../comment/Comment.vue";
   import CommentForm from "../comment/CommentForm.vue";
-  import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
   import StarRating from 'vue-star-rating'
   import {mapGetters} from 'vuex';
 
@@ -90,8 +89,7 @@
       appActor: Actor,
       appComment: Comment,
       appCommentForm: CommentForm,
-      appStarRating: StarRating,
-      PulseLoader
+      appStarRating: StarRating
     }
   }
 </script>
