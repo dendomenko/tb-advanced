@@ -67,6 +67,7 @@
       setRating: function (rating) {
         this.$store.dispatch('movie/rateMovie', {id: this.movie.id, rating}).then(() => {
           this.isVoted = true;
+          this.vote = rating;
         })
       },
       checkVoted: function () {
@@ -74,7 +75,9 @@
           return vote.user_id === this.userId;
         });
         this.isVoted = !!vote.length;
-        this.vote = vote[0].rating;
+        if (vote.length) {
+          this.vote = vote[0].rating;
+        }
       }
     },
     created() {
