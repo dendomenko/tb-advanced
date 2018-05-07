@@ -56,8 +56,8 @@ export const rateMovie = (id, rating) =>
           }
         })
       .then(response => {
-        const data = response.data.rating;
-        return resolve(data);
+        const movie = toMovie(response.data, true);
+        return resolve(movie);
       })
       .catch(error => reject(error));
   });

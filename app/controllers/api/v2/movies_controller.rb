@@ -14,9 +14,9 @@ module Api
       def rate
         rate = @current_user.movie_ratings.create(movie_id: params[:id], rating: params[:rating])
         if rate.save
-          render json: { rating: Movie.find(params[:id]).movie_ratings.average(:rating) || 0 }
+          render json: Movie.find(params[:id])
         else
-          render json: { error: rate.errors }
+          render json: { error: "You already have voted" }, status: :unprocessable_entity
         end
       end
     end

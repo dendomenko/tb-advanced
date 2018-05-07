@@ -2,7 +2,8 @@ import api from "../../api";
 
 const state = {
   loading: false,
-  item: {}
+  item: {},
+  rating: 0
 };
 
 const getters = {
@@ -11,6 +12,9 @@ const getters = {
   },
   item(state) {
     return state.item;
+  },
+  rating(state) {
+    return state.rating;
   }
 };
 
@@ -20,6 +24,13 @@ const mutations = {
   },
   SET_MOVIE(state, data) {
     state.item = data;
+    if (data.rating.length) {
+      state.rating = data.rating.reduce(function (prev, curr) {
+        return prev + parseFloat(curr.rating);
+      }, 0) / data.rating.length;
+    } else {
+      state.rating = 0;
+    }
   },
   APPEND_COMMENT(state, comment) {
     state.item.comments.push(comment);
@@ -41,8 +52,15 @@ const actions = {
         commit("SET_LOADING", false);
       });
   },
-  rateMovie({commit}, { id, rating }) {
-    return api.movies.rateMovie(id, rating).then(data => data);
+  rateMovie({commit}, {id, rating}) {
+    return api.movies
+      .rateMovie(id, rating)
+      .then(data => {
+        commit("SET_MOVIE", data);
+      })
+      .catch(error => {
+        commit("error/SET_ERROR", error.body.error, { root: true });
+      });
   }
 };
 

@@ -17,9 +17,9 @@
                 <app-star-rating
                         :increment="0.5"
                         :max-rating="10"
-                        :rating="parseInt(movie.rating)"
-                        :read-only="!isLogged"
-                        @rating-selected ="setRating"
+                        :rating="parseInt(rating)"
+                        :read-only="!isLogged || isVoted"
+                        @rating-selected="setRating"
                         inactive-color="#000"
                         active-color="#cc1166"
                         :star-size="32"
@@ -47,24 +47,40 @@
   import {mapGetters} from 'vuex';
 
   export default {
+    data() {
+      return {
+        isVoted: false
+      }
+    },
     computed: {
       ...mapGetters({
         loading: 'movie/loading',
         movie: 'movie/item',
-        isLogged: 'authentication/isLogged'
+        rating: 'movie/rating',
+        isLogged: 'authentication/isLogged',
+        userId: 'authentication/userId'
       })
     },
     methods: {
-      setRating: function(rating){
-        console.log('in set rating');
-        this.$store.dispatch('movie/rateMovie', { id: this.movie.id, rating }).then((response) => {
-          console.log(response);
-          this.movie.rating = parseInt(response);
+      setRating: function (rating) {
+        this.$store.dispatch('movie/rateMovie', {id: this.movie.id, rating}).then((response) => {
+          this.isVoted = true;
         })
+      },
+      checkVoted: function () {
+        const uId = this.userId;
+        const vote = this.movie.rating.filter(function (vote) {
+          return vote.user_id === uId;
+        });
+        this.isVoted = !!vote.length;
       }
     },
     created() {
-      this.$store.dispatch('movie/loadMovie', this.$route.params.id);
+      this.$store.dispatch('movie/loadMovie', this.$route.params.id)
+        .then(() => {
+          this.checkVoted();
+        });
+
     },
     components: {
       appActor: Actor,

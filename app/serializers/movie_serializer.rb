@@ -12,6 +12,6 @@ class MovieSerializer < ActiveModel::Serializer
   end
 
   def rating
-    object.movie_ratings.average(:rating) || 0
+    object.movie_ratings
   end
 end
