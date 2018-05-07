@@ -1,5 +1,7 @@
 # README
 
+![alt text](https://api.travis-ci.org/dendomenko/tb-advanced.svg?branch=api)
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
