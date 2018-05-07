@@ -13,7 +13,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <strong>Rating:</strong>
+                <p><strong>Rating: </strong> <i v-if="vote">Your rating: {{ vote }}</i></p>
                 <app-star-rating
                         :increment="0.5"
                         :max-rating="10"
@@ -23,7 +23,7 @@
                         inactive-color="#000"
                         active-color="#cc1166"
                         :star-size="32"
-                >
+                > 5
                 </app-star-rating>
             </div>
         </div>
@@ -43,13 +43,15 @@
   import Actor from "./Actor.vue";
   import Comment from "../comment/Comment.vue";
   import CommentForm from "../comment/CommentForm.vue";
+  import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
   import StarRating from 'vue-star-rating'
   import {mapGetters} from 'vuex';
 
   export default {
     data() {
       return {
-        isVoted: false
+        isVoted: false,
+        vote: null
       }
     },
     computed: {
@@ -63,16 +65,16 @@
     },
     methods: {
       setRating: function (rating) {
-        this.$store.dispatch('movie/rateMovie', {id: this.movie.id, rating}).then((response) => {
+        this.$store.dispatch('movie/rateMovie', {id: this.movie.id, rating}).then(() => {
           this.isVoted = true;
         })
       },
       checkVoted: function () {
-        const uId = this.userId;
-        const vote = this.movie.rating.filter(function (vote) {
-          return vote.user_id === uId;
+        const vote = this.movie.rating.filter(vote => {
+          return vote.user_id === this.userId;
         });
         this.isVoted = !!vote.length;
+        this.vote = vote[0].rating;
       }
     },
     created() {
@@ -80,13 +82,13 @@
         .then(() => {
           this.checkVoted();
         });
-
     },
     components: {
       appActor: Actor,
       appComment: Comment,
       appCommentForm: CommentForm,
-      appStarRating: StarRating
+      appStarRating: StarRating,
+      PulseLoader
     }
   }
 </script>
