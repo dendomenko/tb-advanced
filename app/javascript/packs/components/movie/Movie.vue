@@ -74,6 +74,7 @@
           return vote.user_id === this.userId;
         });
         this.isVoted = !!vote.length;
+        this.vote = null;
         if (vote.length) {
           this.vote = vote[0].rating;
         }

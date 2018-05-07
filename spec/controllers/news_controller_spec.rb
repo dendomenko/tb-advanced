@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe NewsController, type: :controller do
+RSpec.describe API::V2::NewsController, type: :controller do
 
 end

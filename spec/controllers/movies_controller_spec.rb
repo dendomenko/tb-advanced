@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe MoviesController, type: :controller do
+RSpec.describe API::V2::MoviesController, type: :controller do
 
 end
